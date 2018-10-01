@@ -166,7 +166,7 @@ demo.state0.prototype = {
         
         if (health == 0){
             player.kill();
-            this.changeState;
+            this.changeState();
         }
         
     },
