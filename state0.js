@@ -35,8 +35,11 @@ demo.state0.prototype = {
         
         //add sprites
         player = game.add.sprite(32, game.world.height - 250, 'john');
-        boss = game.add.sprite(500, game.world.height - 350, 'boss');
+        boss = game.add.sprite(500, game.world.height - 240, 'boss');
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
+
+
+        
 
         //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', { fontSize: '32px', fill: '#fff' });
@@ -59,7 +62,9 @@ demo.state0.prototype = {
         player.body.collideWorldBounds = true;
         player.animations.add('walk', [0, 1], true);
 
+
         boss.body.gravity.y = 150;
+        boss.body.allowGravity = false;
         boss.body.collideWorldBounds = true;
         boss.body.immovable = true;
         boss.body.velocity.x = -100;
@@ -81,9 +86,8 @@ demo.state0.prototype = {
     
     update: function(){
 
-        
-        game.physics.arcade.collide(player, ground);
         game.physics.arcade.collide(boss, ground);
+        game.physics.arcade.collide(player, ground);
         
         
         //player movement and actions
@@ -108,10 +112,7 @@ demo.state0.prototype = {
         if (game.input.activePointer.isDown){
             this.fire();
         }
-        
-        
-        
-        
+             
         //boss movement
         if (boss.x <= 440){
             boss.body.velocity.x = 100;
@@ -121,7 +122,6 @@ demo.state0.prototype = {
             boss.body.velocity.x = -100;
             boss.frame = 1;
         }
-
         //damage player
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
