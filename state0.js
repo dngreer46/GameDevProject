@@ -12,7 +12,7 @@ var nextFire = 0;
 var boss_health;
 var bossHealth;
 var overlap;
-
+var damageSound;
 var demo = {};
 
 demo.state0 = function(){};
@@ -22,6 +22,7 @@ demo.state0.prototype = {
         game.load.spritesheet('boss', 'assets/boss.png', 100, 100);
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('ground', 'assets/labtile.png');
+        game.load.audio('impact', 'assets/slaphit.mp3');
     },
     
 
@@ -39,8 +40,6 @@ demo.state0.prototype = {
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
 
 
-        
-
         //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', { fontSize: '32px', fill: '#fff' });
         playerHealth = game.add.text(10, 0, 'Player Health: 100', {fontSize: '32px', fill: '#fff'});
@@ -56,20 +55,20 @@ demo.state0.prototype = {
         ground.body.immovable = true;
         ground.body.allowGravity = false;
         
-        //set properties for characters
+        //set properties for player
         player.body.bounce.y = 0.1;
         player.body.gravity.y = 150;
         player.body.collideWorldBounds = true;
         player.animations.add('walk', [0, 1], true);
 
-
+        //set properties for boss
         boss.body.gravity.y = 150;
         boss.body.allowGravity = false;
         boss.body.collideWorldBounds = true;
         boss.body.immovable = true;
-        boss.body.velocity.x = -100;
+        boss.body.velocity.x = -200;
 
-
+        //set properties for bullets
         bullets = game.add.group();
         bullets.enableBody = true;
         bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -77,10 +76,11 @@ demo.state0.prototype = {
         bullets.setAll('checkWorldBounds', true);
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('anchor.y', -5);
-
         bullets.setAll('anchor.x', 0.5);
         
-        game.time.events.repeat(1000, 100, this.overlapFalse, this);
+        //add sound
+        damageSound = game.add.audio('impact'); 
+        game.time.events.repeat(2000, 100, this.overlapFalse, this);
 
     },
     
@@ -114,19 +114,19 @@ demo.state0.prototype = {
         }
              
         //boss movement
-        if (boss.x <= 440){
-            boss.body.velocity.x = 100;
+        if (boss.x <= 100){
+            boss.body.velocity.x = 200;
             boss.frame = 0;
         }
         else if (boss.x >= 660){
-            boss.body.velocity.x = -100;
+            boss.body.velocity.x = -200;
             boss.frame = 1;
         }
         //damage player
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
         //damage boss
-        game.physics.arcade.overlap(boss, bullet, this.hitEnemy);
+        game.physics.arcade.overlap(boss, bullet, this.hitEnemy, null, this);
         
     },
     
@@ -144,6 +144,7 @@ demo.state0.prototype = {
      hitEnemy: function(boss, bullet){
         bullet.kill();
         
+        damageSound.play();
         boss_health -= 10;
         bossHealth.text = 'Boss Health: ' + boss_health;
         
@@ -157,20 +158,23 @@ demo.state0.prototype = {
         if (!overlap){
             overlap = true;
             health -= 10;
-            playerHealth.text = 'Player Health: ' + health;
-            
-            if (health == 0){
-                game.state.start('state1');
-            }
+            damageSound.play();
+            playerHealth.text = 'Player Health: ' + health;        
         }
         
-
+        if (health == 0){
+            this.changeState;
+        }
         
     },
     
     overlapFalse: function() {
         overlap = false;
 
+    },
+    
+    changeState: function(){
+        game.state.start('state1');
     }
     
 };
