@@ -43,6 +43,8 @@ demo.state0.prototype = {
         
         game.physics.arcade.enable(player);
         game.physics.arcade.enable(boss);
+
+  
         game.physics.arcade.enable(ground);
         
         ground.body.immovable = true;
@@ -55,7 +57,9 @@ demo.state0.prototype = {
 
         boss.body.collideWorldBounds = true;
         
-
+        boss.body.immovable = true;
+        boss.body.collideWorldBounds = true;
+        boss.body.velocity.x = -100;
         player.animations.add('walk', [0, 1], true);
 
 
@@ -105,6 +109,9 @@ demo.state0.prototype = {
         }
         game.physics.arcade.overlap(boss, bullet, this.hitEnemy);
         
+
+        this.bossMove();
+
         
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
@@ -132,6 +139,18 @@ demo.state0.prototype = {
         }
          
     },
+
+    bossMove: function(){
+        if (boss.x <= 440){
+            boss.body.velocity.x = 100;
+            boss.frame = 0;
+        }
+        else if (boss.x >= 660){
+            boss.body.velocity.x = -100;
+            boss.frame = 1;
+        }
+    },
+
     
     playerHit: function() {
         if (!overlap){
@@ -150,6 +169,7 @@ demo.state0.prototype = {
     
     overlapFalse: function() {
         overlap = false;
+
     }
     
 };
