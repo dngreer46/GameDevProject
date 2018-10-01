@@ -1,0 +1,4 @@
+John: 35 x 70 pixels
+Boss: 100 x 100
+Labtile: 70 x 70
+Bullet: 14 x 7 
