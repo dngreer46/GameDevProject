@@ -29,14 +29,14 @@ demo.state0.prototype = {
         
         game.physics.arcade.enable(player);
         game.physics.arcade.enable(boss);
-
+        
         player.body.bounce.y = .1;
         player.body.gravity.y = 150;
         player.body.collideWorldBounds = true;
-        boss.body.gravity.y = 1000000000;
-        boss.body.collideWorldBounds = true;
         
-
+        boss.body.immovable = true;
+        boss.body.collideWorldBounds = true;
+        boss.body.velocity.x = -100;
         player.animations.add('walk', [0, 1], true);
 
 
@@ -75,6 +75,8 @@ demo.state0.prototype = {
             this.fire();
         }
         game.physics.arcade.overlap(boss, bullet, this.hitEnemy);
+        
+        this.bossMove();
 
     },
     fire: function(){
@@ -98,6 +100,16 @@ demo.state0.prototype = {
             boss.kill();
         }
          
+    },
+    bossMove: function(){
+        if (boss.x <= 440){
+            boss.body.velocity.x = 100;
+            boss.frame = 0;
+        }
+        else if (boss.x >= 660){
+            boss.body.velocity.x = -100;
+            boss.frame = 1;
+        }
     }
     
 };
