@@ -110,8 +110,7 @@ demo.state0.prototype = {
         }
         
         
-        //damage boss
-        game.physics.arcade.overlap(boss, bullet, this.hitEnemy);
+        
         
         //boss movement
         if (boss.x <= 440){
@@ -126,8 +125,11 @@ demo.state0.prototype = {
         //damage player
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
-
+        //damage boss
+        game.physics.arcade.overlap(boss, bullet, this.hitEnemy);
+        
     },
+    
     fire: function(){
         if(game.time.now > nextFire){
             nextFire = game.time.now + fireRate;
