@@ -156,7 +156,7 @@ demo.state0.prototype = {
          
     },
 
-    playerHit: function() {
+    playerHit: function(player) {
         if (!overlap){
             overlap = true;
             health -= 10;
@@ -165,6 +165,7 @@ demo.state0.prototype = {
         }
         
         if (health == 0){
+            player.kill();
             this.changeState;
         }
         
