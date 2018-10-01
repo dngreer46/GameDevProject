@@ -27,40 +27,42 @@ demo.state0.prototype = {
 
     create: function(){
         overlap = false;
-
+        
+        //add physics to game
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.stage.backgroundColor = '#4B4B4B';
                 
+        
+        //add sprites
+        player = game.add.sprite(32, game.world.height - 250, 'john');
+        boss = game.add.sprite(500, game.world.height - 350, 'boss');
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
 
-        player = game.add.sprite(32, game.world.height - 250, 'john');
-        boss = game.add.sprite(500, game.world.height - 250, 'boss');
-        
+        //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', { fontSize: '32px', fill: '#fff' });
         playerHealth = game.add.text(10, 0, 'Player Health: 100', {fontSize: '32px', fill: '#fff'});
         health = 100;
         boss_health = 100;
         
+        //enable physics for sprites
         game.physics.arcade.enable(player);
-        game.physics.arcade.enable(boss);
-
-  
+        game.physics.arcade.enable(boss);  
         game.physics.arcade.enable(ground);
         
+        //set properties for ground
         ground.body.immovable = true;
         ground.body.allowGravity = false;
         
+        //set properties for characters
         player.body.bounce.y = 0.1;
         player.body.gravity.y = 150;
         player.body.collideWorldBounds = true;
-        boss.body.gravity.y = 150;
-
-        boss.body.collideWorldBounds = true;
-        
-        boss.body.immovable = true;
-        boss.body.collideWorldBounds = true;
-        boss.body.velocity.x = -100;
         player.animations.add('walk', [0, 1], true);
+
+        boss.body.gravity.y = 150;
+        boss.body.collideWorldBounds = true;
+        boss.body.immovable = true;
+        boss.body.velocity.x = -100;
 
 
         bullets = game.add.group();
@@ -84,7 +86,7 @@ demo.state0.prototype = {
         game.physics.arcade.collide(boss, ground);
         
         
-
+        //player movement and actions
         if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
             player.x += speed;
             player.animations.play('walk', 14, true);
@@ -92,7 +94,6 @@ demo.state0.prototype = {
         else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
             player.x -= speed;
             player.animations.play('walk', 14, true);
-
         }
         else{
             player.animations.stop('walk');
@@ -107,12 +108,22 @@ demo.state0.prototype = {
         if (game.input.activePointer.isDown){
             this.fire();
         }
+        
+        
+        //damage boss
         game.physics.arcade.overlap(boss, bullet, this.hitEnemy);
         
+        //boss movement
+        if (boss.x <= 440){
+            boss.body.velocity.x = 100;
+            boss.frame = 0;
+        }
+        else if (boss.x >= 660){
+            boss.body.velocity.x = -100;
+            boss.frame = 1;
+        }
 
-        this.bossMove();
-
-        
+        //damage player
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
 
@@ -140,18 +151,6 @@ demo.state0.prototype = {
          
     },
 
-    bossMove: function(){
-        if (boss.x <= 440){
-            boss.body.velocity.x = 100;
-            boss.frame = 0;
-        }
-        else if (boss.x >= 660){
-            boss.body.velocity.x = -100;
-            boss.frame = 1;
-        }
-    },
-
-    
     playerHit: function() {
         if (!overlap){
             overlap = true;
