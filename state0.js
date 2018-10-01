@@ -79,7 +79,9 @@ demo.state0.prototype = {
         bullets.setAll('anchor.x', 0.5);
         
         //add sound
-        damageSound = game.add.audio('impact'); 
+        damageSound = game.add.audio('impact');
+        
+        //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);
 
     },
