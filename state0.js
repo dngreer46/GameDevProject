@@ -1,8 +1,10 @@
 var player;
 var boss;
+
 var ground;
 var playerHealth;
 var health;
+
 var speed = 4;
 var bullets;
 var bullet;
@@ -12,6 +14,7 @@ var nextFire = 0;
 var boss_health;
 var bossHealth;
 var overlap;
+
 var demo = {};
 
 demo.state0 = function(){};
@@ -51,6 +54,27 @@ demo.state0.prototype = {
         player.body.gravity.y = 150;
         player.body.collideWorldBounds = true;
         boss.body.gravity.y = 150;
+        game.load.image('boss', 'assets/boss.png');
+        game.load.image('bullet', 'assets/bullet.png');
+    },
+    
+    create: function(){
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.stage.backgroundColor = '#ffffff';
+        
+        player = game.add.sprite(32, game.world.height - 150, 'john');
+        boss = game.add.sprite(500, game.world.height - 150, 'boss');
+        
+        bossHealth = game.add.text(540, 0, 'Boss Health: 100', { fontSize: '32px', fill: '#000000' });
+        
+        game.physics.arcade.enable(player);
+        game.physics.arcade.enable(boss);
+
+        player.body.bounce.y = .1;
+        player.body.gravity.y = 150;
+        player.body.collideWorldBounds = true;
+        boss.body.gravity.y = 1000000000;
+
         boss.body.collideWorldBounds = true;
         
 
@@ -64,18 +88,22 @@ demo.state0.prototype = {
         bullets.setAll('checkWorldBounds', true);
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('anchor.y', -5);
+
         bullets.setAll('anchor.x', 0.5);
         
         game.time.events.repeat(500, 100, this.overlapFalse, this);
+        bullets.setAll('anchor.x', 0.5)
 
     },
     
     update: function(){
+
         
         game.physics.arcade.collide(player, ground);
         game.physics.arcade.collide(boss, ground);
         
         
+
         if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
             player.x += speed;
             player.animations.play('walk', 14, true);
@@ -102,6 +130,7 @@ demo.state0.prototype = {
         
         
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
+
 
     },
     fire: function(){
@@ -144,5 +173,8 @@ demo.state0.prototype = {
         overlap = false;
     }
     
+    
+
+    }
     
 };
