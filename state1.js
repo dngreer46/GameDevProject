@@ -18,7 +18,7 @@ demo.state1.prototype = {
     update: function(){},
     
     restart: function() {
-            game.state.start('state0');
+            game.state.start('bossState');
     }
 };
         

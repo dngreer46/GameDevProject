@@ -15,8 +15,8 @@ var overlap;
 var damageSound;
 var demo = {};
 
-demo.state0 = function(){};
-demo.state0.prototype = {
+demo.bossState = function(){};
+demo.bossState.prototype = {
     preload: function(){
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
         game.load.spritesheet('boss', 'assets/boss.png', 100, 100);
