@@ -1,4 +1,4 @@
-var map, groundLayer, wallLayer, platformsLayer, houseLayer, plantsSignsLayer, ladderLayer, chestLayer
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, cursors
 
 var demo = {};
 demo.village = function(){};
@@ -29,6 +29,7 @@ demo.village.prototype = {
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.physics.setBoundsToWorld();
         
         // Load map
         map = game.add.tilemap('villageMap');
@@ -36,24 +37,30 @@ demo.village.prototype = {
         map.addTilesetImage('houseSet');
         
         // Map layers
-        groundLayer = map.createLayer('Ground');
-        wallLayer = map.createLayer('Walls');
-        platformsLayer = map.createLayer('Platforms');
-        houseLayer = map.createLayer('Houses');
-        plantsSignsLayer = map.createLayer('PlantsSigns');
-        ladderLayer = map.createLayer('Ladders');
-        chestLayer = map.createLayer('Chests');
+        ground = map.createLayer('Ground');
+        walls = map.createLayer('Walls');
+        platforms = map.createLayer('Platforms');
+        houses = map.createLayer('Houses');
+        plantsAndSigns = map.createLayer('PlantsSigns');
+        chests = map.createLayer('Chests');
         
         // Map collision
-        map.setCollision([43, 44, 45], true, groundLayer);
-        map.setCollision([44, 54, 1610612780, 2684354604, 3221225516], true, wallLayer);
-        map.setCollision(44, true, platformsLayer);
+        map.setCollision([43, 44, 45], true, ground);
+        map.setCollision([44, 1610612780, 2684354604], true, walls);
+        map.setCollision(44, true, platforms);
+        setTileCollision(platforms, 44, {
+            top: true,
+            bottom: false,
+            left: false,
+            right: false
+        });
         
         // Add Sprites
-        player = game.add.sprite(256, game.world.height - 200, 'john');
+        player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
+        player.body.collideWorldBounds = true;
         
         // Player Animations
         player.animations.add('walk', [0, 1], 5, true);
@@ -68,12 +75,13 @@ demo.village.prototype = {
     
     update: function(){
         // Collision
-        var touchGround = game.physics.arcade.collide(player, groundLayer);
-        game.physics.arcade.collide(player, wallLayer);
-        touchGround += game.physics.arcade.collide(player, platformsLayer);
+        var touchGround = game.physics.arcade.collide(player, ground);
+        game.physics.arcade.collide(player, walls);
+        touchGround += game.physics.arcade.collide(player, platforms);
         
         // Player Movement
         player.body.velocity.x = 0;
+        
         if (cursors.right.isDown) {
                 player.body.velocity.x = 150;
                 player.animations.play('walk');
@@ -88,9 +96,57 @@ demo.village.prototype = {
             }
         
         if (cursors.up.isDown && touchGround) {
-                player.body.velocity.y = -350;
+                player.body.velocity.y = -325;
             }
-    }
+        
+    },
     
     // Functions
+    
 };
+
+// Allows collision for select tile faces
+// Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
+function setTileCollision(mapLayer, idxOrArray, dirs) {
+
+    var mFunc; // tile index matching function
+    if (idxOrArray.length) {
+        // if idxOrArray is an array, use a function with a loop
+        mFunc = function(inp) {
+            for (var i = 0; i < idxOrArray.length; i++) {
+                if (idxOrArray[i] === inp) {
+                    return true;
+                }
+            }
+            return false;
+        };
+    } else {
+        // if idxOrArray is a single number, use a simple function
+        mFunc = function(inp) {
+            return inp === idxOrArray;
+        };
+    }
+
+    // get the 2-dimensional tiles array for this layer
+    var d = mapLayer.map.layers[mapLayer.index].data;
+
+    for (var i = 0; i < d.length; i++) {
+        for (var j = 0; j < d[i].length; j++) {
+            var t = d[i][j];
+            if (mFunc(t.index)) {
+
+                t.collideUp = dirs.top;
+                t.collideDown = dirs.bottom;
+                t.collideLeft = dirs.left;
+                t.collideRight = dirs.right;
+
+                t.faceTop = dirs.top;
+                t.faceBottom = dirs.bottom;
+                t.faceLeft = dirs.left;
+                t.faceRight = dirs.right;
+
+            }
+        }
+    }
+
+}
