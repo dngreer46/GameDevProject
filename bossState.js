@@ -3,7 +3,6 @@ var boss;
 var ground;
 var playerHealth;
 var health;
-var speed = 4;
 var bullets;
 var bullet;
 var velocity = 500;
@@ -13,8 +12,8 @@ var boss_health;
 var bossHealth;
 var overlap;
 var damageSound;
-var demo = {};
 
+var demo = {};
 demo.bossState = function(){};
 demo.bossState.prototype = {
     preload: function(){
@@ -87,8 +86,9 @@ demo.bossState.prototype = {
     
     update: function(){
 
+        // Collision
         game.physics.arcade.collide(boss, ground);
-        game.physics.arcade.collide(player, ground);
+        var touchGround = game.physics.arcade.collide(player, ground)
         
         
         //player movement and actions
