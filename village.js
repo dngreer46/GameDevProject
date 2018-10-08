@@ -103,7 +103,8 @@ demo.village.prototype = {
         
         currItem = inventoryArray[0];
         
-
+        inventoryText.fixedToCamera = true;
+        inventoryText.cameraOffset.setTo(20, 20);
         
       
     },
@@ -168,6 +169,7 @@ demo.village.prototype = {
         currItem = inventoryArray[inventoryArray.indexOf(item)];
         console.log(currItem);
         console.log(inventory);
+        
         
     
     },
