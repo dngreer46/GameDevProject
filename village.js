@@ -164,7 +164,6 @@ demo.village.prototype = {
         //inventory.setAll('cameraOffset.x', 0);
         //inventory.setAll('cameraOffset.y', game.world.height-400);
         //inventory.fixedToCamera = true;
-        console.log(inventory);
         console.log(inventoryArray);
         currItem = inventoryArray[inventoryArray.indexOf(item)];
         console.log(currItem);
