@@ -5,13 +5,14 @@ var playerHealth;
 var health;
 var bullets;
 var bullet;
-var velocity = 500;
-var fireRate = 300;
+var velocity = 700;
+var fireRate = 1000;
 var nextFire = 0;
 var boss_health;
 var bossHealth;
 var overlap;
 var damageSound;
+var bossDialouge;
 
 var demo = {};
 demo.bossState = function(){};
@@ -148,7 +149,10 @@ demo.bossState.prototype = {
         boss_health -= 10;
         bossHealth.text = 'Boss Health: ' + boss_health;
         
-        if (boss_health == 0){
+        if (boss_health == 70){
+            bossDialouge = game.add.text(boss.x, boss.y + 25, 'You wll never win', {fontSize: '32px', fill: '#ffffff' });
+        }
+        else if (boss_health == 0){
             boss.kill();
         }
          
