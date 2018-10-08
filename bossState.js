@@ -3,7 +3,6 @@ var boss;
 var ground;
 var playerHealth;
 var health;
-var speed = 4;
 var bullets;
 var bullet;
 var velocity = 500;
@@ -13,10 +12,10 @@ var boss_health;
 var bossHealth;
 var overlap;
 var damageSound;
-var demo = {};
 
-demo.state0 = function(){};
-demo.state0.prototype = {
+var demo = {};
+demo.bossState = function(){};
+demo.bossState.prototype = {
     preload: function(){
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
         game.load.spritesheet('boss', 'assets/boss.png', 100, 100);
@@ -41,8 +40,8 @@ demo.state0.prototype = {
 
 
         //add health
-        bossHealth = game.add.text(540, 0, 'Boss Health: 100', { fontSize: '32px', fill: '#fff' });
-        playerHealth = game.add.text(10, 0, 'Player Health: 100', {fontSize: '32px', fill: '#fff'});
+        bossHealth = game.add.text(540, 0, 'Boss Health: 100', {fontSize: '32px', fill: '#ffffff' });
+        playerHealth = game.add.text(10, 0, 'Player Health: 100', {fontSize: '32px', fill: '#ffffff'});
         health = 100;
         boss_health = 100;
         
@@ -56,8 +55,7 @@ demo.state0.prototype = {
         ground.body.allowGravity = false;
         
         //set properties for player
-        player.body.bounce.y = 0.1;
-        player.body.gravity.y = 150;
+        player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
         player.animations.add('walk', [0, 1], true);
 
@@ -88,29 +86,29 @@ demo.state0.prototype = {
     
     update: function(){
 
+        // Collision
         game.physics.arcade.collide(boss, ground);
-        game.physics.arcade.collide(player, ground);
+        var touchGround = game.physics.arcade.collide(player, ground)
         
         
         //player movement and actions
-        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-            player.x += speed;
-            player.animations.play('walk', 14, true);
+        player.body.velocity.x = 0;
+        
+        if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
+            player.body.velocity.x = 150;
+            player.animations.play('walk');
         }
-        else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
-            player.x -= speed;
-            player.animations.play('walk', 14, true);
+        else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
+            player.body.velocity.x = -150;
+            player.animations.play('walk');
         }
         else{
-            player.animations.stop('walk');
+            player.animations.stop();
             player.frame = 0;
         }
-        if(game.input.keyboard.isDown(Phaser.Keyboard.UP)){
-            player.y -= speed;
-            if(player.y < 150){
-                player.y = 150;
+        if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
+            player.body.velocity.y = -325;
             }
-        }
         if (game.input.activePointer.isDown){
             this.fire();
         }
@@ -177,7 +175,7 @@ demo.state0.prototype = {
     },
     
     changeState: function(){
-        game.state.start('state1');
+        game.state.start('youDied');
     }
     
 };

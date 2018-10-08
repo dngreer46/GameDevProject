@@ -1,5 +1,5 @@
-demo.state1 = function(){};
-demo.state1.prototype = {
+demo.youDied = function(){};
+demo.youDied.prototype = {
     preload: function(){
         
     },
@@ -18,7 +18,7 @@ demo.state1.prototype = {
     update: function(){},
     
     restart: function() {
-            game.state.start('state0');
+            game.state.start('bossState');
     }
 };
         
