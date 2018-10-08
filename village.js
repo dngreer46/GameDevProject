@@ -104,7 +104,7 @@ demo.village.prototype = {
         currItem = inventoryArray[0];
         
         inventoryText.fixedToCamera = true;
-        inventoryText.cameraOffset.setTo(20, 20);
+        inventoryText.cameraOffset.setTo(40, 5);
         
       
     },
