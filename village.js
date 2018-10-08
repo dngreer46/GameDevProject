@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, currItem;
 
 demo.village = function(){};
 
@@ -21,6 +21,7 @@ demo.village.prototype = {
         game.load.image('pickAxe', 'assets/Pickaxe.png');
         game.load.image('health', 'assets/Heart.png');
         game.load.image('key', 'assets/key.png');
+        game.load.image('bullet', 'assets/bullet.png');
 
 
     },
@@ -73,6 +74,18 @@ demo.village.prototype = {
         //Camera
         game.camera.follow(player);
         
+        //set properties for bullets
+        bullets = game.add.group();
+        bullets.enableBody = true;
+        bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        bullets.createMultiple(50, 'bullet');
+        bullets.setAll('checkWorldBounds', true);
+        bullets.setAll('outOfBoundsKill', true);
+        bullets.setAll('anchor.y', -5);
+        bullets.setAll('anchor.x', 0.5);
+        bullets.setAll('scale.x', 0.8);
+        bullets.setAll('scale.y', 0.8);
+        
         //create items
         items = game.add.group();
         items.enableBody = true;
@@ -85,10 +98,12 @@ demo.village.prototype = {
         
         //create inventory
         inventory = game.add.group();
-
+        inventoryArray = [];
         inventoryText = game.add.text(50, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
         
+        currItem = inventoryArray[0];
         
+
         
       
     },
@@ -117,7 +132,23 @@ demo.village.prototype = {
         if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
             player.body.velocity.y = -325;
         }
-    
+        
+        if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+            currItem = switchItem(inventoryArray);
+            console.log(currItem);
+        }
+        
+        if (game.input.activePointer.isDown){
+            if (currItem == undefined){
+                
+            }
+            
+            else if (currItem.key == 'gun'){
+                this.fire();
+            }
+
+        }
+        
         game.physics.arcade.overlap(items, player, this.addInventory);
         
 
@@ -129,15 +160,30 @@ demo.village.prototype = {
         inventory.setAll('y', game.world.height-450);
         inventory.setAll('scale.x', 2);
         inventory.setAll('scale.y', 2);
+        inventoryArray.push(item);
         //inventory.setAll('cameraOffset.x', 0);
         //inventory.setAll('cameraOffset.y', game.world.height-400);
         //inventory.fixedToCamera = true;
         console.log(inventory);
-
-
+        console.log(inventoryArray);
+        currItem = inventoryArray[inventoryArray.indexOf(item)];
+        console.log(currItem);
         
-        
+    
+    },
+    
+    fire: function(){
+        if(game.time.now > nextFire){
+            nextFire = game.time.now + fireRate;
+            bullet = bullets.getFirstDead();
+            bullet.reset(player.x, player.y);
+            
+            game.physics.arcade.moveToPointer(bullet, velocity);
+            bullet.rotation = game.physics.arcade.angleToPointer(bullet);
+        }
     }
+    
+
     // Functions
     
 };
@@ -186,4 +232,9 @@ function setTileCollision(mapLayer, idxOrArray, dirs) {
         }
     }
 
+}
+function switchItem(inventoryArray){
+     //for (i in inventoryArray){
+         
+     //}
 }
