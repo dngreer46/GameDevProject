@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, cursors;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText;
 
 var demo = {};
 demo.village = function(){};
@@ -17,7 +17,13 @@ demo.village.prototype = {
         
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
-        
+        game.load.image('gun', 'assets/gun.png');
+        game.load.image('sword', 'assets/Sword.png');
+        game.load.image('pickAxe', 'assets/Pickaxe.png');
+        game.load.image('health', 'assets/Heart.png');
+        game.load.image('key', 'assets/key.png');
+
+
     },
     
     create: function(){
@@ -68,9 +74,24 @@ demo.village.prototype = {
         //Camera
         game.camera.follow(player);
         
-        // Controls
-        cursors = game.input.keyboard.createCursorKeys();
+        //create items
+        items = game.add.group();
+        items.enableBody = true;
+        items.physicsBodyType = Phaser.Physics.ARCADE;
+        gun = items.create(230, game.world.height-190, 'gun');
+        items.create(100, game.world.height-190, 'sword');
+        items.create(150, game.world.height-190, 'pickAxe');
+        items.create(1000, game.world.height-190, 'health');
+        items.create(1500, game.world.height-250, 'key');
         
+        //create inventory
+        inventory = game.add.group();
+
+        inventoryText = game.add.text(50, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
+        
+        
+        
+      
     },
     
     update: function(){
@@ -82,25 +103,42 @@ demo.village.prototype = {
         // Player Movement
         player.body.velocity.x = 0;
         
-        if (cursors.right.isDown) {
-                player.body.velocity.x = 150;
-                player.animations.play('walk');
-            }
-        else if (cursors.left.isDown) {
-                player.body.velocity.x = -150;
-                player.animations.play('walk');
-            }
-        else {
-                player.animations.stop();
-                player.frame = 0;
-            }
+        if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
+            player.body.velocity.x = 150;
+            player.animations.play('walk');
+        }
+        else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
+            player.body.velocity.x = -150;
+            player.animations.play('walk');
+        }
+        else{
+            player.animations.stop();
+            player.frame = 0;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
+            player.body.velocity.y = -325;
+        }
+    
+        game.physics.arcade.overlap(items, player, this.addInventory);
         
-        if (cursors.up.isDown && touchGround) {
-                player.body.velocity.y = -325;
-            }
-        
+
     },
     
+    addInventory: function(player, item){
+        inventory.add(item);
+        inventory.set(item, 'x', (inventory.getIndex(item) + 1) * 50);
+        inventory.setAll('y', game.world.height-450);
+        inventory.setAll('scale.x', 2);
+        inventory.setAll('scale.y', 2);
+        //inventory.setAll('cameraOffset.x', 0);
+        //inventory.setAll('cameraOffset.y', game.world.height-400);
+        //inventory.fixedToCamera = true;
+        console.log(inventory);
+
+
+        
+        
+    }
     // Functions
     
 };
@@ -150,3 +188,4 @@ function setTileCollision(mapLayer, idxOrArray, dirs) {
     }
 
 }
+

@@ -1,5 +1,5 @@
-demo.state1 = function(){};
-demo.state1.prototype = {
+demo.youDied = function(){};
+demo.youDied.prototype = {
     preload: function(){
         
     },
