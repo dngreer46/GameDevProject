@@ -1,5 +1,6 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, cursors
 
+var demo = {};
 demo.village = function(){};
 
 demo.village.prototype = {
