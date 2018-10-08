@@ -167,6 +167,7 @@ demo.village.prototype = {
         console.log(inventoryArray);
         currItem = inventoryArray[inventoryArray.indexOf(item)];
         console.log(currItem);
+        console.log(inventory);
         
     
     },
