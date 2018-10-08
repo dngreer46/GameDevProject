@@ -150,7 +150,7 @@ demo.bossState.prototype = {
         bossHealth.text = 'Boss Health: ' + boss_health;
         
         if (boss_health == 70){
-            bossDialouge = game.add.text(boss.x, boss.y + 25, 'You wll never win', {fontSize: '32px', fill: '#ffffff' });
+            bossDialouge = game.add.text(game.world.width - 500, game.world.height - 400, 'You wll never win', {fontSize: '32px', fill: '#ffffff' });
         }
         else if (boss_health == 0){
             boss.kill();
