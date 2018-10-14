@@ -17,12 +17,11 @@ demo.village.prototype = {
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
         game.load.image('gun', 'assets/gun.png');
-        game.load.image('sword', 'assets/Sword.png');
         game.load.image('pickAxe', 'assets/Pickaxe.png');
         game.load.image('health', 'assets/Heart.png');
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
-
+        game.load.spritesheet('johnAttack', 'assets/johnAttack.png', 64, 70);
 
     },
     
@@ -71,6 +70,7 @@ demo.village.prototype = {
         // Player Animations
         player.animations.add('walk', [0, 1], 5, true);
         
+        
         //Camera
         game.camera.follow(player);
         
@@ -90,8 +90,7 @@ demo.village.prototype = {
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
-        gun = items.create(230, game.world.height-190, 'gun');
-        items.create(100, game.world.height-190, 'sword');
+        items.create(230, game.world.height-190, 'gun');
         items.create(150, game.world.height-190, 'pickAxe');
         items.create(1000, game.world.height-190, 'health');
         items.create(1500, game.world.height-250, 'key');
@@ -139,13 +138,17 @@ demo.village.prototype = {
             console.log(currItem);
         }
         
-        if (game.input.activePointer.isDown){
+        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
             if (currItem == undefined){
                 
             }
             
             else if (currItem.key == 'gun'){
                 this.fire();
+            }
+            
+            else if (currItem.key == 'pickAxe'){
+                this.hit();
             }
 
         }
@@ -178,13 +181,18 @@ demo.village.prototype = {
         if(game.time.now > nextFire){
             nextFire = game.time.now + fireRate;
             bullet = bullets.getFirstDead();
-            bullet.reset(player.x, player.y);
+            bullet.reset(player.x, player.y-10);
+            bullet.body.velocity.x = 500
             
-            game.physics.arcade.moveToPointer(bullet, velocity);
-            bullet.rotation = game.physics.arcade.angleToPointer(bullet);
         }
-    }
+    },
     
+    hit: function(){
+        player = game.add.sprite(player.x, player.y, 'johnAttack');
+        player.scale.setTo(0.5, 0.5);
+        player.animations.add('swing', [0, 1, 2], 5, true);
+        player.animations.play('swing');
+    }
 
     // Functions
     
