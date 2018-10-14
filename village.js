@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, currItem;
+var map, ground, walls, platforms, houses, plantsAndSigns, items, inventory, inventoryText, inventoryArray, currItem;
 
 demo.village = function(){};
 
@@ -47,7 +47,6 @@ demo.village.prototype = {
         platforms = map.createLayer('Platforms');
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
-        chests = map.createLayer('Chests');
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
