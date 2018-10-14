@@ -47,7 +47,6 @@ demo.village.prototype = {
         platforms = map.createLayer('Platforms');
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
-        chests = map.createLayer('Chests');
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
