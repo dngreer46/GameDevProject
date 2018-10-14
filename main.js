@@ -3,7 +3,7 @@ game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
-game.state.start('bossState');
+game.state.start('forest');
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -55,6 +55,9 @@ function playerMovement(player){
     var touchGround = game.physics.arcade.collide(player, ground);
     game.physics.arcade.collide(player, walls);
     touchGround += game.physics.arcade.collide(player, platforms);
+
+    
+    player.body.velocity.x = 0;
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.body.velocity.x = 150;            player.animations.play('walk');

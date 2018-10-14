@@ -88,14 +88,17 @@ demo.forest.prototype = {
         enemies.setAll('body.gravity.y', 500);
         
         //set properties for bullets
+        //set properties for bullets
         bullets = game.add.group();
         bullets.enableBody = true;
         bullets.physicsBodyType = Phaser.Physics.ARCADE;
         bullets.createMultiple(50, 'bullet');
         bullets.setAll('checkWorldBounds', true);
         bullets.setAll('outOfBoundsKill', true);
-        bullets.setAll('anchor.y', -2);
-        bullets.setAll('anchor.x', 0);
+        bullets.setAll('anchor.y', -5);
+        bullets.setAll('anchor.x', 0.5);
+        bullets.setAll('scale.x', 0.8);
+        bullets.setAll('scale.y', 0.8);
         
         //add sound
         damageSound = game.add.audio('impact');
@@ -125,12 +128,21 @@ demo.forest.prototype = {
     
     update: function(){
         // Collision
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
         
         // Player Movement
+<<<<<<< HEAD
         player.body.velocity.x = 0;
         playerMovement(player);
+=======
+        playerMovement(player);
+        
+>>>>>>> master
 
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
@@ -157,13 +169,8 @@ demo.forest.prototype = {
         inventory.setAll('scale.x', 2);
         inventory.setAll('scale.y', 2);
         inventoryArray.push(item);
-        //inventory.setAll('cameraOffset.x', 0);
-        //inventory.setAll('cameraOffset.y', game.world.height-400);
-        //inventory.fixedToCamera = true;
-        console.log(inventoryArray);
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-        console.log(currItem);
-        console.log(inventory);
+
 
         
     },

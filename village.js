@@ -117,11 +117,7 @@ demo.village.prototype = {
     },
     
     update: function(){
-        // Collision
-        
-        
-        // Player Movement
-        player.body.velocity.x = 0;
+
         
         playerMovement(player);
         
@@ -140,9 +136,6 @@ demo.village.prototype = {
         inventory.setAll('scale.x', 2);
         inventory.setAll('scale.y', 2);
         inventoryArray.push(item);
-        //inventory.setAll('cameraOffset.x', 0);
-        //inventory.setAll('cameraOffset.y', game.world.height-400);
-        //inventory.fixedToCamera = true;
         console.log(inventoryArray);
         currItem = inventoryArray[inventoryArray.indexOf(item)];
         console.log(currItem);
