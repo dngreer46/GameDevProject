@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, player, playerHealth, bullet, bullets, enemies, boss, damageSound, items, inventory, currItem, inventoryArray, inventoryText
+var map, ground, platforms, trees, player, playerHealth, bullet, bullets, enemies, boss, damageSound, items, inventory, currItem, inventoryArray, inventoryText, mapChange;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -47,6 +47,10 @@ demo.forest.prototype = {
         platforms = map.createLayer('Platforms');
         trees = map.createLayer('Trees');
         
+        // Map change
+        mapChange = game.add.sprite(1910, game.world.height-100, 'blank');
+        game.physics.arcade.enable(mapChange);
+        
         // Map collision
         map.setCollision(44, true, ground);
         map.setCollision(44, true, platforms);
@@ -58,7 +62,7 @@ demo.forest.prototype = {
         });
         
         // Player
-        player = game.add.sprite(256, game.world.height-96, 'john');
+        player = game.add.sprite(32, game.world.height-96, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
@@ -74,9 +78,9 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
-        boss = enemies.create(350, game.world.height-150, 'boss');
-        boss = enemies.create(768, game.world.height-150, 'boss');
-        boss = enemies.create(1216, game.world.height-150, 'boss');
+        boss = enemies.create(350, game.world.height-100, 'boss');
+        boss = enemies.create(768, game.world.height-100, 'boss');
+        boss = enemies.create(1216, game.world.height-100, 'boss');
         boss = enemies.create(1056, 192, 'boss');
         boss = enemies.create(1440, 288, 'boss');
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
@@ -98,9 +102,6 @@ demo.forest.prototype = {
         
         //add sound
         damageSound = game.add.audio('impact');
-        
-        //time event to deal damage to the player
-        //game.time.events.repeat(2000, 100, this.overlapFalse, this);
         
         //create items
         items = game.add.group();
@@ -135,19 +136,22 @@ demo.forest.prototype = {
     
     update: function(){
         // Collision
-
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
         
         // Player Movement
+        player.body.velocity.x = 0;
         playerMovement(player);
-        
-        
+
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
+        
+        // Map change
+        game.physics.arcade.overlap(mapChange, player, this.toLab);
+
     },
 
     
@@ -172,6 +176,10 @@ demo.forest.prototype = {
 
 
         
-    }
+    },
+    
+    toLab: function(){        
+        game.state.start('bossState');    
+    },
     
 }

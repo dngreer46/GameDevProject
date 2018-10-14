@@ -37,7 +37,8 @@ demo.bossState.prototype = {
         
         //add sprites
         player = game.add.sprite(32, game.world.height - 250, 'john');
-        boss = game.add.sprite(500, game.world.height - 240, 'boss');
+        player.scale.setTo(0.5, 0.5);
+        boss = game.add.sprite(500, game.world.height - 250, 'boss');
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
 
 
@@ -121,6 +122,7 @@ demo.bossState.prototype = {
     
     update: function(){
 
+        player.body.velocity.x = 0;
         playerMovement(player);
         
         //boss movement
