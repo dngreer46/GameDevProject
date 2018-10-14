@@ -19,7 +19,7 @@ demo.bossState = function(){};
 demo.bossState.prototype = {
     preload: function(){
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
-        game.load.spritesheet('boss', 'assets/boss.png', 100, 100);
+        game.load.spritesheet('boss', 'assets/Boss.png', 100, 100);
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('ground', 'assets/labtile.png');
         game.load.audio('impact', 'assets/slaphit.mp3');               game.load.image('gun', 'assets/gun.png');
@@ -67,6 +67,7 @@ demo.bossState.prototype = {
         boss.body.collideWorldBounds = true;
         boss.body.immovable = true;
         boss.body.velocity.x = -200;
+        boss.animations.add('blob', [0, 1, 2, 3], 7, true);
 
         //set properties for bullets
         bullets = game.add.group();
@@ -108,6 +109,7 @@ demo.bossState.prototype = {
         playerMovement(player);
         
         //boss movement
+        boss.animations.play('blob');
         if (boss.x <= 100){
             boss.body.velocity.x = 200;
             boss.frame = 0;
