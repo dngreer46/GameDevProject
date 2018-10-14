@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, player, playerHealth, bullet, bullets, damageSound, items, inventory, currItem, inventoryArray, inventoryText
+var map, ground, platforms, trees, player, playerHealth, bullet, bullets, enemies, boss, damageSound, items, inventory, currItem, inventoryArray, inventoryText
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -17,6 +17,7 @@ demo.forest.prototype = {
         
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
+        game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
         
         // Weapons
         game.load.image('bullet', 'assets/bullet.png');
@@ -67,6 +68,19 @@ demo.forest.prototype = {
         //Camera
         game.camera.follow(player);
         
+        // Enemy Group
+        enemies = game.add.group();
+        enemies.enableBody = true;
+        //enemies.body.gravity.y = 500;
+        boss = enemies.create(350, game.world.height-150, 'boss');
+        boss = enemies.create(768, game.world.height-150, 'boss');
+        boss = enemies.create(1216, game.world.height-150, 'boss');
+        boss = enemies.create(1056, 192, 'boss');
+        boss = enemies.create(1440, 288, 'boss');
+        enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
+        enemies.callAll('play', null, 'blob');
+        enemies.setAll('body.gravity.y', 500);
+        //enemies.scale.set(0.4, 0.4);
         
         //set properties for bullets
         bullets = game.add.group();
@@ -75,8 +89,8 @@ demo.forest.prototype = {
         bullets.createMultiple(50, 'bullet');
         bullets.setAll('checkWorldBounds', true);
         bullets.setAll('outOfBoundsKill', true);
-        bullets.setAll('anchor.y', -5);
-        bullets.setAll('anchor.x', 0.5);
+        bullets.setAll('anchor.y', -2);
+        bullets.setAll('anchor.x', 0);
         
         //add sound
         damageSound = game.add.audio('impact');
@@ -109,8 +123,10 @@ demo.forest.prototype = {
     update: function(){
         // Collision
         var touchGround = game.physics.arcade.collide(player, ground);
-        game.physics.arcade.collide(player, walls);
         touchGround += game.physics.arcade.collide(player, platforms);
+        game.physics.arcade.collide(player, walls);
+        game.physics.arcade.collide(enemies, ground);
+        game.physics.arcade.collide(enemies, platforms);
         
         // Player Movement
         player.body.velocity.x = 0;
@@ -142,6 +158,9 @@ demo.forest.prototype = {
 
         }
         
+        // Damage
+        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
+        
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
     },
@@ -153,6 +172,12 @@ demo.forest.prototype = {
             bullet.reset(player.x, player.y);
             bullet.body.velocity.x = 500
         }
+    },
+    
+    hitEnemy: function(boss, bullet){
+        bullet.kill();
+        boss.kill();
+        damageSound.play();
     },
     
     addInventory: function(player, item){
