@@ -142,12 +142,7 @@ demo.forest.prototype = {
         // Player Movement
         player.body.velocity.x = 0;
         playerMovement(player);
-<<<<<<< HEAD
 
-=======
-        
-        
->>>>>>> master
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
