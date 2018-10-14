@@ -97,17 +97,20 @@ demo.village.prototype = {
         //create inventory
         inventory = game.add.group();
         inventoryArray = [];
-        inventoryText = game.add.text(0, 0, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
+        inventoryText = game.add.text(10, game.world.height - 2720, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
         
         currItem = inventoryArray[0];
         
         inventoryText.fixedToCamera = true;
-        inventoryText.cameraOffset.setTo(40, 5);
+        //inventoryText.cameraOffset.setTo(40, 5);
         
         inventoryParent = game.add.graphics(0, 0);
         inventoryParent.beginFill(0xffffff, 0.3);
         inventoryParent.lineStyle(0, 0xffffff, 1);
-        inventoryParent.drawRect(40, game.world.height-450, 350, 22);
+        inventoryParent.drawRect(inventoryText.x, inventoryText.y + 40, 350, 30);
+        inventoryParent.fixedToCamera = true;
+        console.log(inventoryText.x, inventoryText.y);
+        console.log(inventoryParent.x, inventoryParent.y);
       
     },
     
@@ -123,8 +126,9 @@ demo.village.prototype = {
     
     addInventory: function(player, item){
         inventory.add(item);
-        inventory.set(item, 'x', (inventory.getIndex(item) + 1) * 50);
-        inventory.setAll('y', game.world.height-450);
+        inventory.set(item, 'x', (inventory.getIndex(item) + 1) * 30);
+        inventory.setAll('y', game.world.height-2675);
+        inventory.fixedToCamera = true;
         inventory.setAll('scale.x', 2);
         inventory.setAll('scale.y', 2);
         inventoryArray.push(item);
