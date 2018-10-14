@@ -22,7 +22,8 @@ demo.bossState.prototype = {
         game.load.spritesheet('boss', 'assets/boss.png', 100, 100);
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('ground', 'assets/labtile.png');
-        game.load.audio('impact', 'assets/slaphit.mp3');
+        game.load.audio('impact', 'assets/slaphit.mp3');               game.load.image('gun', 'assets/gun.png');
+
     },
     
 
@@ -58,7 +59,7 @@ demo.bossState.prototype = {
         //set properties for player
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
-        player.animations.add('walk', [0, 1], true);
+        player.animations.add('walk', [0, 1], 10, true);
 
         //set properties for boss
         boss.body.gravity.y = 150;
@@ -82,7 +83,24 @@ demo.bossState.prototype = {
         
         //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);
+        
+        //create items
+        items = game.add.group();
+        items.enableBody = true;
+        items.physicsBodyType = Phaser.Physics.ARCADE;
+        items.create(230, game.world.height-190, 'gun');
+        items.setAll('scale.x', 2)
+        items.setAll('scale.y', 2)
 
+        //create inventory
+        inventory = game.add.group();
+        inventoryArray = [];
+        inventoryText = game.add.text(50, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
+        
+        currItem = inventoryArray[0];
+        
+        inventoryText.fixedToCamera = true;
+        inventoryText.cameraOffset.setTo(40, 5);
     },
     
     update: function(){
@@ -110,8 +128,16 @@ demo.bossState.prototype = {
         if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
             player.body.velocity.y = -325;
             }
-        if (game.input.activePointer.isDown){
-            this.fire();
+        
+        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+            if (currItem == undefined){
+                
+            }
+            
+            else if (currItem.key == 'gun'){
+                this.fire();
+            }
+
         }
              
         //boss movement
@@ -129,6 +155,9 @@ demo.bossState.prototype = {
         //damage boss
         game.physics.arcade.overlap(boss, bullet, this.hitEnemy, null, this);
         
+        game.physics.arcade.overlap(items, player, this.addInventory);
+
+        
     },
     
     fire: function(){
@@ -136,9 +165,7 @@ demo.bossState.prototype = {
             nextFire = game.time.now + fireRate;
             bullet = bullets.getFirstDead();
             bullet.reset(player.x, player.y);
-            
-            game.physics.arcade.moveToPointer(bullet, velocity);
-            bullet.rotation = game.physics.arcade.angleToPointer(bullet);
+            bullet.body.velocity.x = 500
         }
     },
     
@@ -180,6 +207,23 @@ demo.bossState.prototype = {
     
     changeState: function(){
         game.state.start('youDied');
+    },
+    
+    addInventory: function(player, item){
+        inventory.add(item);
+        inventory.set(item, 'x', (inventory.getIndex(item) + 1) * 50);
+        inventory.setAll('y', game.world.height-450);
+        inventory.setAll('scale.x', 2);
+        inventory.setAll('scale.y', 2);
+        inventoryArray.push(item);
+        //inventory.setAll('cameraOffset.x', 0);
+        //inventory.setAll('cameraOffset.y', game.world.height-400);
+        //inventory.fixedToCamera = true;
+        console.log(inventoryArray);
+        currItem = inventoryArray[inventoryArray.indexOf(item)];
+        console.log(currItem);
+        console.log(inventory);
+        
     }
     
 };
