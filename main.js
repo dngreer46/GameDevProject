@@ -3,7 +3,7 @@ game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
-game.state.start('bossState');
+game.state.start('village');
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html

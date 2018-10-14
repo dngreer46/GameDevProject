@@ -23,7 +23,7 @@ demo.bossState.prototype = {
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('ground', 'assets/labtile.png');
         game.load.audio('impact', 'assets/slaphit.mp3');               game.load.image('gun', 'assets/gun.png');
-
+        game.load.image('health', 'assets/Heart.png');
     },
     
 
@@ -43,8 +43,15 @@ demo.bossState.prototype = {
 
         //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', {fontSize: '32px', fill: '#ffffff' });
-        playerHealth = game.add.text(10, game.world.height-50, 'Player Health: 100', {fontSize: '32px', fill: '#ffffff'});
-        health = 100;
+        //playerHealth = game.add.text(10, game.world.height-50, 'Player Health: 100', {fontSize: '32px', fill: '#ffffff'});
+        //health = 100;
+        
+        playerHealth = game.add.group();
+        for (var i = 0; i < 3; i++){
+            playerHealth.create(i * 50, game.world.height - 50, 'health');
+        }
+        playerHealth.setAll('scale.x', 3);
+        playerHealth.setAll('scale.y', 3);
         boss_health = 100;
         
         //enable physics for sprites
@@ -159,7 +166,7 @@ demo.bossState.prototype = {
             overlap = true;
             health -= 10;
             damageSound.play();
-            playerHealth.text = 'Player Health: ' + health;        
+            //playerHealth.text = 'Player Health: ' + health;        
         }
         
         if (health == 0){
