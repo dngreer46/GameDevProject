@@ -65,8 +65,7 @@ demo.village.prototype = {
         });
         
         // Add Sprites
-        player = game.add.sprite(1664, 1152, 'john');
-        //player = game.add.sprite(256, game.world.height-197, 'john');
+        player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;

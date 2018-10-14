@@ -62,7 +62,7 @@ demo.forest.prototype = {
         });
         
         // Player
-        player = game.add.sprite(1800, game.world.height-96, 'john');
+        player = game.add.sprite(32, game.world.height-96, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
@@ -128,21 +128,12 @@ demo.forest.prototype = {
     
     update: function(){
         // Collision
-<<<<<<< HEAD
-=======
-
->>>>>>> master
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
         
         // Player Movement
-<<<<<<< HEAD
         player.body.velocity.x = 0;
         playerMovement(player);
-=======
-        playerMovement(player);
-        
->>>>>>> master
 
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
