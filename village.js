@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, items, inventory, inventoryText, inventoryArray, currItem;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem;
 
 demo.village = function(){};
 
@@ -97,60 +97,28 @@ demo.village.prototype = {
         //create inventory
         inventory = game.add.group();
         inventoryArray = [];
-        inventoryText = game.add.text(50, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
+        inventoryText = game.add.text(0, 0, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
         
         currItem = inventoryArray[0];
         
         inventoryText.fixedToCamera = true;
         inventoryText.cameraOffset.setTo(40, 5);
         
+        inventoryParent = game.add.graphics(0, 0);
+        inventoryParent.beginFill(0xffffff, 0.3);
+        inventoryParent.lineStyle(0, 0xffffff, 1);
+        inventoryParent.drawRect(40, game.world.height-450, 350, 22);
       
     },
     
     update: function(){
         // Collision
-        var touchGround = game.physics.arcade.collide(player, ground);
-        game.physics.arcade.collide(player, walls);
-        touchGround += game.physics.arcade.collide(player, platforms);
+        
         
         // Player Movement
         player.body.velocity.x = 0;
         
-        if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-            player.body.velocity.x = 150;
-            player.animations.play('walk');
-        }
-        else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
-            player.body.velocity.x = -150;
-            player.animations.play('walk');
-        }
-        else{
-            player.animations.stop();
-            player.frame = 0;
-        }
-        if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
-            player.body.velocity.y = -325;
-        }
-        
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-            currItem = switchItem(inventoryArray);
-            console.log(currItem);
-        }
-        
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            if (currItem == undefined){
-                
-            }
-            
-            else if (currItem.key == 'gun'){
-                this.fire();
-            }
-            
-            else if (currItem.key == 'pickAxe'){
-                this.hit();
-            }
-
-        }
+        playerMovement(player);
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -176,30 +144,7 @@ demo.village.prototype = {
     
     },
     
-    fire: function(){
-        if(game.time.now > nextFire){
-            nextFire = game.time.now + fireRate;
-            bullet = bullets.getFirstDead();
-            bullet.reset(player.x, player.y-10);
-            bullet.body.velocity.x = 500
-            
-        }
-    },
-    
-    hit: function(){
-        player = game.add.sprite(player.x, player.y, 'johnAttack');
-        player.scale.setTo(0.5, 0.5);
-        player.animations.add('swing', [0, 1, 2], 5, true);
-        player.animations.play('swing');
-    }
 
-    // Functions
     
+
 };
-
-
-function switchItem(inventoryArray){
-     //for (i in inventoryArray){
-         
-     //}
-}

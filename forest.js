@@ -2,6 +2,7 @@ var map, ground, platforms, trees, player, playerHealth, bullet, bullets, enemie
 var fireRate = 1000;
 var nextFire = 0;
 
+
 demo.forest = function(){};
 
 demo.forest.prototype = {
@@ -17,12 +18,13 @@ demo.forest.prototype = {
         
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
+
         game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
         
         // Weapons
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('gun', 'assets/Gun.png');
-        
+
     }, 
     
     
@@ -68,6 +70,7 @@ demo.forest.prototype = {
         //Camera
         game.camera.follow(player);
         
+
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
@@ -113,6 +116,7 @@ demo.forest.prototype = {
         
         inventoryText.fixedToCamera = true;
         inventoryText.cameraOffset.setTo(40, 5);
+
     }, 
     
     
@@ -145,16 +149,8 @@ demo.forest.prototype = {
             player.body.velocity.y = -325;
         }
         
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            if (currItem == undefined){
-                
-            }
-            
-            else if (currItem.key == 'gun'){
-                this.fire();
-            }
 
-        }
+        
         
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
@@ -162,15 +158,7 @@ demo.forest.prototype = {
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
     },
-    
-    fire: function(){
-        if(game.time.now > nextFire){
-            nextFire = game.time.now + fireRate;
-            bullet = bullets.getFirstDead();
-            bullet.reset(player.x, player.y);
-            bullet.body.velocity.x = 500
-        }
-    },
+
     
     hitEnemy: function(boss, bullet){
         bullet.kill();
@@ -192,6 +180,8 @@ demo.forest.prototype = {
         currItem = inventoryArray[inventoryArray.indexOf(item)];
         console.log(currItem);
         console.log(inventory);
+
         
     }
+    
 }
