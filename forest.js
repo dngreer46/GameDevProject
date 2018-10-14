@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, player
+var map, ground, platforms, trees, player;
 
 demo.forest = function(){};
 
@@ -15,6 +15,7 @@ demo.forest.prototype = {
         
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 35, 70);
+
     }, 
     create: function(){
         // Game Physics
@@ -57,6 +58,9 @@ demo.forest.prototype = {
         
         //Camera
         game.camera.follow(player);
+        
+
+
     }, 
     update: function(){
         // Collision
@@ -82,5 +86,9 @@ demo.forest.prototype = {
         if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
             player.body.velocity.y = -325;
         }
+        
+        
+        
     }
+    
 }

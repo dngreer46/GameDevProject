@@ -3,7 +3,7 @@ game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
-game.state.start('forest');
+game.state.start('bossState');
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -49,4 +49,60 @@ function setTileCollision(mapLayer, idxOrArray, dirs) {
         }
     }
 
+}
+
+function playerMovement(player){
+    var touchGround = game.physics.arcade.collide(player, ground);
+    game.physics.arcade.collide(player, walls);
+    touchGround += game.physics.arcade.collide(player, platforms);
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
+        player.body.velocity.x = 150;            player.animations.play('walk');
+    }
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                 player.body.velocity.x = -150;
+        player.animations.play('walk');
+    }
+    else{
+        player.animations.stop();
+        player.frame = 0;
+    }
+    if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
+        player.body.velocity.y = -325;
+    }
+        
+    if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+        currItem = switchItem(inventoryArray);
+        console.log(currItem);
+    }
+        
+    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+        if (currItem == undefined){
+                
+        }
+            
+        else if (currItem.key == 'gun'){
+            this.fire();
+        }
+            
+        else if (currItem.key == 'pickAxe'){
+            this.hit();
+        }
+
+    }
+
+}
+
+function fire(){
+    if(game.time.now > nextFire){
+        nextFire = game.time.now + fireRate;         
+        bullet = bullets.getFirstDead();
+        bullet.reset(player.x, player.y-10);
+        bullet.body.velocity.x = 500
+    }
+}
+function hit(){
+    player = game.add.sprite(player.x, player.y, 'johnAttack');
+    player.scale.setTo(0.5, 0.5);
+    player.animations.add('swing', [0, 1, 2], 5, true);
+    player.animations.play('swing');
 }

@@ -105,41 +105,8 @@ demo.bossState.prototype = {
     
     update: function(){
 
-        // Collision
-        game.physics.arcade.collide(boss, ground);
-        var touchGround = game.physics.arcade.collide(player, ground)
+        playerMovement(player);
         
-        
-        //player movement and actions
-        player.body.velocity.x = 0;
-        
-        if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-            player.body.velocity.x = 150;
-            player.animations.play('walk');
-        }
-        else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
-            player.body.velocity.x = -150;
-            player.animations.play('walk');
-        }
-        else{
-            player.animations.stop();
-            player.frame = 0;
-        }
-        if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
-            player.body.velocity.y = -325;
-            }
-        
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            if (currItem == undefined){
-                
-            }
-            
-            else if (currItem.key == 'gun'){
-                this.fire();
-            }
-
-        }
-             
         //boss movement
         if (boss.x <= 100){
             boss.body.velocity.x = 200;
@@ -160,14 +127,6 @@ demo.bossState.prototype = {
         
     },
     
-    fire: function(){
-        if(game.time.now > nextFire){
-            nextFire = game.time.now + fireRate;
-            bullet = bullets.getFirstDead();
-            bullet.reset(player.x, player.y);
-            bullet.body.velocity.x = 500
-        }
-    },
     
      hitEnemy: function(boss, bullet){
         bullet.kill();
