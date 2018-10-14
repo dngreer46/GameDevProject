@@ -71,7 +71,6 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
-        //enemies.body.gravity.y = 500;
         boss = enemies.create(350, game.world.height-150, 'boss');
         boss = enemies.create(768, game.world.height-150, 'boss');
         boss = enemies.create(1216, game.world.height-150, 'boss');
@@ -80,7 +79,6 @@ demo.forest.prototype = {
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
-        //enemies.scale.set(0.4, 0.4);
         
         //set properties for bullets
         bullets = game.add.group();
