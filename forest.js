@@ -124,34 +124,13 @@ demo.forest.prototype = {
     
     update: function(){
         // Collision
-        var touchGround = game.physics.arcade.collide(player, ground);
-        touchGround += game.physics.arcade.collide(player, platforms);
-        game.physics.arcade.collide(player, walls);
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
         
         // Player Movement
         player.body.velocity.x = 0;
-        
-        if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-            player.body.velocity.x = 150;
-            player.animations.play('walk');
-        }
-        else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
-            player.body.velocity.x = -150;
-            player.animations.play('walk');
-        }
-        else{
-            player.animations.stop();
-            player.frame = 0;
-        }
-        if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
-            player.body.velocity.y = -325;
-        }
-        
+        playerMovement(player);
 
-        
-        
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
