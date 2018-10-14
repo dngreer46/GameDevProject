@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem, mapChange;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem, mapChange, tutorial, tutorialText;
 
 demo.village = function(){};
 
@@ -52,6 +52,11 @@ demo.village.prototype = {
         // Map change
         mapChange = game.add.sprite(1787, 1152, 'blank');
         game.physics.arcade.enable(mapChange);
+        
+        // Tutorial sign
+        tutorial = game.add.sprite(192, game.world.height-192, 'blank');
+        game.physics.arcade.enable(tutorial);
+        tutorialText = game.add.text(100, game.world.height-100, 'Move Left/Right: A/D\nJump: W', {fontSize: '18px', fill: '#ffffff' });  
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
@@ -126,6 +131,8 @@ demo.village.prototype = {
         game.physics.arcade.overlap(items, player, this.addInventory);
         
         game.physics.arcade.overlap(mapChange, player, this.toForest);
+        
+        game.physics.arcade.overlap(tutorial, player, this.showTutorial);
 
         
 
@@ -151,6 +158,13 @@ demo.village.prototype = {
     toForest: function(){        
         game.state.start('forest');    
     },
+    
+    showTutorial: function(){        
+        tutorialText.text += '\nShoot: SPACE'
+        //tutorialText.fixedToCamera = true;
+        tutorial.kill();
+    },
+
     
 
     
