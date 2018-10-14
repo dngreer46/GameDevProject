@@ -106,6 +106,7 @@ demo.bossState.prototype = {
     
     update: function(){
 
+        player.body.velocity.x = 0;
         playerMovement(player);
         
         //boss movement

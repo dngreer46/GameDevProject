@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem, mapChange;
 
 demo.village = function(){};
 
@@ -22,6 +22,7 @@ demo.village.prototype = {
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
         game.load.spritesheet('johnAttack', 'assets/johnAttack.png', 64, 70);
+        game.load.image('blank', 'assets/blank.png');
 
     },
     
@@ -48,6 +49,10 @@ demo.village.prototype = {
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
         
+        // Map change
+        mapChange = game.add.sprite(1787, 1152, 'blank');
+        game.physics.arcade.enable(mapChange);
+        
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
         map.setCollision([44, 1610612780, 2684354604], true, walls);
@@ -60,7 +65,8 @@ demo.village.prototype = {
         });
         
         // Add Sprites
-        player = game.add.sprite(256, game.world.height-197, 'john');
+        player = game.add.sprite(1664, 1152, 'john');
+        //player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
@@ -68,7 +74,6 @@ demo.village.prototype = {
         
         // Player Animations
         player.animations.add('walk', [0, 1], 5, true);
-        
         
         //Camera
         game.camera.follow(player);
@@ -122,6 +127,9 @@ demo.village.prototype = {
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
+        game.physics.arcade.overlap(mapChange, player, this.toForest);
+
+        
 
     },
     
@@ -142,6 +150,10 @@ demo.village.prototype = {
         
         
     
+    },
+    
+    toForest: function(){        
+        game.state.start('forest');    
     },
     
 
