@@ -24,7 +24,6 @@ demo.bossState.prototype = {
         game.load.image('ground', 'assets/labtile.png');
         game.load.audio('impact', 'assets/slaphit.mp3');               game.load.image('gun', 'assets/gun.png');
         game.load.image('health', 'assets/Heart.png');
-        game.load.image('health', 'assets/Heart.png');
 
     },
     
@@ -102,7 +101,7 @@ demo.bossState.prototype = {
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
-        items.create(630, game.world.height-190, 'gun');
+        items.create(110, game.world.height-190, 'gun');
         items.create(130, game.world.height-190, 'health');
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
@@ -201,9 +200,6 @@ demo.bossState.prototype = {
         inventory.setAll('scale.x', 2);
         inventory.setAll('scale.y', 2);
         inventoryArray.push(item);
-        //inventory.setAll('cameraOffset.x', 0);
-        //inventory.setAll('cameraOffset.y', game.world.height-400);
-        //inventory.fixedToCamera = true;
         currItem = inventoryArray[inventoryArray.indexOf(item)];
 
         

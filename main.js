@@ -3,7 +3,7 @@ game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
-game.state.start('village');
+game.state.start('bossState');
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -92,7 +92,15 @@ function playerMovement(player){
         }
         
         else if (currItem.key == 'health'){
-            this.addHealth();
+            if (healthArray.length < 3){
+                this.addHealth();
+                console.log(currItem.index);
+                inventoryArray.splice(inventoryArray.indexOf(currItem, 1));
+                currItem = inventoryArray[0];
+                console.log(currItem);
+            }
+
+
         }
     }
 
@@ -114,7 +122,10 @@ function hit(){
 }
 
 function addHealth(){
-    heart = playerHealth.getFirstDead();
-    //heart.reset(playerHealth.x, playerHealth.y);
-    console.log(heart);
+    var addHeart = playerHealth.getFirstAlive();
+    playerHealth.create(addHeart.x - 50, addHeart.y, 'health');
+    healthArray.push(addHeart);
+    playerHealth.setAll('scale.x', 3);
+    playerHealth.setAll('scale.y', 3);
+
 }
