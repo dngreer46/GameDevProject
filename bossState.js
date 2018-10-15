@@ -2,7 +2,7 @@ var player;
 var boss;
 var ground;
 var playerHealth;
-var health;
+var healthArray;
 var bullets;
 var bullet;
 var velocity = 700;
@@ -24,6 +24,8 @@ demo.bossState.prototype = {
         game.load.image('ground', 'assets/labtile.png');
         game.load.audio('impact', 'assets/slaphit.mp3');               game.load.image('gun', 'assets/gun.png');
         game.load.image('health', 'assets/Heart.png');
+        game.load.image('health', 'assets/Heart.png');
+
     },
     
 
@@ -44,13 +46,16 @@ demo.bossState.prototype = {
 
         //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', {fontSize: '32px', fill: '#ffffff' });
-        //playerHealth = game.add.text(10, game.world.height-50, 'Player Health: 100', {fontSize: '32px', fill: '#ffffff'});
-        //health = 100;
+
         
         playerHealth = game.add.group();
+        healthArray = [];
         for (var i = 0; i < 3; i++){
             playerHealth.create(i * 50, game.world.height - 50, 'health');
+            healthArray.push(i);
+
         }
+        
         playerHealth.setAll('scale.x', 3);
         playerHealth.setAll('scale.y', 3);
         boss_health = 100;
@@ -97,7 +102,8 @@ demo.bossState.prototype = {
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
-        items.create(230, game.world.height-190, 'gun');
+        items.create(630, game.world.height-190, 'gun');
+        items.create(130, game.world.height-190, 'health');
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
 
@@ -106,23 +112,23 @@ demo.bossState.prototype = {
         inventoryArray = [];
         inventoryText = game.add.text(10, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
         
+        //set current item in the inventory
         currItem = inventoryArray[0];
         
         inventoryText.fixedToCamera = true;
         //inventoryText.cameraOffset.setTo(40, 5);
         
+        //white box to represent inventory
         inventoryParent = game.add.graphics(0, 0);
         inventoryParent.beginFill(0xffffff, 0.3);
         inventoryParent.lineStyle(0, 0xffffff, 1);
         inventoryParent.drawRect(inventoryText.x, inventoryText.y + 40, 350, 30);
         inventoryParent.fixedToCamera = true;
-        console.log(inventoryText.x, inventoryText.y);
-        console.log(inventoryParent.x, inventoryParent.y);
+        
     },
     
     update: function(){
 
-        player.body.velocity.x = 0;
         playerMovement(player);
         
         //boss movement
@@ -155,7 +161,7 @@ demo.bossState.prototype = {
         bossHealth.text = 'Boss Health: ' + boss_health;
         
         if (boss_health == 70){
-            bossDialouge = game.add.text(game.world.width - 500, game.world.height - 400, 'You wll never win', {fontSize: '32px', fill: '#ffffff' });
+            bossDialouge = game.add.text(game.world.width - 500, game.world.height - 400, 'You will never win', {fontSize: '32px', fill: '#ffffff' });
         }
         else if (boss_health == 0){
             boss.kill();
@@ -166,12 +172,13 @@ demo.bossState.prototype = {
     playerHit: function(player) {
         if (!overlap){
             overlap = true;
-            health -= 10;
+            healthArray.pop();
+            var heart = playerHealth.getFirstAlive();
+            heart.kill();
             damageSound.play();
-            //playerHealth.text = 'Player Health: ' + health;        
         }
         
-        if (health == 0){
+        if (healthArray.length == 0){
             player.kill();
             this.changeState();
         }
@@ -197,10 +204,8 @@ demo.bossState.prototype = {
         //inventory.setAll('cameraOffset.x', 0);
         //inventory.setAll('cameraOffset.y', game.world.height-400);
         //inventory.fixedToCamera = true;
-        console.log(inventoryArray);
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-        console.log(currItem);
-        console.log(inventory);
+
         
     }
     

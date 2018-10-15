@@ -90,7 +90,10 @@ function playerMovement(player){
         else if (currItem.key == 'pickAxe'){
             this.hit();
         }
-
+        
+        else if (currItem.key == 'health'){
+            this.addHealth();
+        }
     }
 
 }
@@ -108,4 +111,10 @@ function hit(){
     player.scale.setTo(0.5, 0.5);
     player.animations.add('swing', [0, 1, 2], 5, true);
     player.animations.play('swing');
+}
+
+function addHealth(){
+    heart = playerHealth.getFirstDead();
+    //heart.reset(playerHealth.x, playerHealth.y);
+    console.log(heart);
 }
