@@ -120,6 +120,8 @@ demo.village.prototype = {
         inventoryParent.fixedToCamera = true;
         console.log(inventoryText.x, inventoryText.y);
         console.log(inventoryParent.x, inventoryParent.y);
+        
+
       
     },
     
