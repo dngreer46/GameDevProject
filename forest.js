@@ -24,6 +24,9 @@ demo.forest.prototype = {
         // Weapons
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('gun', 'assets/Gun.png');
+        game.load.image('health', 'assets/Heart.png');
+        game.load.audio('impact', 'assets/slaphit.mp3');
+
 
     }, 
     
@@ -128,7 +131,20 @@ demo.forest.prototype = {
         inventoryParent.fixedToCamera = true;
         console.log(inventoryText.x, inventoryText.y);
         console.log(inventoryParent.x, inventoryParent.y);
+        
+        playerHealth = game.add.group();
+        healthArray = [];
+        for (var i = 0; i < 3; i++){
+            playerHealth.create(i * 50, game.world.height - 50, 'health');
+            healthArray.push(i);
 
+        }
+        playerHealth.fixedToCamera = true;
+        playerHealth.setAll('scale.x', 3);
+        playerHealth.setAll('scale.y', 3);
+        
+        //time event to deal damage to the player
+        game.time.events.repeat(2000, 100, this.overlapFalse, this);        
     }, 
     
     
@@ -140,11 +156,11 @@ demo.forest.prototype = {
         game.physics.arcade.collide(enemies, platforms);
         
         // Player Movement
-        player.body.velocity.x = 0;
         playerMovement(player);
 
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
         
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
@@ -182,4 +198,28 @@ demo.forest.prototype = {
         game.state.start('bossState');    
     },
     
-}
+    playerHit: function(player) {
+        if (!overlap){
+            overlap = true;
+            healthArray.pop();
+            var heart = playerHealth.getFirstAlive();
+            heart.kill();
+            damageSound.play();
+        }
+        
+        if (healthArray.length == 0){
+            player.kill();
+            this.changeState();
+        }
+        
+    },
+    
+    overlapFalse: function() {
+        overlap = false;
+        
+    },
+    
+    changeState: function(){
+        game.state.start('youDied');
+    }
+};
