@@ -80,7 +80,7 @@ function playerMovement(player){
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
         if (currItem == undefined){
-                
+              console.log("No object equipped")  
         }
             
         else if (currItem.key == 'gun'){
@@ -104,8 +104,26 @@ function fire(){
     }
 }
 function hit(){
-    player = game.add.sprite(player.x, player.y, 'johnAttack');
-    player.scale.setTo(0.5, 0.5);
-    player.animations.add('swing', [0, 1, 2], 5, true);
-    player.animations.play('swing');
+    player.kill();
+    playerHitting = game.add.sprite(player.x, player.y, 'johnAttack');
+    playerHitting.scale.setTo(0.5, 0.5);
+    game.physics.arcade.enable(playerHitting);
+    playerHitting.body.gravity.y = 500;
+    playerHitting.body.collideWorldBounds = true;
+   playerHitting.body.allowGravity = false;
+    playerHitting.body.velocity.x = 0;
+    playerHitting.animations.add('swing', [0,1,2], 40, false);
+    playerHitting.animations.play('swing');
+    console.log("swung");
+    player.reset(playerHitting.x, playerHitting.y);
+   // player = player.getFristDead();
+    //player.reset(playerHitting.x, playerHitting.y);
+    //playerHitting.killPlayer();
+    
 }
+
+
+
+
+
+

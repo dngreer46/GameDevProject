@@ -21,7 +21,7 @@ demo.village.prototype = {
         game.load.image('health', 'assets/Heart.png');
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
-        game.load.spritesheet('johnAttack', 'assets/johnAttack.png', 64, 70);
+        game.load.spritesheet('johnAttack', 'assets/johnAttack.png', 70, 70);
         game.load.image('blank', 'assets/blank.png');
 
     },
@@ -78,7 +78,7 @@ demo.village.prototype = {
         
         // Player Animations
         player.animations.add('walk', [0, 1], 5, true);
-        
+        player.animations.add('hitting', [2,3,4], 30, true);
         //Camera
         game.camera.follow(player);
         
