@@ -1,4 +1,5 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem, mapChange, tutorial, tutorialText;
+var dialogueName, dialogueText, box;
 
 demo.village = function(){};
 
@@ -131,6 +132,15 @@ demo.village.prototype = {
         console.log(inventoryText.x, inventoryText.y);
         console.log(inventoryParent.x, inventoryParent.y);
         
+        box = game.add.graphics(0, 0);
+        box.beginFill(0x77bdea);
+        box.alpha = 0;
+        box.drawRect(200, 20, 400, 200);
+        box.fixedToCamera = true;
+        dialogueName = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+        dialogueName.fixedToCamera = true;
+        dialogueText = game.add.text(210, 75, '', {fontSize: '15px', fill: '#000'});
+        dialogueText.fixedToCamera = true;
 
       
     },
@@ -153,6 +163,20 @@ demo.village.prototype = {
         if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.E)) {
             this.toHouse();
         }
+        
+        var atSarah = game.physics.arcade.overlap(sarah, player)
+        
+        if (atSarah) {
+            box.alpha = 0.8;
+            dialogueName.text = 'Sarah:';
+            dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked!\nWill you please find the key for me?';
+        }
+        else {
+            box.alpha = 0;
+            dialogueName.text = '';
+            dialogueText.text = '';
+        }
+        
 
         
 
@@ -188,7 +212,6 @@ demo.village.prototype = {
         //tutorialText.fixedToCamera = true;
         tutorial.kill();
     },
-
     
 
     
