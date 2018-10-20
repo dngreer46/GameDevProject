@@ -15,7 +15,8 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 35, 70);
+        game.load.spritesheet('john', 'assets/John.png', 65, 70);
+        game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.image('gun', 'assets/gun.png');
         game.load.image('pickAxe', 'assets/Pickaxe.png');
         game.load.image('health', 'assets/Heart.png');
@@ -53,6 +54,9 @@ demo.village.prototype = {
         mapChange = game.add.sprite(1787, 1152, 'blank');
         game.physics.arcade.enable(mapChange);
         
+        mapChangeHouse = game.add.sprite(545, 2529, 'blank');
+        game.physics.arcade.enable(mapChangeHouse);
+        
         // Tutorial sign
         tutorial = game.add.sprite(192, game.world.height-192, 'blank');
         game.physics.arcade.enable(tutorial);
@@ -69,7 +73,13 @@ demo.village.prototype = {
             right: false
         });
         
-        // Add Sprites
+        // Add Sarah sprite
+        sarah = game.add.sprite(850, game.world.height-197, 'sarah');
+        sarah.scale.setTo(0.5, 0.5);
+        game.physics.arcade.enable(sarah);
+        sarah.body.gravity.y = 500;
+        
+        // Add John sprite
         player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
@@ -77,7 +87,7 @@ demo.village.prototype = {
         player.body.collideWorldBounds = true;
         
         // Player Animations
-        player.animations.add('walk', [0, 1], 5, true);
+        player.animations.add('walk', [0, 1], 10, true);
         
         //Camera
         game.camera.follow(player);
@@ -126,6 +136,8 @@ demo.village.prototype = {
     },
     
     update: function(){
+        
+        game.physics.arcade.collide(sarah, ground);
 
         
         playerMovement(player);
@@ -135,6 +147,12 @@ demo.village.prototype = {
         game.physics.arcade.overlap(mapChange, player, this.toForest);
         
         game.physics.arcade.overlap(tutorial, player, this.showTutorial);
+        
+        var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
+        
+        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.E)) {
+            this.toHouse();
+        }
 
         
 
@@ -159,6 +177,10 @@ demo.village.prototype = {
     
     toForest: function(){        
         game.state.start('forest');    
+    },
+    
+    toHouse: function(){
+        game.state.start('house');    
     },
     
     showTutorial: function(){        
