@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, player, playerHealth, bullet, bullets, enemies, boss, damageSound, items, inventory, currItem, inventoryArray, inventoryText, mapChange;
+var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -115,7 +115,7 @@ demo.forest.prototype = {
         items.setAll('scale.y', 2)
 
         //create inventory
-        inventory = game.add.group();
+        /*inventory = game.add.group();
         inventoryArray = [];
         inventoryText = game.add.text(10, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
         
@@ -131,6 +131,7 @@ demo.forest.prototype = {
         inventoryParent.fixedToCamera = true;
         console.log(inventoryText.x, inventoryText.y);
         console.log(inventoryParent.x, inventoryParent.y);
+        */
         
         playerHealth = game.add.group();
         healthArray = [];
@@ -178,20 +179,8 @@ demo.forest.prototype = {
     },
     
     addInventory: function(player, item){
-        inventory.add(item);
-        inventory.set(item, 'x', (inventory.getIndex(item) + 1) * 30);
-        inventory.setAll('y', inventoryText.y + 40);
-        inventory.fixedToCamera = true;
-        inventory.setAll('scale.x', 2);
-        inventory.setAll('scale.y', 2);
-        inventoryArray.push(item);
-        console.log(inventoryArray);
+        inventoryArray.push(item);               item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-        console.log(currItem);
-        console.log(inventory);
-
-
-        
     },
     
     toLab: function(){        

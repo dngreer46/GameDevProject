@@ -3,7 +3,11 @@ game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
+game.state.add('inventoryState', demo.inventoryState);
+
 game.state.start('village');
+
+var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], bullet, bullets;
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -74,8 +78,10 @@ function playerMovement(player){
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-        currItem = switchItem(inventoryArray);
-        console.log(currItem);
+        //currItem = switchItem(inventoryArray);
+        //console.log(currItem);
+        game.state.start('inventoryState', inventoryArray);    
+
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
@@ -129,3 +135,10 @@ function addHealth(){
     playerHealth.setAll('scale.y', 3);
 
 }
+
+/*function addInventory(item){
+    inventoryArray.push(item);
+    items.remove(item);
+    currItem = inventoryArray[inventoryArray.indexOf(item)];
+    
+}*/
