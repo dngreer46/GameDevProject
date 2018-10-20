@@ -1,4 +1,5 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventory, inventoryText, inventoryArray, inventoryParent, currItem, mapChange, tutorial, tutorialText;
+var dialogueName, dialogueText, box;
 
 demo.village = function(){};
 
@@ -15,7 +16,8 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 35, 70);
+        game.load.spritesheet('john', 'assets/John.png', 65, 70);
+        game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.image('gun', 'assets/gun.png');
         game.load.image('pickAxe', 'assets/Pickaxe.png');
         game.load.image('health', 'assets/Heart.png');
@@ -53,6 +55,9 @@ demo.village.prototype = {
         mapChange = game.add.sprite(1787, 1152, 'blank');
         game.physics.arcade.enable(mapChange);
         
+        mapChangeHouse = game.add.sprite(545, 2529, 'blank');
+        game.physics.arcade.enable(mapChangeHouse);
+        
         // Tutorial sign
         tutorial = game.add.sprite(192, game.world.height-192, 'blank');
         game.physics.arcade.enable(tutorial);
@@ -69,7 +74,13 @@ demo.village.prototype = {
             right: false
         });
         
-        // Add Sprites
+        // Add Sarah sprite
+        sarah = game.add.sprite(850, game.world.height-197, 'sarah');
+        sarah.scale.setTo(0.5, 0.5);
+        game.physics.arcade.enable(sarah);
+        sarah.body.gravity.y = 500;
+        
+        // Add John sprite
         player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
@@ -77,7 +88,7 @@ demo.village.prototype = {
         player.body.collideWorldBounds = true;
         
         // Player Animations
-        player.animations.add('walk', [0, 1], 5, true);
+        player.animations.add('walk', [0, 1], 10, true);
         
         //Camera
         game.camera.follow(player);
@@ -121,11 +132,22 @@ demo.village.prototype = {
         console.log(inventoryText.x, inventoryText.y);
         console.log(inventoryParent.x, inventoryParent.y);
         
+        box = game.add.graphics(0, 0);
+        box.beginFill(0x77bdea);
+        box.alpha = 0;
+        box.drawRect(200, 20, 400, 200);
+        box.fixedToCamera = true;
+        dialogueName = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+        dialogueName.fixedToCamera = true;
+        dialogueText = game.add.text(210, 75, '', {fontSize: '15px', fill: '#000'});
+        dialogueText.fixedToCamera = true;
 
       
     },
     
     update: function(){
+        
+        game.physics.arcade.collide(sarah, ground);
 
         
         playerMovement(player);
@@ -135,6 +157,26 @@ demo.village.prototype = {
         game.physics.arcade.overlap(mapChange, player, this.toForest);
         
         game.physics.arcade.overlap(tutorial, player, this.showTutorial);
+        
+        var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
+        
+        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.E)) {
+            this.toHouse();
+        }
+        
+        var atSarah = game.physics.arcade.overlap(sarah, player)
+        
+        if (atSarah) {
+            box.alpha = 0.8;
+            dialogueName.text = 'Sarah:';
+            dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked!\nWill you please find the key for me?';
+        }
+        else {
+            box.alpha = 0;
+            dialogueName.text = '';
+            dialogueText.text = '';
+        }
+        
 
         
 
@@ -161,12 +203,15 @@ demo.village.prototype = {
         game.state.start('forest');    
     },
     
+    toHouse: function(){
+        game.state.start('house');    
+    },
+    
     showTutorial: function(){        
         tutorialText.text += '\nShoot: SPACE'
         //tutorialText.fixedToCamera = true;
         tutorial.kill();
     },
-
     
 
     
