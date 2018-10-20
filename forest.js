@@ -24,7 +24,7 @@ demo.forest.prototype = {
         // Weapons
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('gun', 'assets/Gun.png');
-
+        game.load.image('pickaxe', 'assets/Pickaxe.png');
     }, 
     
     
@@ -74,7 +74,7 @@ demo.forest.prototype = {
         //Camera
         game.camera.follow(player);
         
-
+        
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
@@ -110,6 +110,7 @@ demo.forest.prototype = {
         items.create(224, game.world.height-96, 'gun');
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
+        
 
         //create inventory
         inventory = game.add.group();

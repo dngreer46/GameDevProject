@@ -119,7 +119,7 @@ function hit(){
    // player = player.getFristDead();
     //player.reset(playerHitting.x, playerHitting.y);
     //playerHitting.killPlayer();
-    
+   
 }
 
 
