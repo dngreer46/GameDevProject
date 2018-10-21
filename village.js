@@ -114,24 +114,6 @@ demo.village.prototype = {
         items.create(150, game.world.height-190, 'pickAxe');
         items.create(1000, game.world.height-190, 'health');
         items.create(1500, game.world.height-250, 'key');      
-
-        //create inventory
-        inventory = game.add.group();
-        inventoryArray = [];
-        inventoryText = game.add.text(10, game.world.height - 2720, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
-        
-        currItem = inventoryArray[0];
-        
-        inventoryText.fixedToCamera = true;
-        //inventoryText.cameraOffset.setTo(40, 5);
-        
-        inventoryParent = game.add.graphics(0, 0);
-        inventoryParent.beginFill(0xffffff, 0.3);
-        inventoryParent.lineStyle(0, 0xffffff, 1);
-        inventoryParent.drawRect(inventoryText.x, inventoryText.y + 40, 350, 30);
-        inventoryParent.fixedToCamera = true;
-        console.log(inventoryText.x, inventoryText.y);
-        console.log(inventoryParent.x, inventoryParent.y);
         
         box = game.add.graphics(0, 0);
         box.beginFill(0x77bdea);
@@ -154,7 +136,7 @@ demo.village.prototype = {
         
         playerMovement(player);
         
-        game.physics.arcade.overlap(items, player,             this.addInventory);
+        game.physics.arcade.overlap(items, player, this.addInventory);
         
         game.physics.arcade.overlap(mapChange, player, this.toForest);
         

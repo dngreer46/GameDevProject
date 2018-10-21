@@ -64,9 +64,11 @@ function playerMovement(player){
     player.body.velocity.x = 0;
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-        player.body.velocity.x = 150;            player.animations.play('walk');
+        player.body.velocity.x = 150;            
+        player.animations.play('walk');
     }
-    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                 player.body.velocity.x = -150;
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                 
+        player.body.velocity.x = -150;
         player.animations.play('walk');
     }
     else{
@@ -135,10 +137,3 @@ function addHealth(){
     playerHealth.setAll('scale.y', 3);
 
 }
-
-/*function addInventory(item){
-    inventoryArray.push(item);
-    items.remove(item);
-    currItem = inventoryArray[inventoryArray.indexOf(item)];
-    
-}*/
