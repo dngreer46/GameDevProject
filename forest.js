@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange;
+var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange, forestMusic;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 35, 70);
+        game.load.spritesheet('john', 'assets/John.png', 65, 70);
 
         game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
         
@@ -26,12 +26,16 @@ demo.forest.prototype = {
         game.load.image('gun', 'assets/Gun.png');
         game.load.image('health', 'assets/Heart.png');
         game.load.audio('impact', 'assets/slaphit.mp3');
+        game.load.audio('forestMusic', 'assets/forestMusic.mp3');
 
 
     }, 
     
     
     create: function(){
+        
+        forestMusic = game.add.audio('forestMusic');
+        forestMusic.play();
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.setBoundsToWorld();
@@ -67,6 +71,7 @@ demo.forest.prototype = {
         // Player
         player = game.add.sprite(32, game.world.height-96, 'john');
         player.scale.setTo(0.5, 0.5);
+        //player.body.setSize(32, 70, 0, 0);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
@@ -114,7 +119,14 @@ demo.forest.prototype = {
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
 
-
+        //inventory
+        inventoryBox = game.add.graphics(0, 0);
+        inventoryBox.beginFill(0x77bdea);
+        inventoryBox.alpha = 0;
+        inventoryBox.drawRect(200, 20, 400, 100);
+        inventoryBox.fixedToCamera = true;
+        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+        inventoryText.fixedToCamera = true;
         
         playerHealth = game.add.group();
         healthArray = [];
