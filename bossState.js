@@ -9,7 +9,7 @@ var demo = {};
 demo.bossState = function(){};
 demo.bossState.prototype = {
     preload: function(){
-        game.load.spritesheet('john', 'assets/John.png', 35, 70);
+        game.load.spritesheet('john', 'assets/John.png', 65, 70);
         game.load.spritesheet('boss', 'assets/Boss.png', 100, 100);
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('ground', 'assets/labtile.png');
@@ -31,6 +31,7 @@ demo.bossState.prototype = {
         //add sprites
         player = game.add.sprite(32, game.world.height - 250, 'john');
         player.scale.setTo(0.5, 0.5);
+        player.body.setSize(32, 70, 0, 0);
         boss = game.add.sprite(500, game.world.height - 250, 'boss');
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
 

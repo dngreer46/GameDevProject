@@ -3,7 +3,6 @@ game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
-game.state.add('inventoryState', demo.inventoryState);
 game.state.add('house', demo.house);
 game.state.start('village');
 

@@ -1,5 +1,5 @@
 
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic;
 
 
 demo.village = function(){};
@@ -25,10 +25,14 @@ demo.village.prototype = {
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('blank', 'assets/blank.png');
+        game.load.audio('villageMusic', 'assets/villageMusic.mp3');
 
     },
     
     create: function(){
+        
+        villageMusic = game.add.audio('villageMusic');
+        villageMusic.play();
         
         // Background image
         game.add.tileSprite(0, 0, 1792, 2720, 'sky');

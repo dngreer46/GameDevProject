@@ -67,6 +67,7 @@ demo.forest.prototype = {
         // Player
         player = game.add.sprite(32, game.world.height-96, 'john');
         player.scale.setTo(0.5, 0.5);
+        player.body.setSize(32, 70, 0, 0);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
