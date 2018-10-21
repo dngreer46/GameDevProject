@@ -1,13 +1,4 @@
-var player;
 var boss;
-var ground;
-var playerHealth;
-var healthArray;
-var bullets;
-var bullet;
-var velocity = 700;
-var fireRate = 1000;
-var nextFire = 0;
 var boss_health;
 var bossHealth;
 var overlap;
@@ -103,26 +94,8 @@ demo.bossState.prototype = {
         items.physicsBodyType = Phaser.Physics.ARCADE;
         items.create(110, game.world.height-190, 'gun');
         items.create(130, game.world.height-190, 'health');
-        items.setAll('scale.x', 2)
-        items.setAll('scale.y', 2)
-
-        //create inventory
-        inventory = game.add.group();
-        inventoryArray = [];
-        inventoryText = game.add.text(10, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
-        
-        //set current item in the inventory
-        currItem = inventoryArray[0];
-        
-        inventoryText.fixedToCamera = true;
-        //inventoryText.cameraOffset.setTo(40, 5);
-        
-        //white box to represent inventory
-        inventoryParent = game.add.graphics(0, 0);
-        inventoryParent.beginFill(0xffffff, 0.3);
-        inventoryParent.lineStyle(0, 0xffffff, 1);
-        inventoryParent.drawRect(inventoryText.x, inventoryText.y + 40, 350, 30);
-        inventoryParent.fixedToCamera = true;
+        items.setAll('scale.x', 2);
+        items.setAll('scale.y', 2);
         
     },
     
@@ -194,12 +167,8 @@ demo.bossState.prototype = {
     },
     
     addInventory: function(player, item){
-        inventory.add(item);
-        inventory.set(item, 'x', (inventory.getIndex(item) + 1) * 50);
-        inventory.setAll('y', game.world.height-450);
-        inventory.setAll('scale.x', 2);
-        inventory.setAll('scale.y', 2);
         inventoryArray.push(item);
+        item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
 
         
