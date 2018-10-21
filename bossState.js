@@ -13,7 +13,8 @@ demo.bossState.prototype = {
         game.load.spritesheet('boss', 'assets/Boss.png', 100, 100);
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('ground', 'assets/labtile.png');
-        game.load.audio('impact', 'assets/slaphit.mp3');               game.load.image('gun', 'assets/gun.png');
+        game.load.audio('impact', 'assets/slaphit.mp3');               
+        game.load.image('gun', 'assets/gun.png');
         game.load.image('health', 'assets/Heart.png');
 
     },

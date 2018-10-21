@@ -114,24 +114,7 @@ demo.forest.prototype = {
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
 
-        //create inventory
-        /*inventory = game.add.group();
-        inventoryArray = [];
-        inventoryText = game.add.text(10, game.world.height - 500, 'Inventory: ', {fontSize: '32px', fill: '#ffffff'});
-        
-        currItem = inventoryArray[0];
-        
-        inventoryText.fixedToCamera = true;
-        //inventoryText.cameraOffset.setTo(40, 5);
-        
-        inventoryParent = game.add.graphics(0, 0);
-        inventoryParent.beginFill(0xffffff, 0.3);
-        inventoryParent.lineStyle(0, 0xffffff, 1);
-        inventoryParent.drawRect(inventoryText.x, inventoryText.y + 40, 350, 30);
-        inventoryParent.fixedToCamera = true;
-        console.log(inventoryText.x, inventoryText.y);
-        console.log(inventoryParent.x, inventoryParent.y);
-        */
+
         
         playerHealth = game.add.group();
         healthArray = [];
@@ -179,7 +162,8 @@ demo.forest.prototype = {
     },
     
     addInventory: function(player, item){
-        inventoryArray.push(item);               item.kill();
+        inventoryArray.push(item);               
+        item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
     },
     
