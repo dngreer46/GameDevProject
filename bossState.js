@@ -4,6 +4,7 @@ var bossHealth;
 var overlap;
 var damageSound;
 var bossDialouge;
+var inventoryBox;
 
 var demo = {};
 demo.bossState = function(){};
@@ -31,7 +32,7 @@ demo.bossState.prototype = {
         //add sprites
         player = game.add.sprite(32, game.world.height - 250, 'john');
         player.scale.setTo(0.5, 0.5);
-        player.body.setSize(32, 70, 0, 0);
+        //player.body.setSize(32, 70, 0, 0);
         boss = game.add.sprite(500, game.world.height - 250, 'boss');
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
 
@@ -99,6 +100,14 @@ demo.bossState.prototype = {
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
         
+        //inventory
+        inventoryBox = game.add.graphics(0, 0);
+        inventoryBox.beginFill(0x77bdea);
+        inventoryBox.alpha = 0;
+        inventoryBox.drawRect(200, 20, 400, 100);
+        inventoryBox.fixedToCamera = true;
+        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+        inventoryText.fixedToCamera = true;
     },
     
     update: function(){

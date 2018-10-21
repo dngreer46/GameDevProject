@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange;
+var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange, forestMusic;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -26,12 +26,16 @@ demo.forest.prototype = {
         game.load.image('gun', 'assets/Gun.png');
         game.load.image('health', 'assets/Heart.png');
         game.load.audio('impact', 'assets/slaphit.mp3');
+        game.load.audio('forestMusic', 'assets/forestMusic.mp3');
 
 
     }, 
     
     
     create: function(){
+        
+        forestMusic = game.add.audio('forestMusic');
+        forestMusic.play();
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.setBoundsToWorld();
@@ -67,7 +71,7 @@ demo.forest.prototype = {
         // Player
         player = game.add.sprite(32, game.world.height-96, 'john');
         player.scale.setTo(0.5, 0.5);
-        player.body.setSize(32, 70, 0, 0);
+        //player.body.setSize(32, 70, 0, 0);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
