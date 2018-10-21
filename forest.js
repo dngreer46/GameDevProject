@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 35, 70);
+        game.load.spritesheet('john', 'assets/John.png', 65, 70);
 
         game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
         
@@ -114,7 +114,14 @@ demo.forest.prototype = {
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
 
-
+        //inventory
+        inventoryBox = game.add.graphics(0, 0);
+        inventoryBox.beginFill(0x77bdea);
+        inventoryBox.alpha = 0;
+        inventoryBox.drawRect(200, 20, 400, 100);
+        inventoryBox.fixedToCamera = true;
+        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+        inventoryText.fixedToCamera = true;
         
         playerHealth = game.add.group();
         healthArray = [];

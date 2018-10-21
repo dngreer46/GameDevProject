@@ -1,5 +1,5 @@
 
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryText, inventoryParent, currItem, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box;
 
 
 demo.village = function(){};
@@ -24,7 +24,6 @@ demo.village.prototype = {
         game.load.image('health', 'assets/Heart.png');
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
-        game.load.spritesheet('johnAttack', 'assets/johnAttack.png', 64, 70);
         game.load.image('blank', 'assets/blank.png');
 
     },
@@ -85,11 +84,13 @@ demo.village.prototype = {
         player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
+        player.body.setSize(32, 70, 0, 0);
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
         
         // Player Animations
         player.animations.add('walk', [0, 1], 10, true);
+        player.animations.add('attack', [2, 3, 4], 10, true);
         
         //Camera
         game.camera.follow(player);
@@ -113,8 +114,18 @@ demo.village.prototype = {
         items.create(230, game.world.height-190, 'gun');
         items.create(150, game.world.height-190, 'pickAxe');
         items.create(1000, game.world.height-190, 'health');
-        items.create(1500, game.world.height-250, 'key');      
+        items.create(1500, game.world.height-250, 'key');   
         
+        //inventory
+        inventoryBox = game.add.graphics(0, 0);
+        inventoryBox.beginFill(0x77bdea);
+        inventoryBox.alpha = 0;
+        inventoryBox.drawRect(200, 20, 400, 100);
+        inventoryBox.fixedToCamera = true;
+        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+        inventoryText.fixedToCamera = true;
+        
+        //dialouge
         box = game.add.graphics(0, 0);
         box.beginFill(0x77bdea);
         box.alpha = 0;

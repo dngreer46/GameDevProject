@@ -34,7 +34,7 @@ demo.inventoryState.prototype = {
         if (game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
         //currItem = switchItem(inventoryArray);
         //console.log(currItem);
-            game.state.start('village');    
+            game.state.start('village', true, false);    
         }   
     }
 }

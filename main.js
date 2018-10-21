@@ -7,7 +7,9 @@ game.state.add('inventoryState', demo.inventoryState);
 game.state.add('house', demo.house);
 game.state.start('village');
 
-var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], bullet, bullets;
+var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets;
+
+
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -82,11 +84,26 @@ function playerMovement(player){
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
         //currItem = switchItem(inventoryArray);
         //console.log(currItem);
-        game.state.start('inventoryState', inventoryArray);    
-
+        //game.state.start('inventoryState', true, false);    
+        inventoryBox.alpha = 0.8;
+        inventory = game.add.group(inventoryBox);
+        inventoryText.text = 'Inventory: ';
+        for (var i = 0; i < inventoryArray.length; i++){
+            inventory.create(0, 0, inventoryArray[i].key);
+        }
+        inventory.setAll('scale.x', 2);
+        inventory.setAll('scale.y', 2);
+        inventory.align(5, 1, 50, 30, Phaser.CENTER);
+        inventory.x = 210;
+        inventory.y = 80;
+    }
+    else{
+        inventoryBox.alpha=0;
+        inventoryText.text = '';
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+
         if (currItem == undefined){
                 
         }
@@ -96,7 +113,10 @@ function playerMovement(player){
         }
             
         else if (currItem.key == 'pickAxe'){
-            this.hit();
+            //this.hit();
+            player.animations.play('attack');
+            console.log(player.animations.currentFrame);
+
         }
         
         else if (currItem.key == 'health'){
@@ -105,11 +125,14 @@ function playerMovement(player){
                 console.log(currItem.index);
                 inventoryArray.splice(inventoryArray.indexOf(currItem, 1));
                 currItem = inventoryArray[0];
-                console.log(currItem);
             }
 
 
         }
+    }
+    if (game.input.keyboard.downDuration(Phaser.Keyboard.F, 10)){
+            currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+            console.log(currItem);
     }
 
 }
@@ -123,10 +146,8 @@ function fire(){
     }
 }
 function hit(){
-    player = game.add.sprite(player.x, player.y, 'johnAttack');
-    player.scale.setTo(0.5, 0.5);
-    player.animations.add('swing', [0, 1, 2], 5, true);
-    player.animations.play('swing');
+    player.animations.play('attack');
+
 }
 
 function addHealth(){
