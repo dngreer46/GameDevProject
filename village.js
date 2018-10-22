@@ -1,5 +1,6 @@
 
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic, tutorial1, tutorial2, currOnScreen;
+var sarah, bob, paula
 
 
 demo.village = function(){};
@@ -19,6 +20,8 @@ demo.village.prototype = {
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 65, 70);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
+        game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
+        game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
         game.load.image('gun', 'assets/gun.png');
         game.load.image('pickAxe', 'assets/Pickaxe.png');
         game.load.image('health', 'assets/Heart.png');
@@ -87,9 +90,24 @@ demo.village.prototype = {
         game.physics.arcade.enable(sarah);
         sarah.body.gravity.y = 500;
         
+        // Bob
+        bob = game.add.sprite(550, 1698, 'bob');
+        bob.scale.setTo(0.5, 0.5);
+        game.physics.arcade.enable(bob);
+        bob.body.gravity.y = 500;
+        
+        // Paula
+        paula = game.add.sprite(900, 1698, 'paula');
+        paula.scale.setTo(0.5, 0.5);
+        game.physics.arcade.enable(paula);
+        paula.body.gravity.y = 500;
+        
+        
         // Add John sprite
-        player = game.add.sprite(256, game.world.height-197, 'john');
-        //player = game.add.sprite(1220, game.world.height-1050, 'john');
+
+        player = game.add.sprite(950, 1698, 'john');
+        //player = game.add.sprite(256, game.world.height-197, 'john');
+
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.setSize(32, 70, 0, 0);
@@ -152,6 +170,8 @@ demo.village.prototype = {
     update: function(){
         
         game.physics.arcade.collide(sarah, ground);
+        game.physics.arcade.collide(bob, ground);
+        game.physics.arcade.collide(paula, ground);
 
         playerMovement(player);
         
@@ -174,21 +194,38 @@ demo.village.prototype = {
             }
         }
         
-
-        
+        // Overlap NPC
         var atSarah = game.physics.arcade.overlap(sarah, player)
+        var atPaula = game.physics.arcade.overlap(paula, player)
+        var atBob = game.physics.arcade.overlap(bob, player)
         
+        // Sarah dialogue
         if (atSarah) {
             box.alpha = 0.8;
             dialogueName.text = 'Sarah:';
             dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked!\nWill you please find the key for me?';
         }
+        
+        // Paula dialogue
+        else if (atPaula) {
+            box.alpha = 0.8;
+            dialogueName.text = 'Paula:';
+            dialogueText.text = 'Hiya neighbor! Fine weather we have today.';
+        }
+        
+        // Bob dialogue
+        else if (atBob) {
+            box.alpha = 0.8;
+            dialogueName.text = 'Bob:';
+            dialogueText.text = 'Good mornin, John! How are you today?';
+        }
+        
+        // Get rid of text box if not overlapping NPC
         else {
             box.alpha = 0;
             dialogueName.text = '';
             dialogueText.text = '';
         }
-        
 
         
 
