@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic;
 var sarah, bob, paula
+=======
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic, tutorial1, tutorial2, currOnScreen;
+
+>>>>>>> master
 
 demo.village = function(){};
 
@@ -65,9 +70,12 @@ demo.village.prototype = {
         game.physics.arcade.enable(mapChangeHouse);
         
         // Tutorial sign
-        tutorial = game.add.sprite(192, game.world.height-192, 'blank');
-        game.physics.arcade.enable(tutorial);
         tutorialText = game.add.text(100, game.world.height-100, 'Move Left/Right: A/D\nJump: W', {fontSize: '18px', fill: '#ffffff' });  
+        tutorial = game.add.group();
+        tutorial.enableBody = true;
+        tutorial1 = tutorial.create(192, game.world.height-192, 'blank');
+        tutorial2 = tutorial.create(150, game.world.height-192, 'blank');
+        tutorial3 = tutorial.create(1500, game.world.height-250, 'blank');
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
@@ -101,6 +109,7 @@ demo.village.prototype = {
         
         // Add John sprite
         player = game.add.sprite(256, game.world.height-197, 'john');
+        //player = game.add.sprite(1220, game.world.height-1050, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.setSize(32, 70, 0, 0);
@@ -130,9 +139,8 @@ demo.village.prototype = {
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
-        items.create(230, game.world.height-190, 'gun');
+        items.create(1170, game.world.height-1015, 'gun');
         items.create(150, game.world.height-190, 'pickAxe');
-        items.create(1000, game.world.height-190, 'health');
         items.create(1500, game.world.height-250, 'key');   
         
         //inventory
@@ -143,6 +151,8 @@ demo.village.prototype = {
         inventoryBox.fixedToCamera = true;
         inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
         inventoryText.fixedToCamera = true;
+        
+        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         
         //dialouge
         box = game.add.graphics(0, 0);
@@ -165,8 +175,9 @@ demo.village.prototype = {
         game.physics.arcade.collide(bob, ground);
         game.physics.arcade.collide(paula, ground);
 
-        
         playerMovement(player);
+        
+        //showCurrItem();
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -177,10 +188,20 @@ demo.village.prototype = {
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
         if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.E)) {
-            this.toHouse();
+            if(currItem == undefined){
+            
+            }
+            else if(currItem.key == 'key'){
+                this.toHouse();
+            }
         }
         
+<<<<<<< HEAD
         // Overlap NPC
+=======
+
+        
+>>>>>>> master
         var atSarah = game.physics.arcade.overlap(sarah, player)
         var atPaula = game.physics.arcade.overlap(paula, player)
         var atBob = game.physics.arcade.overlap(bob, player)
@@ -235,10 +256,41 @@ demo.village.prototype = {
     showTutorial: function(){        
         tutorialText.text += '\nShoot: SPACE'
         //tutorialText.fixedToCamera = true;
+    showTutorial: function(player, tutorial){     
+        tutorialText.fixedToCamera = true;
+        tutorialText.cameraOffset.setTo(100, game.world.height-2320);
+
+        if (tutorial == tutorial1){
+            tutorialText.text = 'Walk over items to pick them up';
+        }
+        else if (tutorial == tutorial2){
+            tutorialText.text = 'Press space to use items';
+        }
+        else if (tutorial == tutorial3){
+            tutorialText.text = 'Press shift to check the inventory\nPress F to change items'
+        }
+
+        
         tutorial.kill();
     },
-    
+
 
     
 
 };
+
+function showCurrItem(){
+    itemBox = game.add.graphics(0, 0);
+    itemBox.beginFill(0x685442);
+    itemBox.alpha = 0.8;
+    itemBox.drawRect(0, game.world.height-2720, 60, 60);
+    itemBox.fixedToCamera = true;
+    
+    itemOnScreen = game.add.sprite(0, game.world.height-2710, currItem.key);
+    
+    itemOnScreen.fixedToCamera = true;
+    itemOnScreen.scale.x = 4
+    itemOnScreen.scale.y = 4
+    
+}
+

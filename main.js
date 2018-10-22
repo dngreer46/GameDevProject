@@ -4,7 +4,10 @@ game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
 game.state.add('house', demo.house);
+<<<<<<< HEAD
 game.state.add('villageKidnapped', demo.villageKidnapped);
+=======
+>>>>>>> master
 game.state.start('village');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets;
