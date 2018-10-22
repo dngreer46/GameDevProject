@@ -105,7 +105,8 @@ demo.village.prototype = {
         player = game.add.sprite(256, game.world.height-197, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
-        player.body.setSize(32, 70, 0, 0);
+        player.body.setSize(35, 70, 0, 0);
+
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
         
@@ -223,6 +224,11 @@ demo.village.prototype = {
         }
 
         
+
+    },
+    
+    render: function(){
+        //game.debug.body(player);
 
     },
     

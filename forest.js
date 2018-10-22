@@ -34,6 +34,7 @@ demo.forest.prototype = {
     
     create: function(){
         
+        villageMusic.stop();
         forestMusic = game.add.audio('forestMusic');
         forestMusic.play();
         // Game Physics
@@ -147,6 +148,7 @@ demo.forest.prototype = {
     
     
     update: function(){
+        
         // Collision
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
