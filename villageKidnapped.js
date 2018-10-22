@@ -128,7 +128,6 @@ demo.villageKidnapped.prototype = {
         items.physicsBodyType = Phaser.Physics.ARCADE;
         items.create(230, game.world.height-190, 'gun');
         items.create(150, game.world.height-190, 'pickAxe');
-        items.create(1000, game.world.height-190, 'health');
         items.create(1500, game.world.height-250, 'key');   
         
         //inventory
