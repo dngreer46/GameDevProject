@@ -174,8 +174,6 @@ demo.village.prototype = {
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
-        game.physics.arcade.overlap(mapChange, player, this.toForest);
-        
         game.physics.arcade.overlap(tutorial, player, this.showTutorial);
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
@@ -193,6 +191,7 @@ demo.village.prototype = {
         var atSarah = game.physics.arcade.overlap(sarah, player)
         var atPaula = game.physics.arcade.overlap(paula, player)
         var atBob = game.physics.arcade.overlap(bob, player)
+        var atForest = game.physics.arcade.overlap(mapChange, player)
         
         // Sarah dialogue
         if (atSarah) {
@@ -213,6 +212,13 @@ demo.village.prototype = {
             box.alpha = 0.8;
             dialogueName.text = 'Bob:';
             dialogueText.text = 'Good mornin, John! How are you today?';
+        }
+        
+        // Forest dialogue
+        else if (atForest) {
+            box.alpha = 0.8;
+            dialogueName.text = 'John (you):';
+            dialogueText.text = 'The forest is dangerous! \nI should look for the kite at home first.';
         }
         
         // Get rid of text box if not overlapping NPC
