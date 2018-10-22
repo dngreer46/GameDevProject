@@ -77,7 +77,7 @@ demo.house.prototype = {
         
         var atDoor = game.physics.arcade.overlap(mapChange, player)
         
-        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.E)) {
+        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
             this.toVillage();
         }
         
