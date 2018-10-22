@@ -1,11 +1,8 @@
-
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic;
 var sarah, bob, paula
 
-demo.village = function(){};
-
-demo.village.prototype = {
-    
+demo.villageKidnapped = function(){};
+demo.villageKidnapped.prototype = {
     preload: function(){
         game.load.image('sky', 'assets/maps/sky.png');
         
@@ -100,7 +97,7 @@ demo.village.prototype = {
         
         
         // Add John sprite
-        player = game.add.sprite(256, game.world.height-197, 'john');
+        player = game.add.sprite(550, 2528, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.setSize(32, 70, 0, 0);
