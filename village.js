@@ -178,9 +178,8 @@ demo.village.prototype = {
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
-        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.E)) {
+        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
             if(currItem == undefined){
-            
             }
             else if(currItem.key == 'key'){
                 this.toHouse();
@@ -258,7 +257,7 @@ demo.village.prototype = {
             tutorialText.text = 'Press space to use items';
         }
         else if (tutorial == tutorial3){
-            tutorialText.text = 'Press shift to check the inventory\nPress F to change items'
+            tutorialText.text = 'Press shift to check the inventory\nPress F to change items\nPress SPACE to use items'
         }
 
         
