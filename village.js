@@ -1,11 +1,5 @@
-
-<<<<<<< HEAD
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic;
-var sarah, bob, paula
-=======
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic, tutorial1, tutorial2, currOnScreen;
-
->>>>>>> master
+var sarah, bob, paula
 
 demo.village = function(){};
 
@@ -196,12 +190,7 @@ demo.village.prototype = {
             }
         }
         
-<<<<<<< HEAD
         // Overlap NPC
-=======
-
-        
->>>>>>> master
         var atSarah = game.physics.arcade.overlap(sarah, player)
         var atPaula = game.physics.arcade.overlap(paula, player)
         var atBob = game.physics.arcade.overlap(bob, player)
@@ -253,9 +242,6 @@ demo.village.prototype = {
         game.state.start('house');    
     },
     
-    showTutorial: function(){        
-        tutorialText.text += '\nShoot: SPACE'
-        //tutorialText.fixedToCamera = true;
     showTutorial: function(player, tutorial){     
         tutorialText.fixedToCamera = true;
         tutorialText.cameraOffset.setTo(100, game.world.height-2320);

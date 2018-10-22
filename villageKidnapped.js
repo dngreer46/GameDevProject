@@ -15,7 +15,7 @@ demo.villageKidnapped.prototype = {
         
         // Sprites
         game.load.spritesheet('john', 'assets/John.png', 65, 70);
-        game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
+        game.load.spritesheet('note', 'assets/note.png', 35, 35);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
         game.load.image('gun', 'assets/gun.png');
@@ -77,11 +77,10 @@ demo.villageKidnapped.prototype = {
             right: false
         });
         
-        // Add Sarah sprite
-        sarah = game.add.sprite(850, game.world.height-197, 'sarah');
-        sarah.scale.setTo(0.5, 0.5);
-        game.physics.arcade.enable(sarah);
-        sarah.body.gravity.y = 500;
+        // Add Note sprite
+        note = game.add.sprite(850, game.world.height-197, 'note');
+        game.physics.arcade.enable(note);
+        note.body.gravity.y = 500;
         
         // Bob
         bob = game.add.sprite(550, 1698, 'bob');
@@ -158,7 +157,7 @@ demo.villageKidnapped.prototype = {
     
     update: function(){
         
-        game.physics.arcade.collide(sarah, ground);
+        game.physics.arcade.collide(note, ground);
         game.physics.arcade.collide(bob, ground);
         game.physics.arcade.collide(paula, ground);
 
@@ -178,29 +177,29 @@ demo.villageKidnapped.prototype = {
         }
         
         // Overlap NPC
-        var atSarah = game.physics.arcade.overlap(sarah, player)
+        var atNote = game.physics.arcade.overlap(note, player)
         var atPaula = game.physics.arcade.overlap(paula, player)
         var atBob = game.physics.arcade.overlap(bob, player)
         
         // Sarah dialogue
-        if (atSarah) {
+        if (atNote) {
             box.alpha = 0.8;
-            dialogueName.text = 'Sarah:';
-            dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked!\nWill you please find the key for me?';
+            dialogueName.text = 'Note:';
+            dialogueText.text = 'H E L P';
         }
         
         // Paula dialogue
         else if (atPaula) {
             box.alpha = 0.8;
             dialogueName.text = 'Paula:';
-            dialogueText.text = 'Hiya neighbor! Fine weather we have today.';
+            dialogueText.text = 'H-Hurry, John! Something horrible took your sister \naway!!';
         }
         
         // Bob dialogue
         else if (atBob) {
             box.alpha = 0.8;
             dialogueName.text = 'Bob:';
-            dialogueText.text = 'Good mornin, John! How are you today?';
+            dialogueText.text = 'I tried to stop it, John, but it was too fast! \nIt took your sister Sarah into the forest!';
         }
         
         // Get rid of text box if not overlapping NPC
