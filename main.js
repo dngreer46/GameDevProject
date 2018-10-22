@@ -4,7 +4,7 @@ game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
 game.state.add('house', demo.house);
-game.state.start('bossState');
+game.state.start('village');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets;
 
@@ -80,10 +80,7 @@ function playerMovement(player){
         player.body.velocity.y = -325;
     }
         
-    if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-        //currItem = switchItem(inventoryArray);
-        //console.log(currItem);
-        //game.state.start('inventoryState', true, false);    
+    if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
         inventoryBox.alpha = 0.8;
         inventory = game.add.group(inventoryBox);
         inventoryText.text = 'Inventory: ';
@@ -114,7 +111,7 @@ function playerMovement(player){
         else if (currItem.key == 'pickAxe'){
             //this.hit();
             player.animations.play('attack');
-            console.log(player.animations.currentFrame);
+            console.log(player.animations.frameTotal);
 
         }
         
@@ -122,7 +119,7 @@ function playerMovement(player){
             if (healthArray.length < 3){
                 this.addHealth();
                 console.log(currItem.index);
-                inventoryArray.splice(inventoryArray.indexOf(currItem, 1));
+                inventoryArray.splice(inventoryArray.indexOf(currItem));
                 currItem = inventoryArray[0];
             }
 
@@ -133,6 +130,7 @@ function playerMovement(player){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
             console.log(currItem);
     }
+
 
 }
 
@@ -157,3 +155,4 @@ function addHealth(){
     playerHealth.setAll('scale.y', 3);
 
 }
+
