@@ -7,7 +7,7 @@ game.state.add('house', demo.house);
 game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.start('village');
 
-var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets;
+var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue;
 
 
 
@@ -68,10 +68,14 @@ function playerMovement(player){
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.body.velocity.x = 150;            
         player.animations.play('walk');
+        dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
+
     }
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                 
         player.body.velocity.x = -150;
         player.animations.play('walk');
+        dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
+
     }
     else{
         player.animations.stop();
@@ -102,7 +106,9 @@ function playerMovement(player){
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 
         if (currItem == undefined){
-                
+            currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+
+            
         }
             
         else if (currItem.key == 'gun'){
@@ -111,8 +117,8 @@ function playerMovement(player){
             
         else if (currItem.key == 'pickAxe'){
             //this.hit();
+            player.animations.add('attack', [2, 3, 4], 10, true);
             player.animations.play('attack');
-            console.log(player.animations.frameTotal);
 
         }
         
@@ -140,7 +146,15 @@ function fire(){
         nextFire = game.time.now + fireRate;         
         bullet = bullets.getFirstDead();
         bullet.reset(player.x, player.y-10);
-        bullet.body.velocity.x = 500
+        if (dirValue == 1){
+            bullet.body.velocity.x = -500;
+
+        }
+        else if(dirValue == -1){
+            bullet.body.velocity.x = 500;
+
+        }
+        
     }
 }
 function hit(){
@@ -156,4 +170,3 @@ function addHealth(){
     playerHealth.setAll('scale.y', 3);
 
 }
-

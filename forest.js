@@ -181,7 +181,8 @@ demo.forest.prototype = {
         currItem = inventoryArray[inventoryArray.indexOf(item)];
     },
     
-    toLab: function(){        
+    toLab: function(){
+        forestMusic.stop();
         game.state.start('bossState');    
     },
     

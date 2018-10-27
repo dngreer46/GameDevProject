@@ -103,6 +103,8 @@ demo.village.prototype = {
         
         // Add John sprite
         player = game.add.sprite(256, game.world.height-197, 'john');
+        //player = game.add.sprite(1180, game.world.height-1015, 'john');
+
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.setSize(35, 70, 0, 0);
@@ -112,7 +114,6 @@ demo.village.prototype = {
         
         // Player Animations
         player.animations.add('walk', [0, 1], 10, true);
-        player.animations.add('attack', [2, 3, 4], 10, true);
         
         //Camera
         game.camera.follow(player);
@@ -133,9 +134,11 @@ demo.village.prototype = {
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
-        items.create(1170, game.world.height-1015, 'gun');
-        items.create(150, game.world.height-190, 'pickAxe');
+        //items.create(1170, game.world.height-1015, 'gun');
+        items.create(150, game.world.height-195, 'pickAxe'); 
         items.create(1500, game.world.height-250, 'key');   
+        items.setAll('scale.x', 2);
+        items.setAll('scale.y', 2);
         
         //inventory
         inventoryBox = game.add.graphics(0, 0);
@@ -170,11 +173,12 @@ demo.village.prototype = {
         game.physics.arcade.collide(paula, ground);
 
         playerMovement(player);
-        
+
         //showCurrItem();
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
+ 
         game.physics.arcade.overlap(tutorial, player, this.showTutorial);
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
@@ -234,7 +238,6 @@ demo.village.prototype = {
     
     render: function(){
         //game.debug.body(player);
-
     },
     
     addInventory: function(player, item){
@@ -249,6 +252,7 @@ demo.village.prototype = {
     },
     
     toHouse: function(){
+        villageMusic.stop();
         game.state.start('house');    
     },
     

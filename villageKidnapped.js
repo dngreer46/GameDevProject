@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, box, villageMusic;
 var sarah, bob, paula
 
 demo.villageKidnapped = function(){};
@@ -18,20 +18,15 @@ demo.villageKidnapped.prototype = {
         game.load.spritesheet('note', 'assets/note.png', 35, 35);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
-        game.load.image('gun', 'assets/gun.png');
-        game.load.image('pickAxe', 'assets/Pickaxe.png');
-        game.load.image('health', 'assets/Heart.png');
-        game.load.image('key', 'assets/key.png');
-        game.load.image('bullet', 'assets/bullet.png');
         game.load.image('blank', 'assets/blank.png');
-        game.load.audio('villageMusic', 'assets/villageMusic.mp3');
+        //game.load.audio('villageMusic', 'assets/villageMusic.mp3');
 
     },
     
     create: function(){
         
-        villageMusic = game.add.audio('villageMusic');
-        villageMusic.play();
+        //villageMusic = game.add.audio('villageMusic');
+        //villageMusic.play();
         
         // Background image
         game.add.tileSprite(0, 0, 1792, 2720, 'sky');
@@ -61,10 +56,7 @@ demo.villageKidnapped.prototype = {
         mapChangeHouse = game.add.sprite(545, 2529, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
-        // Tutorial sign
-        tutorial = game.add.sprite(192, game.world.height-192, 'blank');
-        game.physics.arcade.enable(tutorial);
-        tutorialText = game.add.text(100, game.world.height-100, 'Move Left/Right: A/D\nJump: W', {fontSize: '18px', fill: '#ffffff' });  
+
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
@@ -110,24 +102,13 @@ demo.villageKidnapped.prototype = {
         //Camera
         game.camera.follow(player);
         
-        //set properties for bullets
-        bullets = game.add.group();
-        bullets.enableBody = true;
-        bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        bullets.createMultiple(50, 'bullet');
-        bullets.setAll('checkWorldBounds', true);
-        bullets.setAll('outOfBoundsKill', true);
-        bullets.setAll('anchor.y', -5);
-        bullets.setAll('anchor.x', 0.5);
-        bullets.setAll('scale.x', 0.8);
-        bullets.setAll('scale.y', 0.8);
+        
         
         //create items
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
-        items.create(230, game.world.height-190, 'gun');
-        items.create(150, game.world.height-190, 'pickAxe'); 
+
         
         //inventory
         inventoryBox = game.add.graphics(0, 0);
@@ -166,7 +147,6 @@ demo.villageKidnapped.prototype = {
         
         game.physics.arcade.overlap(mapChange, player, this.toForest);
         
-        game.physics.arcade.overlap(tutorial, player, this.showTutorial);
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
@@ -226,11 +206,7 @@ demo.villageKidnapped.prototype = {
         game.state.start('house');    
     },
     
-    showTutorial: function(){        
-        tutorialText.text += '\nShoot: SPACE'
-        //tutorialText.fixedToCamera = true;
-        tutorial.kill();
-    },
+
     
 
     
