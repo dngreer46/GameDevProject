@@ -26,7 +26,7 @@ demo.forest.prototype = {
         game.load.image('gun', 'assets/Gun.png');
         game.load.image('health', 'assets/Heart.png');
         game.load.audio('impact', 'assets/slaphit.mp3');
-        game.load.audio('forestMusic', 'assets/forestMusic.mp3');
+        game.load.audio('forestMusic', 'assets/forestMusic.ogg');
 
 
     }, 
@@ -35,8 +35,9 @@ demo.forest.prototype = {
     create: function(){
         
         villageMusic.stop();
-        forestMusic = game.add.audio('forestMusic');
+        forestMusic = game.add.audio('forestMusic', true);
         forestMusic.play();
+        
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.setBoundsToWorld();

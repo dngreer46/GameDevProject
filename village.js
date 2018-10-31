@@ -32,7 +32,7 @@ demo.village.prototype = {
     
     create: function(){
         
-        villageMusic = game.add.audio('villageMusic');
+        villageMusic = game.add.audio('villageMusic', 0.3, true);
         villageMusic.play();
         
         // Background image

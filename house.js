@@ -83,7 +83,8 @@ demo.house.prototype = {
         
     },
     
-    toVillage: function(){        
+    toVillage: function(){
+        villageMusic.stop();
         game.state.start('villageKidnapped');    
     },
     
