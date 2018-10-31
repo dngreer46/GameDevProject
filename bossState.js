@@ -44,7 +44,7 @@ demo.bossState.prototype = {
         playerHealth = game.add.group();
         healthArray = [];
         for (var i = 0; i < 3; i++){
-            playerHealth.create(i * 50, game.world.height - 50, 'health');
+            playerHealth.create(i * 50, 0, 'health');
             healthArray.push(i);
 
         }
