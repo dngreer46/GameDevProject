@@ -120,7 +120,7 @@ demo.bossState.prototype = {
         itemOnScreen.scale.x = 4;
         itemOnScreen.scale.y = 4;
         
-    };
+    },
     
     update: function(){
 
