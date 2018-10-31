@@ -79,7 +79,7 @@ demo.forest.prototype = {
         
         // Player Animations
         player.animations.add('walk', [0, 1], 5, true);
-        
+        player.animations.add('attack', [2, 3, 4], 10, true);
         //Camera
         game.camera.follow(player);
         
@@ -141,7 +141,18 @@ demo.forest.prototype = {
         playerHealth.setAll('scale.y', 3);
         
         //time event to deal damage to the player
-        game.time.events.repeat(2000, 100, this.overlapFalse, this);        
+        game.time.events.repeat(2000, 100, this.overlapFalse, this);     
+        
+        //current item display
+        itemBox = game.add.graphics(0, 0);
+        itemBox.beginFill(0xECE6E5);
+        itemBox.alpha = 0.8;
+        itemBox.drawRect(740, game.world.height-70, 60, 60);
+        itemBox.fixedToCamera = true;
+        itemOnScreen = game.add.sprite(743, game.world.height-55, currItem.key);
+        itemOnScreen.fixedToCamera = true;
+        itemOnScreen.scale.x = 4;
+        itemOnScreen.scale.y = 4;
     }, 
     
     
@@ -178,7 +189,7 @@ demo.forest.prototype = {
     addInventory: function(player, item){
         inventoryArray.push(item);               
         item.kill();
-        currItem = inventoryArray[inventoryArray.indexOf(item)];
+        
     },
     
     toLab: function(){

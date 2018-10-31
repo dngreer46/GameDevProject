@@ -1,5 +1,5 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic, tutorial1, tutorial2, currOnScreen;
-var sarah, bob, paula
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic, tutorial1, tutorial2, itemOnScreen;
+var sarah, bob, paula;
 
 demo.village = function(){};
 
@@ -16,7 +16,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 65, 70);
+        game.load.spritesheet('john', 'assets/John.png', 65, 70, 5);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -103,7 +103,7 @@ demo.village.prototype = {
         
         // Add John sprite
         player = game.add.sprite(256, game.world.height-197, 'john');
-        //player = game.add.sprite(1180, game.world.height-1015, 'john');
+        //player = game.add.sprite(1500, game.world.height-250, 'john');
 
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
@@ -114,7 +114,7 @@ demo.village.prototype = {
         
         // Player Animations
         player.animations.add('walk', [0, 1], 10, true);
-        
+        player.animations.add('attack', [2, 3, 4], 10, true);
         //Camera
         game.camera.follow(player);
         
@@ -151,6 +151,17 @@ demo.village.prototype = {
         
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         
+        //current item display
+        itemBox = game.add.graphics(0, 0);
+        itemBox.beginFill(0xECE6E5);
+        itemBox.alpha = 0.8;
+        itemBox.drawRect(game.world.width - 1053, game.world.height-2280, 60, 60);
+        itemBox.fixedToCamera = true;
+        itemOnScreen = game.add.sprite(game.world.width - 1052, game.world.height-2273, currItem.key);
+        itemOnScreen.fixedToCamera = true;
+        itemOnScreen.scale.x = 4
+        itemOnScreen.scale.y = 4
+        
         //dialouge
         box = game.add.graphics(0, 0);
         box.beginFill(0x77bdea);
@@ -174,7 +185,6 @@ demo.village.prototype = {
 
         playerMovement(player);
 
-        //showCurrItem();
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -243,7 +253,6 @@ demo.village.prototype = {
     addInventory: function(player, item){
         inventoryArray.push(item);
         item.kill();
-        currItem = inventoryArray[inventoryArray.indexOf(item)];
 
     },
     
@@ -279,18 +288,5 @@ demo.village.prototype = {
 
 };
 
-function showCurrItem(){
-    itemBox = game.add.graphics(0, 0);
-    itemBox.beginFill(0x685442);
-    itemBox.alpha = 0.8;
-    itemBox.drawRect(0, game.world.height-2720, 60, 60);
-    itemBox.fixedToCamera = true;
-    
-    itemOnScreen = game.add.sprite(0, game.world.height-2710, currItem.key);
-    
-    itemOnScreen.fixedToCamera = true;
-    itemOnScreen.scale.x = 4
-    itemOnScreen.scale.y = 4
-    
-}
+
 
