@@ -66,13 +66,13 @@ function playerMovement(player){
     player.body.velocity.x = 0;
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-        player.body.velocity.x = 150;            
+        player.body.velocity.x = 175;            
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                 
-        player.body.velocity.x = -150;
+        player.body.velocity.x = -175;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
@@ -82,7 +82,7 @@ function playerMovement(player){
         player.frame = 0;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
-        player.body.velocity.y = -325;
+        player.body.velocity.y = -340;
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
@@ -107,6 +107,7 @@ function playerMovement(player){
 
         if (currItem == undefined){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+            showCurrItem();
 
             
         }
@@ -117,7 +118,6 @@ function playerMovement(player){
             
         else if (currItem.key == 'pickAxe'){
             //this.hit();
-            player.animations.add('attack', [2, 3, 4], 10, true);
             player.animations.play('attack');
 
         }
@@ -136,6 +136,7 @@ function playerMovement(player){
     if (game.input.keyboard.downDuration(Phaser.Keyboard.F, 10)){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
             console.log(currItem);
+            showCurrItem(currItem);
     }
 
 
@@ -147,11 +148,11 @@ function fire(){
         bullet = bullets.getFirstDead();
         bullet.reset(player.x, player.y-10);
         if (dirValue == 1){
-            bullet.body.velocity.x = -500;
+            bullet.body.velocity.x = -550;
 
         }
         else if(dirValue == -1){
-            bullet.body.velocity.x = 500;
+            bullet.body.velocity.x = 550;
 
         }
         
@@ -169,4 +170,15 @@ function addHealth(){
     playerHealth.setAll('scale.x', 3);
     playerHealth.setAll('scale.y', 3);
 
+}
+
+function showCurrItem(){
+    
+    if (currItem == undefined){
+        currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+    }
+    
+    itemOnScreen.loadTexture(currItem.key);
+
+    
 }

@@ -108,7 +108,19 @@ demo.bossState.prototype = {
         inventoryBox.fixedToCamera = true;
         inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
         inventoryText.fixedToCamera = true;
-    },
+        
+        //current item display
+        itemBox = game.add.graphics(0, 0);
+        itemBox.beginFill(0xECE6E5);
+        itemBox.alpha = 0.8;
+        itemBox.drawRect(740, game.world.height-70, 60, 60);
+        itemBox.fixedToCamera = true;
+        itemOnScreen = game.add.sprite(743, game.world.height-55, currItem.key);
+        itemOnScreen.fixedToCamera = true;
+        itemOnScreen.scale.x = 4;
+        itemOnScreen.scale.y = 4;
+        
+    };
     
     update: function(){
 
@@ -180,7 +192,7 @@ demo.bossState.prototype = {
     addInventory: function(player, item){
         inventoryArray.push(item);
         item.kill();
-        currItem = inventoryArray[inventoryArray.indexOf(item)];
+        
 
         
     }
