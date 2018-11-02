@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, box, villageMusic;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, box, villageMusic, villageKidnappedMusic;
 var sarah, bob, paula
 
 demo.villageKidnapped = function(){};
@@ -19,14 +19,14 @@ demo.villageKidnapped.prototype = {
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
         game.load.image('blank', 'assets/blank.png');
-        //game.load.audio('villageMusic', 'assets/villageMusic.mp3');
+        game.load.audio('villageKidnappedMusic', 'assets/villageKidnappedMusic.ogg');
 
     },
     
     create: function(){
         
-        //villageMusic = game.add.audio('villageMusic');
-        //villageMusic.play();
+        villageKidnappedMusic = game.add.audio('villageKidnappedMusic', 1, true);
+        villageKidnappedMusic.play();
         
         // Background image
         game.add.tileSprite(0, 0, 1792, 2720, 'sky');

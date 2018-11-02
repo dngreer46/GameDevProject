@@ -1,4 +1,4 @@
-var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, tutorial, tutorialText, dialogueName, dialogueText, box, villageMusic, tutorial1, tutorial2, itemOnScreen;
+var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText;
 var sarah, bob, paula;
 
 demo.village = function(){};
@@ -32,7 +32,7 @@ demo.village.prototype = {
     
     create: function(){
         
-        villageMusic = game.add.audio('villageMusic');
+        villageMusic = game.add.audio('villageMusic', 0.3, true);
         villageMusic.play();
         
         // Background image
@@ -63,13 +63,7 @@ demo.village.prototype = {
         mapChangeHouse = game.add.sprite(545, 2529, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
-        // Tutorial sign
-        tutorialText = game.add.text(100, game.world.height-100, 'Move Left/Right: A/D\nJump: W', {fontSize: '18px', fill: '#ffffff' });  
-        tutorial = game.add.group();
-        tutorial.enableBody = true;
-        tutorial1 = tutorial.create(192, game.world.height-192, 'blank');
-        tutorial2 = tutorial.create(150, game.world.height-192, 'blank');
-        tutorial3 = tutorial.create(1500, game.world.height-250, 'blank');
+
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
@@ -151,6 +145,9 @@ demo.village.prototype = {
         
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         
+        itemText = game.add.text(game.world.width - 1200, game.world.height - 2255, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
+        
         //current item display
         itemBox = game.add.graphics(0, 0);
         itemBox.beginFill(0xECE6E5);
@@ -163,11 +160,11 @@ demo.village.prototype = {
         itemOnScreen.scale.y = 4
         
         //dialouge
-        box = game.add.graphics(0, 0);
-        box.beginFill(0x77bdea);
-        box.alpha = 0;
-        box.drawRect(200, 20, 400, 200);
-        box.fixedToCamera = true;
+        dialogueBox = game.add.graphics(0, 0);
+        dialogueBox.beginFill(0x77bdea);
+        dialogueBox.alpha = 0;
+        dialogueBox.drawRect(200, 20, 400, 200);
+        dialogueBox.fixedToCamera = true;
         dialogueName = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
         dialogueName.fixedToCamera = true;
         dialogueText = game.add.text(210, 75, '', {fontSize: '15px', fill: '#000'});
@@ -188,8 +185,7 @@ demo.village.prototype = {
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
- 
-        game.physics.arcade.overlap(tutorial, player, this.showTutorial);
+
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
@@ -209,35 +205,35 @@ demo.village.prototype = {
         
         // Sarah dialogue
         if (atSarah) {
-            box.alpha = 0.8;
+            dialogueBox.alpha = 0.8;
             dialogueName.text = 'Sarah:';
             dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked!\nWill you please find the key for me?';
         }
         
         // Paula dialogue
         else if (atPaula) {
-            box.alpha = 0.8;
+            dialogueBox.alpha = 0.8;
             dialogueName.text = 'Paula:';
             dialogueText.text = 'Hiya neighbor! Fine weather we have today.';
         }
         
         // Bob dialogue
         else if (atBob) {
-            box.alpha = 0.8;
+            dialogueBox.alpha = 0.8;
             dialogueName.text = 'Bob:';
             dialogueText.text = 'Good mornin, John! How are you today?';
         }
         
         // Forest dialogue
         else if (atForest) {
-            box.alpha = 0.8;
+            dialogueBox.alpha = 0.8;
             dialogueName.text = 'John (you):';
             dialogueText.text = 'The forest is dangerous! \nI should look for the kite at home first.';
         }
         
         // Get rid of text box if not overlapping NPC
         else {
-            box.alpha = 0;
+            dialogueBox.alpha = 0;
             dialogueName.text = '';
             dialogueText.text = '';
         }
@@ -265,24 +261,7 @@ demo.village.prototype = {
         game.state.start('house');    
     },
     
-    showTutorial: function(player, tutorial){     
-        tutorialText.fixedToCamera = true;
-        tutorialText.cameraOffset.setTo(100, game.world.height-2320);
-
-        if (tutorial == tutorial1){
-            tutorialText.text = 'Walk over items to pick them up';
-        }
-        else if (tutorial == tutorial2){
-            tutorialText.text = 'Press space to use items';
-        }
-        else if (tutorial == tutorial3){
-            tutorialText.text = 'Press shift to check the inventory\nPress F to change items\nPress SPACE to use items'
-        }
-
-        
-        tutorial.kill();
-    },
-
+   
 
     
 
