@@ -160,7 +160,9 @@ demo.bossState.prototype = {
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
         //damage boss
-        game.physics.arcade.overlap(boss, bullet, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(boss, bullet, this.hitBoss, null, this);
+        
+        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
         game.physics.arcade.overlap(items, player, this.addInventory);
 
@@ -178,7 +180,7 @@ demo.bossState.prototype = {
 
     
     
-     hitEnemy: function(boss, bullet){
+     hitBoss: function(boss, bullet){
         bullet.kill();
         
         damageSound.play();
@@ -232,7 +234,13 @@ demo.bossState.prototype = {
         
 
         
-    }
+    },
+    
+    hitEnemy: function(enemy, bullet){
+        bullet.kill();
+        enemy.kill();
+        damageSound.play();
+    },
 
     
 };

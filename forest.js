@@ -149,7 +149,7 @@ demo.forest.prototype = {
         itemBox = game.add.graphics(0, 0);
         itemBox.beginFill(0x5daf8a);
         itemBox.alpha = 0.65;
-        itemBox.drawRect(740, game.world.height-70, 50, 50);
+        itemBox.drawRect(740, game.world.height-50, 50, 50);
         itemBox.fixedToCamera = true;
         itemOnScreen = game.add.sprite(743, game.world.height-55, currItem.key);
         itemOnScreen.fixedToCamera = true;
@@ -182,9 +182,9 @@ demo.forest.prototype = {
     },
 
     
-    hitEnemy: function(boss, bullet){
+    hitEnemy: function(enemy, bullet){
         bullet.kill();
-        boss.kill();
+        enemy.kill();
         damageSound.play();
     },
     
