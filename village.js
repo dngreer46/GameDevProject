@@ -2,6 +2,7 @@ var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, invent
 var johnSign, paulaSign, bobSign, forestSign;
 var sarah, bob, paula;
 
+
 demo.village = function(){};
 
 demo.village.prototype = {
