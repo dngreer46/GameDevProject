@@ -71,8 +71,8 @@ demo.forest.prototype = {
         });
         
         // Player
-        //player = game.add.sprite(32, game.world.height-96, 'john');
-        player = game.add.sprite(1910, game.world.height-96, 'john');
+        player = game.add.sprite(32, game.world.height-96, 'john');
+        //player = game.add.sprite(1910, game.world.height-96, 'john');
         player.scale.setTo(0.5, 0.5);
         //player.body.setSize(32, 70, 0, 0);
         game.physics.arcade.enable(player);
@@ -196,7 +196,7 @@ demo.forest.prototype = {
     
     toLab: function(){
         forestMusic.stop();
-        game.state.start('bossState');    
+        game.state.start('lab');    
     },
     
     playerHit: function(player) {
