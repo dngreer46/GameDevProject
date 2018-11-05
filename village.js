@@ -16,7 +16,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 65, 70, 5);
+        game.load.spritesheet('john', 'assets/john.png', 63, 70, 5);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -36,9 +36,9 @@ demo.village.prototype = {
         villageMusic.play();
         
         // Background image
-        game.add.tileSprite(0, 0, 1792, 2720, 'sky');
+        game.add.tileSprite(0, 0, 3520, 640, 'sky');
         game.stage.backgroundColor = '#000';
-        game.world.setBounds(0, 0, 1792, 2720);
+        game.world.setBounds(0, 0, 3520, 640);
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -57,10 +57,10 @@ demo.village.prototype = {
         plantsAndSigns = map.createLayer('PlantsSigns');
         
         // Map change
-        mapChange = game.add.sprite(1787, 1152, 'blank');
+        mapChange = game.add.sprite(3500, 480, 'blank');
         game.physics.arcade.enable(mapChange);
         
-        mapChangeHouse = game.add.sprite(545, 2529, 'blank');
+        mapChangeHouse = game.add.sprite(545, 544, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
 
@@ -77,26 +77,26 @@ demo.village.prototype = {
         });
         
         // Add Sarah sprite
-        sarah = game.add.sprite(850, game.world.height-197, 'sarah');
+        sarah = game.add.sprite(850, 544, 'sarah');
         sarah.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(sarah);
         sarah.body.gravity.y = 500;
         
         // Bob
-        bob = game.add.sprite(550, 1698, 'bob');
+        bob = game.add.sprite(2785, 480, 'bob');
         bob.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(bob);
         bob.body.gravity.y = 500;
         
         // Paula
-        paula = game.add.sprite(900, 1698, 'paula');
+        paula = game.add.sprite(1960, 480, 'paula');
         paula.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(paula);
         paula.body.gravity.y = 500;
         
         
         // Add John sprite
-        player = game.add.sprite(256, game.world.height-197, 'john');
+        player = game.add.sprite(256, 544, 'john');
         //player = game.add.sprite(1500, game.world.height-250, 'john');
 
         player.scale.setTo(0.5, 0.5);
@@ -129,8 +129,8 @@ demo.village.prototype = {
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
         //items.create(1170, game.world.height-1015, 'gun');
-        items.create(150, game.world.height-195, 'pickAxe'); 
-        items.create(1500, game.world.height-250, 'key');   
+        items.create(150, 544, 'pickAxe'); 
+        items.create(1072, 455, 'key');   
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
         
@@ -145,19 +145,19 @@ demo.village.prototype = {
         
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         
-        itemText = game.add.text(game.world.width - 1200, game.world.height - 2255, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
         //current item display
-        itemBox = game.add.graphics(0, 0);
-        itemBox.beginFill(0xECE6E5);
-        itemBox.alpha = 0.8;
-        itemBox.drawRect(game.world.width - 1053, game.world.height-2280, 60, 60);
+        itemBox = game.add.graphics(0, game.world.height-195);
+        itemBox.beginFill(0x5daf8a);
+        itemBox.alpha = 0.65;
+        itemBox = itemBox.drawRect(720, 0, 50, 50);
         itemBox.fixedToCamera = true;
-        itemOnScreen = game.add.sprite(game.world.width - 1052, game.world.height-2273, currItem.key);
+        itemOnScreen = game.add.sprite(720, game.world.height-190, currItem.key);
         itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 4
-        itemOnScreen.scale.y = 4
+        itemOnScreen.scale.x = 3.75
+        itemOnScreen.scale.y = 3.75
         
         //dialouge
         dialogueBox = game.add.graphics(0, 0);
