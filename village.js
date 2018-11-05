@@ -16,7 +16,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63, 70, 5);
+        game.load.spritesheet('john', 'assets/john.png', 63, 70);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -97,7 +97,7 @@ demo.village.prototype = {
         
         // Add John sprite
         player = game.add.sprite(256, 544, 'john');
-        //player = game.add.sprite(1500, game.world.height-250, 'john');
+        //player = game.add.sprite(2210, 390, 'john');
 
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
@@ -107,8 +107,8 @@ demo.village.prototype = {
         player.body.collideWorldBounds = true;
         
         // Player Animations
-        player.animations.add('walk', [0, 1], 10, true);
-        player.animations.add('attack', [2, 3, 4], 10, true);
+        player.animations.add('walk', [0, 1], 10);
+        player.animations.add('attack', [2, 3, 4], 10);
         //Camera
         game.camera.follow(player);
         
@@ -130,7 +130,7 @@ demo.village.prototype = {
         items.physicsBodyType = Phaser.Physics.ARCADE;
         //items.create(1170, game.world.height-1015, 'gun');
         items.create(150, 544, 'pickAxe'); 
-        items.create(1072, 455, 'key');   
+        items.create(2210, 390, 'key');   
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
         
@@ -181,7 +181,7 @@ demo.village.prototype = {
         game.physics.arcade.collide(paula, ground);
 
         playerMovement(player);
-
+        useItem(player);
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -244,6 +244,8 @@ demo.village.prototype = {
     
     render: function(){
         //game.debug.body(player);
+        game.debug.spriteInfo(player, 32, 32);
+
     },
     
     addInventory: function(player, item){

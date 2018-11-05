@@ -78,13 +78,15 @@ function playerMovement(player){
 
     }
     else{
-        player.animations.stop();
-        player.frame = 0;
+        player.animations.stop('walk');
+        //player.frame = 0;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
         player.body.velocity.y = -340;
     }
-        
+}
+    
+function useItem(player){
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
         inventoryBox.alpha = 0.8;
         inventory = game.add.group(inventoryBox);
@@ -104,12 +106,10 @@ function playerMovement(player){
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-
+        
         if (currItem == undefined){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-            showCurrItem();
-
-            
+            showCurrItem();  
         }
             
         else if (currItem.key == 'gun'){
@@ -119,7 +119,6 @@ function playerMovement(player){
         else if (currItem.key == 'pickAxe'){
             //this.hit();
             player.animations.play('attack');
-
         }
         
         else if (currItem.key == 'health'){
@@ -134,9 +133,14 @@ function playerMovement(player){
         }
     }
     if (game.input.keyboard.downDuration(Phaser.Keyboard.F, 10)){
+        currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+        console.log(currItem);
+        if (currItem == undefined){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-            console.log(currItem);
-            showCurrItem(currItem);
+        }
+        showCurrItem(currItem);
+
+        
     }
 
 
