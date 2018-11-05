@@ -36,9 +36,9 @@ demo.village.prototype = {
         villageMusic.play();
         
         // Background image
-        game.add.tileSprite(0, 0, 1792, 2720, 'sky');
+        game.add.tileSprite(0, 0, 3520, 640, 'sky');
         game.stage.backgroundColor = '#000';
-        game.world.setBounds(0, 0, 1792, 2720);
+        game.world.setBounds(0, 0, 3520, 640);
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -96,7 +96,7 @@ demo.village.prototype = {
         
         
         // Add John sprite
-        player = game.add.sprite(256, game.world.height-197, 'john');
+        player = game.add.sprite(256, 544, 'john');
         //player = game.add.sprite(1500, game.world.height-250, 'john');
 
         player.scale.setTo(0.5, 0.5);
