@@ -1,12 +1,13 @@
 var game = new Phaser.Game(800, 500, Phaser.AUTO);
-game.state.add('startTutorial', demo.startTutorial);
 game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
 game.state.add('house', demo.house);
+game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
-game.state.start('village');
+//game.state.start('village');
+game.state.start('startTutorial');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue;
 
@@ -65,15 +66,16 @@ function playerMovement(player){
 
     
     player.body.velocity.x = 0;
+    player.anchor.setTo(.35,.35);
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-        player.scale.x = .72;
+        player.scale.x = .7;
         player.body.velocity.x = 175;    
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
-    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                   player.scale.x = -.72;
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                   player.scale.x = -.7;
         player.body.velocity.x = -175;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);

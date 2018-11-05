@@ -1,6 +1,7 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText;
 var sarah, bob, paula;
 
+
 demo.village = function(){};
 
 demo.village.prototype = {
