@@ -5,6 +5,8 @@ var overlap;
 var damageSound;
 var bossDialouge;
 var inventoryBox;
+var enemyE;
+var enemies;
 
 var demo = {};
 demo.bossState = function(){};
@@ -17,6 +19,7 @@ demo.bossState.prototype = {
         game.load.audio('impact', 'assets/slaphit.mp3');               
         game.load.image('gun', 'assets/gun.png');
         game.load.image('health', 'assets/Heart.png');
+        game.load.spritesheet('enemy', 'assets/bossmini.png', 40, 40);
 
     },
     
@@ -39,6 +42,8 @@ demo.bossState.prototype = {
 
         //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', {fontSize: '32px', fill: '#ffffff' });
+        boss_health = 100;
+
 
         
         playerHealth = game.add.group();
@@ -51,13 +56,12 @@ demo.bossState.prototype = {
         
         playerHealth.setAll('scale.x', 3);
         playerHealth.setAll('scale.y', 3);
-        boss_health = 100;
         
         //enable physics for sprites
         game.physics.arcade.enable(player);
         game.physics.arcade.enable(boss);  
         game.physics.arcade.enable(ground);
-        
+
         //set properties for ground
         ground.body.immovable = true;
         ground.body.allowGravity = false;
@@ -74,7 +78,20 @@ demo.bossState.prototype = {
         boss.body.immovable = true;
         boss.body.velocity.x = -200;
         boss.animations.add('blob', [0, 1, 2, 3], 7, true);
+        
+        //create enemies 
+        //enemyE = game.add.emitter(boss.x, boss.y, 30);
+        //enemyE.makeParticles('boss', 0, 30, true, true);
+        //enemyE.enableBody = true;
+        enemies = game.add.group();
+        enemies.enableBody = true;
+        enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
+        enemies.createMultiple(15, 'enemy');
+        enemies.setAll('body.gravity.y', 500);
+        enemies.setAll('collideWorldBounds', true);
+        game.add.tween(enemies).to( { x: game.world.randomX }, 2000, "Linear", true, 2000, -1, true);
+        
         //set properties for bullets
         bullets = game.add.group();
         bullets.enableBody = true;
@@ -126,6 +143,8 @@ demo.bossState.prototype = {
 
         playerMovement(player);
         
+        game.physics.arcade.collide(enemies, ground);
+
         //boss movement
         boss.animations.play('blob');
         if (boss.x <= 100){
@@ -136,27 +155,47 @@ demo.bossState.prototype = {
             boss.body.velocity.x = -200;
             boss.frame = 1;
         }
+        
         //damage player
         game.physics.arcade.overlap(player, boss, this.playerHit, null, this);
 
         //damage boss
-        game.physics.arcade.overlap(boss, bullet, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(boss, bullet, this.hitBoss, null, this);
+        
+        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
         game.physics.arcade.overlap(items, player, this.addInventory);
 
         
     },
     
+    render: function(){
+        //game.debug.body(player);
+  //      game.debug.body(ground);
+//        enemy = enemies.getFirstAlive();
+        //game.debug.body(enemy);
+    },
+
+
+
     
-     hitEnemy: function(boss, bullet){
+    
+     hitBoss: function(boss, bullet){
         bullet.kill();
         
         damageSound.play();
         boss_health -= 10;
         bossHealth.text = 'Boss Health: ' + boss_health;
+        console.log(boss_health);
         
         if (boss_health == 70){
-            bossDialouge = game.add.text(game.world.width - 500, game.world.height - 400, 'You will never win', {fontSize: '32px', fill: '#ffffff' });
+            for (var i = 0; i < 5; i++){
+                enemy = enemies.getFirstDead();
+                enemy.reset(200 + (i*50), 0);
+            }
+            //enemyE.on = true;
+            //enemyE.start(true, 0, 15);
+            //bossDialouge = game.add.text(game.world.width - 500, game.world.height - 400, 'You will never win', {fontSize: '32px', fill: '#ffffff' });
         }
         else if (boss_health == 0){
             boss.kill();
@@ -195,6 +234,14 @@ demo.bossState.prototype = {
         
 
         
-    }
+    },
+    
+    hitEnemy: function(enemy, bullet){
+        bullet.kill();
+        enemy.kill();
+        damageSound.play();
+    },
+
     
 };
+
