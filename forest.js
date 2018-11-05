@@ -146,14 +146,14 @@ demo.forest.prototype = {
         
         //current item display
         itemBox = game.add.graphics(0, 0);
-        itemBox.beginFill(0xECE6E5);
-        itemBox.alpha = 0.8;
-        itemBox.drawRect(740, game.world.height-70, 60, 60);
+        itemBox.beginFill(0x5daf8a);
+        itemBox.alpha = 0.65;
+        itemBox.drawRect(740, game.world.height-70, 50, 50);
         itemBox.fixedToCamera = true;
         itemOnScreen = game.add.sprite(743, game.world.height-55, currItem.key);
         itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 4;
-        itemOnScreen.scale.y = 4;
+        itemOnScreen.scale.x = 3.75;
+        itemOnScreen.scale.y = 3.75;
     }, 
     
     

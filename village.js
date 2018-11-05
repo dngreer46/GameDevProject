@@ -145,19 +145,19 @@ demo.village.prototype = {
         
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         
-        itemText = game.add.text(game.world.width - 1200, game.world.height - 2255, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
         //current item display
-        itemBox = game.add.graphics(0, 0);
-        itemBox.beginFill(0xECE6E5);
-        itemBox.alpha = 0.8;
-        itemBox.drawRect(game.world.width - 1053, game.world.height-2280, 60, 60);
+        itemBox = game.add.graphics(0, game.world.height-195);
+        itemBox.beginFill(0x5daf8a);
+        itemBox.alpha = 0.65;
+        itemBox = itemBox.drawRect(720, 0, 50, 50);
         itemBox.fixedToCamera = true;
-        itemOnScreen = game.add.sprite(game.world.width - 1052, game.world.height-2273, currItem.key);
+        itemOnScreen = game.add.sprite(720, game.world.height-190, currItem.key);
         itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 4
-        itemOnScreen.scale.y = 4
+        itemOnScreen.scale.x = 3.75
+        itemOnScreen.scale.y = 3.75
         
         //dialouge
         dialogueBox = game.add.graphics(0, 0);
