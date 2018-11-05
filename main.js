@@ -134,9 +134,14 @@ function playerMovement(player){
         }
     }
     if (game.input.keyboard.downDuration(Phaser.Keyboard.F, 10)){
+        currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+        console.log(currItem);
+        if (currItem == undefined){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-            console.log(currItem);
-            showCurrItem(currItem);
+        }
+        showCurrItem(currItem);
+
+        
     }
 
 
