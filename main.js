@@ -1,4 +1,5 @@
 var game = new Phaser.Game(800, 500, Phaser.AUTO);
+game.state.add('startTutorial', demo.startTutorial);
 game.state.add('bossState', demo.bossState);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
@@ -66,12 +67,13 @@ function playerMovement(player){
     player.body.velocity.x = 0;
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-        player.body.velocity.x = 175;            
+        player.scale.x = .72;
+        player.body.velocity.x = 175;    
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
-    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                 
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                   player.scale.x = -.72;
         player.body.velocity.x = -175;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
