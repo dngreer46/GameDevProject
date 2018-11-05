@@ -14,7 +14,7 @@ demo.villageKidnapped.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 65, 70);
+        game.load.spritesheet('john', 'assets/john.png', 63, 70);
         game.load.spritesheet('note', 'assets/note.png', 35, 35);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -29,9 +29,9 @@ demo.villageKidnapped.prototype = {
         villageKidnappedMusic.play();
         
         // Background image
-        game.add.tileSprite(0, 0, 1792, 2720, 'sky');
+        game.add.tileSprite(0, 0, 3520, 640, 'sky');
         game.stage.backgroundColor = '#000';
-        game.world.setBounds(0, 0, 1792, 2720);
+        game.world.setBounds(0, 0, 3520, 640);
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -50,10 +50,10 @@ demo.villageKidnapped.prototype = {
         plantsAndSigns = map.createLayer('PlantsSigns');
         
         // Map change
-        mapChange = game.add.sprite(1787, 1152, 'blank');
+        mapChange = game.add.sprite(3500, 480, 'blank');
         game.physics.arcade.enable(mapChange);
         
-        mapChangeHouse = game.add.sprite(545, 2529, 'blank');
+        mapChangeHouse = game.add.sprite(545, 544, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
 
@@ -70,18 +70,18 @@ demo.villageKidnapped.prototype = {
         });
         
         // Add Note sprite
-        note = game.add.sprite(850, game.world.height-197, 'note');
+        note = game.add.sprite(850, 544, 'note');
         game.physics.arcade.enable(note);
         note.body.gravity.y = 500;
         
         // Bob
-        bob = game.add.sprite(550, 1698, 'bob');
+        bob = game.add.sprite(2785, 480, 'bob');
         bob.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(bob);
         bob.body.gravity.y = 500;
         
         // Paula
-        paula = game.add.sprite(900, 1698, 'paula');
+        paula = game.add.sprite(1960, 480, 'paula');
         paula.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(paula);
         paula.body.gravity.y = 500;
@@ -89,8 +89,7 @@ demo.villageKidnapped.prototype = {
         
         // Add John sprite
         //player = game.add.sprite(1787, 1152, 'john');
-        player = game.add.sprite(550, 2528, 'john');
-        player.scale.setTo(0.5, 0.5);
+        player = game.add.sprite(545, 544, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.setSize(32, 70, 0, 0);

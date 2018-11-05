@@ -16,7 +16,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 65, 70, 5);
+        game.load.spritesheet('john', 'assets/john.png', 63, 70, 5);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -57,10 +57,10 @@ demo.village.prototype = {
         plantsAndSigns = map.createLayer('PlantsSigns');
         
         // Map change
-        mapChange = game.add.sprite(1787, 1152, 'blank');
+        mapChange = game.add.sprite(3500, 480, 'blank');
         game.physics.arcade.enable(mapChange);
         
-        mapChangeHouse = game.add.sprite(545, 2529, 'blank');
+        mapChangeHouse = game.add.sprite(545, 544, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
 
@@ -77,19 +77,19 @@ demo.village.prototype = {
         });
         
         // Add Sarah sprite
-        sarah = game.add.sprite(850, game.world.height-197, 'sarah');
+        sarah = game.add.sprite(850, 544, 'sarah');
         sarah.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(sarah);
         sarah.body.gravity.y = 500;
         
         // Bob
-        bob = game.add.sprite(550, 1698, 'bob');
+        bob = game.add.sprite(2785, 480, 'bob');
         bob.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(bob);
         bob.body.gravity.y = 500;
         
         // Paula
-        paula = game.add.sprite(900, 1698, 'paula');
+        paula = game.add.sprite(1960, 480, 'paula');
         paula.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(paula);
         paula.body.gravity.y = 500;
@@ -129,8 +129,8 @@ demo.village.prototype = {
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
         //items.create(1170, game.world.height-1015, 'gun');
-        items.create(150, game.world.height-195, 'pickAxe'); 
-        items.create(1500, game.world.height-250, 'key');   
+        items.create(150, 544, 'pickAxe'); 
+        items.create(1072, 455, 'key');   
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
         
