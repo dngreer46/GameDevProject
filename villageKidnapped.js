@@ -14,16 +14,22 @@ demo.villageKidnapped.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63, 70);
         game.load.spritesheet('note', 'assets/note.png', 35, 35);
-        game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
-        game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
+
         game.load.image('blank', 'assets/blank.png');
         game.load.audio('villageKidnappedMusic', 'assets/villageKidnappedMusic.ogg');
 
     },
     
     create: function(){
+        
+        // Add John sprite
+        //loadPlayer(545, 544);
+        loadPlayer(3500, 480);
+        //inventory
+        createInventory();
+        //current item display
+        displayCurrentItem(740, game.world.height-195);
         
         villageKidnappedMusic = game.add.audio('villageKidnappedMusic', 1, true);
         villageKidnappedMusic.play();
@@ -87,52 +93,11 @@ demo.villageKidnapped.prototype = {
         paula.body.gravity.y = 500;
         
         
-        // Add John sprite
-        //player = game.add.sprite(3500, 480, 'john');
-        player = game.add.sprite(545, 544, 'john');
-        player.scale.setTo(0.5, 0.5);
-        game.physics.arcade.enable(player);
-        player.body.setSize(32, 70, 0, 0);
-        player.body.gravity.y = 500;
-        player.body.collideWorldBounds = true;
-        
-        // Player Animations
-        player.animations.add('walk', [0, 1], 10, true);
-        player.animations.add('attack', [2, 3, 4], 10, true);
-        
-        //Camera
-        game.camera.follow(player);
-        
-        
-        
         //create items
         items = game.add.group();
         items.enableBody = true;
         items.physicsBodyType = Phaser.Physics.ARCADE;
 
-        
-        //inventory
-        inventoryBox = game.add.graphics(0, 0);
-        inventoryBox.beginFill(0x77bdea);
-        inventoryBox.alpha = 0;
-        inventoryBox.drawRect(200, 20, 400, 100);
-        inventoryBox.fixedToCamera = true;
-        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-        inventoryText.fixedToCamera = true;
-        
-        itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
-        itemText.fixedToCamera = true;
-        
-        //current item display
-        itemBox = game.add.graphics(0, game.world.height-195);
-        itemBox.beginFill(0x5daf8a);
-        itemBox.alpha = 0.65;
-        itemBox = itemBox.drawRect(720, 0, 50, 50);
-        itemBox.fixedToCamera = true;
-        itemOnScreen = game.add.sprite(720, game.world.height-190, currItem.key);
-        itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 3.75
-        itemOnScreen.scale.y = 3.75
         
         //dialouge
         box = game.add.graphics(0, 0);
@@ -213,7 +178,8 @@ demo.villageKidnapped.prototype = {
 
     },
     
-    toForest: function(){        
+    toForest: function(){   
+        villageKidnappedMusic.stop();
         game.state.start('forest');    
     },
     

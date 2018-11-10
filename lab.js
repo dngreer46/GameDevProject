@@ -10,18 +10,16 @@ demo.lab.prototype = {
         // Preload tilemap
         game.load.tilemap('labMap', 'assets/maps/labMap.json', null, Phaser.Tilemap.TILED_JSON);
         
-        // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63, 70, 5);
         
-        game.load.image('gun', 'assets/gun.png');
-        game.load.image('pickAxe', 'assets/Pickaxe.png');
-        game.load.image('health', 'assets/Heart.png');
-        game.load.image('key', 'assets/key.png');
-        game.load.image('bullet', 'assets/bullet.png');
-        game.load.image('blank', 'assets/blank.png');
     },
     
     create: function() {
+        
+        // Add John sprite
+        loadPlayer(16, 192);
+        //inventory
+        createInventory();
+        
         game.stage.backgroundColor = '#000';
         game.world.setBounds(0, 0, 960, 1600);
         
@@ -54,29 +52,8 @@ demo.lab.prototype = {
         mapChange = game.add.sprite(940, 1408, 'blank');
         game.physics.arcade.enable(mapChange);
         
-        // Add John sprite
-        player = game.add.sprite(16, 192, 'john');
-        player.scale.setTo(0.5, 0.5);
-        game.physics.arcade.enable(player);
-        player.body.setSize(35, 70, 0, 0);
 
-        player.body.gravity.y = 500;
-        player.body.collideWorldBounds = true;
         
-        // Player Animations
-        player.animations.add('walk', [0, 1], 10, true);
-        player.animations.add('attack', [2, 3, 4], 10, true);
-        //Camera
-        game.camera.follow(player);
-        
-        //inventory
-        inventoryBox = game.add.graphics(0, 0);
-        inventoryBox.beginFill(0x77bdea);
-        inventoryBox.alpha = 0;
-        inventoryBox.drawRect(200, 20, 400, 100);
-        inventoryBox.fixedToCamera = true;
-        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-        inventoryText.fixedToCamera = true;
         
     },
     

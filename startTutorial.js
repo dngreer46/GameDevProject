@@ -12,7 +12,6 @@ demo.startTutorial.prototype = {
         game.load.image('spacebar', 'assets/spacebar.png');
         game.load.image('shift', 'assets/shift.png');
         game.load.image('WASD', 'assets/WASD.png');
-        game.load.audio('villageMusic', 'assets/villageMusic.mp3');
         
     },
     

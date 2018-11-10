@@ -28,14 +28,22 @@ demo.village.prototype = {
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('blank', 'assets/blank.png');
-        game.load.audio('villageMusic', 'assets/villageMusic.mp3');
 
     },
     
     create: function(){
         
-        villageMusic = game.add.audio('villageMusic', 0.3, true);
-        villageMusic.play();
+        //This functions must be called in every state
+        // Add John sprite
+        //loadPlayer(246, 544);
+        loadPlayer(2210, 390);
+        //set properties for bullets
+        createBullets();
+        //current item display
+        displayCurrentItem(740, game.world.height-195);
+        //inventory
+        createInventory();
+        
         
         // Background image
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
@@ -98,34 +106,7 @@ demo.village.prototype = {
         paula.body.gravity.y = 500;
         
         
-        // Add John sprite
-        player = game.add.sprite(256, 544, 'john');
-        //player = game.add.sprite(2210, 390, 'john');
 
-        player.scale.setTo(0.5, 0.5);
-        game.physics.arcade.enable(player);
-        player.body.setSize(35, 63, 0, 0);
-    
-        player.body.gravity.y = 500;
-        player.body.collideWorldBounds = true;
-        
-        // Player Animations
-        player.animations.add('walk', [0, 1], 10);
-        player.animations.add('attack', [2, 3, 4], 10);
-        //Camera
-        game.camera.follow(player);
-        
-        //set properties for bullets
-        bullets = game.add.group();
-        bullets.enableBody = true;
-        bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        bullets.createMultiple(50, 'bullet');
-        bullets.setAll('checkWorldBounds', true);
-        bullets.setAll('outOfBoundsKill', true);
-        bullets.setAll('anchor.y', -5);
-        bullets.setAll('anchor.x', 0.5);
-        bullets.setAll('scale.x', 0.8);
-        bullets.setAll('scale.y', 0.8);
         
         //create items
         items = game.add.group();
@@ -137,30 +118,16 @@ demo.village.prototype = {
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
         
-        //inventory
-        inventoryBox = game.add.graphics(0, 0);
-        inventoryBox.beginFill(0x77bdea);
-        inventoryBox.alpha = 0;
-        inventoryBox.drawRect(200, 20, 400, 100);
-        inventoryBox.fixedToCamera = true;
-        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-        inventoryText.fixedToCamera = true;
+
+        
         
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         
         itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
-        //current item display
-        itemBox = game.add.graphics(0, game.world.height-195);
-        itemBox.beginFill(0x5daf8a);
-        itemBox.alpha = 0.65;
-        itemBox = itemBox.drawRect(720, 0, 50, 50);
-        itemBox.fixedToCamera = true;
-        itemOnScreen = game.add.sprite(720, game.world.height-190, currItem.key);
-        itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 3.75
-        itemOnScreen.scale.y = 3.75
+
+
         
         //dialouge
         dialogueBox = game.add.graphics(0, 0);
@@ -295,6 +262,8 @@ demo.village.prototype = {
     addInventory: function(player, item){
         inventoryArray.push(item);
         item.kill();
+        currItem = inventoryArray[inventoryArray.indexOf(item)];
+
 
     },
     
