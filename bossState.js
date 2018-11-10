@@ -33,9 +33,8 @@ demo.bossState.prototype = {
                 
         
         //add sprites
-        player = game.add.sprite(32, game.world.height - 250, 'john');
-        player.scale.setTo(0.5, 0.5);
-        //player.body.setSize(32, 70, 0, 0);
+        loadPlayer(32, 250);
+
         boss = game.add.sprite(500, game.world.height - 250, 'boss');
         ground = this.add.tileSprite(0,this.game.height-140,this.game.world.width,70,'ground');
 
@@ -66,10 +65,7 @@ demo.bossState.prototype = {
         ground.body.immovable = true;
         ground.body.allowGravity = false;
         
-        //set properties for player
-        player.body.gravity.y = 500;
-        player.body.collideWorldBounds = true;
-        player.animations.add('walk', [0, 1], 10, true);
+
 
         //set properties for boss
         boss.body.gravity.y = 150;
@@ -93,14 +89,7 @@ demo.bossState.prototype = {
         game.add.tween(enemies).to( { x: game.world.randomX }, 2000, "Linear", true, 2000, -1, true);
         
         //set properties for bullets
-        bullets = game.add.group();
-        bullets.enableBody = true;
-        bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        bullets.createMultiple(50, 'bullet');
-        bullets.setAll('checkWorldBounds', true);
-        bullets.setAll('outOfBoundsKill', true);
-        bullets.setAll('anchor.y', -5);
-        bullets.setAll('anchor.x', 0.5);
+        createBullets();
         
         //add sound
         damageSound = game.add.audio('impact');
@@ -118,24 +107,10 @@ demo.bossState.prototype = {
         items.setAll('scale.y', 2);
         
         //inventory
-        inventoryBox = game.add.graphics(0, 0);
-        inventoryBox.beginFill(0x77bdea);
-        inventoryBox.alpha = 0;
-        inventoryBox.drawRect(200, 20, 400, 100);
-        inventoryBox.fixedToCamera = true;
-        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-        inventoryText.fixedToCamera = true;
+        createInventory();
         
         //current item display
-        itemBox = game.add.graphics(0, 0);
-        itemBox.beginFill(0xECE6E5);
-        itemBox.alpha = 0.8;
-        itemBox.drawRect(740, game.world.height-70, 60, 60);
-        itemBox.fixedToCamera = true;
-        itemOnScreen = game.add.sprite(743, game.world.height-55, currItem.key);
-        itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 4;
-        itemOnScreen.scale.y = 4;
+        displayCurrentItem(0, 0);
         
     },
     
@@ -231,8 +206,7 @@ demo.bossState.prototype = {
     addInventory: function(player, item){
         inventoryArray.push(item);
         item.kill();
-        
-
+        currItem = inventoryArray[inventoryArray.indexOf(item)];
         
     },
     

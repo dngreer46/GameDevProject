@@ -61,6 +61,22 @@ function setTileCollision(mapLayer, idxOrArray, dirs) {
 
 }
 
+function loadPlayer(x, y){
+    player= game.add.sprite(x, y, 'john');
+    player.scale.setTo(0.5, 0.5);
+    game.physics.arcade.enable(player);
+    player.body.setSize(35, 63, 0, 0);
+    
+    player.body.gravity.y = 500;
+    player.body.collideWorldBounds = true;
+        
+    // Player Animations
+    player.animations.add('walk', [0, 1], 10);
+    player.animations.add('attack', [2, 3, 4], 10);
+    //Camera
+    game.camera.follow(player);
+    
+}
 function playerMovement(player){
     var touchGround = game.physics.arcade.collide(player, ground);
     game.physics.arcade.collide(player, walls);
@@ -72,7 +88,7 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.scale.x = .5;
-        player.body.velocity.x = 175;    
+        player.body.velocity.x = 375;    
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
@@ -80,7 +96,7 @@ function playerMovement(player){
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
         player.scale.x = -.5;
-        player.body.velocity.x = -175;
+        player.body.velocity.x = -375;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
@@ -140,7 +156,10 @@ function playerMovement(player){
 
         }
     }
-    if (game.input.keyboard.downDuration(Phaser.Keyboard.F, 10)){
+    
+    game.input.keyboard.addKeyCapture(Phaser.Keyboard.TAB);
+    
+    if (game.input.keyboard.downDuration(Phaser.Keyboard.TAB, 10)){
         currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
         console.log(currItem);
         if (currItem == undefined){
@@ -152,6 +171,42 @@ function playerMovement(player){
     }
 
 
+}
+
+function createInventory(){
+    //inventory
+    inventoryBox = game.add.graphics(0, 0);
+    inventoryBox.beginFill(0x77bdea);
+    inventoryBox.alpha = 0;
+    inventoryBox.drawRect(200, 20, 400, 100);
+    inventoryBox.fixedToCamera = true;
+    inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+    inventoryText.fixedToCamera = true;
+}
+
+function createBullets(){
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    bullets.createMultiple(50, 'bullet');
+    bullets.setAll('checkWorldBounds', true);
+    bullets.setAll('outOfBoundsKill', true);
+    bullets.setAll('anchor.y', -5);
+    bullets.setAll('anchor.x', 0.5);
+    bullets.setAll('scale.x', 0.8);
+    bullets.setAll('scale.y', 0.8);        
+}
+
+function displayCurrentItem(x, y){
+    itemBox = game.add.graphics(0, 0);
+    itemBox.beginFill(0x5daf8a);
+    itemBox.alpha = 0.65;
+    itemBox = itemBox.drawRect(x, y, 50, 50);
+    itemBox.fixedToCamera = true;
+    itemOnScreen = game.add.sprite(x, y, currItem.key);
+    itemOnScreen.fixedToCamera = true;
+    itemOnScreen.scale.x = 3.75
+    itemOnScreen.scale.y = 3.75
 }
 
 function fire(){

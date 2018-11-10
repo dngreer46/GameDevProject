@@ -14,7 +14,6 @@ demo.house.prototype = {
         game.load.tilemap('houseMap', 'assets/maps/houseMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 65, 70);
         game.load.image('blank', 'assets/blank.png');
 
     },
@@ -56,17 +55,7 @@ demo.house.prototype = {
         game.physics.arcade.enable(mapChange);
         
         // Add John sprite
-        player = game.add.sprite(194, 517, 'john');
-        player.scale.setTo(0.5, 0.5);
-        game.physics.arcade.enable(player);
-        player.body.gravity.y = 500;
-        player.body.collideWorldBounds = true;
-        
-        // Player Animations
-        player.animations.add('walk', [0, 1], 10, true);
-        
-        //Camera
-        game.camera.follow(player);
+        loadPlayer(194, 517);
         
         
     },

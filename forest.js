@@ -17,16 +17,10 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/John.png', 65, 70);
-
         game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
         
-        // Weapons
-        game.load.image('bullet', 'assets/bullet.png');
-        game.load.image('gun', 'assets/Gun.png');
-        game.load.image('health', 'assets/Heart.png');
         game.load.audio('impact', 'assets/slaphit.mp3');
-        game.load.audio('forestMusic', 'assets/forestMusic.ogg');
+        game.load.audio('forestMusic', 'assets/forestMusic.mp3');
 
 
     }, 
@@ -34,7 +28,15 @@ demo.forest.prototype = {
     
     create: function(){
         
-        villageMusic.stop();
+        // Player
+        loadPlayer(32, 381);
+        //inventory
+        createInventory();
+        //set properties for bullets
+        createBullets();
+        displayCurrentItem(740, game.world.height-65);
+
+        
         forestMusic = game.add.audio('forestMusic', true);
         forestMusic.play();
         
@@ -70,21 +72,6 @@ demo.forest.prototype = {
             right: false
         });
         
-        // Player
-        player = game.add.sprite(32, game.world.height-96, 'john');
-        //player = game.add.sprite(1910, game.world.height-96, 'john');
-        player.scale.setTo(0.5, 0.5);
-        //player.body.setSize(32, 70, 0, 0);
-        game.physics.arcade.enable(player);
-        player.body.gravity.y = 500;
-        player.body.collideWorldBounds = true;
-        
-        // Player Animations
-        player.animations.add('walk', [0, 1], 5, true);
-        player.animations.add('attack', [2, 3, 4], 10, true);
-        //Camera
-        game.camera.follow(player);
-        
 
         // Enemy Group
         enemies = game.add.group();
@@ -98,18 +85,7 @@ demo.forest.prototype = {
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
         
-        //set properties for bullets
-        //set properties for bullets
-        bullets = game.add.group();
-        bullets.enableBody = true;
-        bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        bullets.createMultiple(50, 'bullet');
-        bullets.setAll('checkWorldBounds', true);
-        bullets.setAll('outOfBoundsKill', true);
-        bullets.setAll('anchor.y', -5);
-        bullets.setAll('anchor.x', 0.5);
-        bullets.setAll('scale.x', 0.8);
-        bullets.setAll('scale.y', 0.8);
+       
         
         //add sound
         damageSound = game.add.audio('impact');
@@ -122,14 +98,7 @@ demo.forest.prototype = {
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
 
-        //inventory
-        inventoryBox = game.add.graphics(0, 0);
-        inventoryBox.beginFill(0x77bdea);
-        inventoryBox.alpha = 0;
-        inventoryBox.drawRect(200, 20, 400, 100);
-        inventoryBox.fixedToCamera = true;
-        inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-        inventoryText.fixedToCamera = true;
+        
         
         playerHealth = game.add.group();
         healthArray = [];
@@ -146,15 +115,8 @@ demo.forest.prototype = {
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
         
         //current item display
-        itemBox = game.add.graphics(0, 0);
-        itemBox.beginFill(0x5daf8a);
-        itemBox.alpha = 0.65;
-        itemBox.drawRect(740, game.world.height-50, 50, 50);
-        itemBox.fixedToCamera = true;
-        itemOnScreen = game.add.sprite(743, game.world.height-55, currItem.key);
-        itemOnScreen.fixedToCamera = true;
-        itemOnScreen.scale.x = 3.75;
-        itemOnScreen.scale.y = 3.75;
+        itemText = game.add.text(600, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
     }, 
     
     
@@ -191,6 +153,8 @@ demo.forest.prototype = {
     addInventory: function(player, item){
         inventoryArray.push(item);               
         item.kill();
+        currItem = inventoryArray[inventoryArray.indexOf(item)];
+
         
     },
     
