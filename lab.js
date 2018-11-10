@@ -15,10 +15,6 @@ demo.lab.prototype = {
     
     create: function() {
         
-        // Add John sprite
-        loadPlayer(16, 192);
-        //inventory
-        createInventory();
         
         game.stage.backgroundColor = '#000';
         game.world.setBounds(0, 0, 960, 1600);
@@ -36,6 +32,12 @@ demo.lab.prototype = {
         ground = map.createLayer('Ground');
         walls = map.createLayer('Walls');
         platforms = map.createLayer('Platforms');
+        
+        
+        // Add John sprite
+        loadPlayer(16, 192);
+        //inventory
+        createInventory();
         
         // Map collision
         map.setCollision([211, 215, 216, 101, 33, 32, 205, 206, 207, 141, 142, 176, 177, 71, 72, 106, 107], true, ground);

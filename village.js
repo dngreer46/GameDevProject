@@ -32,23 +32,12 @@ demo.village.prototype = {
     },
     
     create: function(){
-        
-        //This functions must be called in every state
-        // Add John sprite
-        //loadPlayer(246, 544);
-        loadPlayer(2210, 390);
-        //set properties for bullets
-        createBullets();
-        //current item display
-        displayCurrentItem(740, game.world.height-195);
-        //inventory
-        createInventory();
-        
-        
+
         // Background image
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
         game.stage.backgroundColor = '#000';
         game.world.setBounds(0, 0, 3520, 640);
+        
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -65,6 +54,19 @@ demo.village.prototype = {
         platforms = map.createLayer('Platforms');
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
+        
+        //These functions must be called in every state
+        // Add John sprite
+        loadPlayer(246, 544);
+        //loadPlayer(2210, 390);
+        //set properties for bullets
+        createBullets();
+        //current item display
+        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
+        displayCurrentItem(740, game.world.height-195);
+        //inventory
+        createInventory();
+        
         
         // Map change
         mapChange = game.add.sprite(3500, 480, 'blank');
@@ -120,8 +122,7 @@ demo.village.prototype = {
         
 
         
-        
-        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
+
         
         itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
