@@ -17,8 +17,6 @@ demo.startTutorial.prototype = {
     },
     
     create: function(){
-        villageMusic = game.add.audio('villageMusic', 0.3, true);
-        villageMusic.play();
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
         game.stage.backgroundColor = '#000';
         game.world.setBounds(0, 0, 3520, 640);
@@ -29,7 +27,7 @@ demo.startTutorial.prototype = {
         groundT.body.immovable = true;
         
         
-        title = game.add.text(325, 70, 'Elysian Hill',{fontSize: '32px', fill: '#000000' });
+        title = game.add.text(325, 70, 'Tutorial',{fontSize: '32px', fill: '#000000' });
         
         keys = game.add.group();
         var wasd = keys.create(75, game.world.height-525, 'WASD');
@@ -45,9 +43,7 @@ demo.startTutorial.prototype = {
         space.scale.setTo(.4,.4);
         spaceD = game.add.text(120, 380, 'To Use Item',{fontSize: '24px', fill: '#000000' });
         
-        var startD = game.add.text(230, 465, 'Press The Spacebar To Begin',{fontSize: '24px', fill: '#ffffff' });
-        
-        
+        var startD = game.add.text(230, 465, 'Press The Spacebar To Begin',{fontSize: '24px', fill: '#ffffff' });  
         
     },
     
@@ -56,8 +52,5 @@ demo.startTutorial.prototype = {
             game.state.start('village')
         }
     }
-    
-
-    
-    
+   
 };

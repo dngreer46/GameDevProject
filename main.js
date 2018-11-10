@@ -6,9 +6,10 @@ game.state.add('forest', demo.forest);
 game.state.add('house', demo.house);
 game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
+game.state.add('startPage', demo.startPage);
 game.state.add('lab', demo.lab);
 //game.state.start('village');
-game.state.start('startTutorial');
+game.state.start('startPage');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue;
 
@@ -76,6 +77,7 @@ function playerMovement(player){
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
+
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
         player.scale.x = -.5;
         player.body.velocity.x = -175;
