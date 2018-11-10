@@ -15,6 +15,7 @@ var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, 
 
 
 
+
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
 function setTileCollision(mapLayer, idxOrArray, dirs) {
@@ -205,8 +206,8 @@ function displayCurrentItem(x, y){
     itemBox.fixedToCamera = true;
     itemOnScreen = game.add.sprite(x, y, currItem.key);
     itemOnScreen.fixedToCamera = true;
-    itemOnScreen.scale.x = 3.75
-    itemOnScreen.scale.y = 3.75
+    itemOnScreen.scale.x = 3.75;
+    itemOnScreen.scale.y = 3.75;
 }
 
 function fire(){

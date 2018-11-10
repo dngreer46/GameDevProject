@@ -23,13 +23,7 @@ demo.villageKidnapped.prototype = {
     
     create: function(){
         
-        // Add John sprite
-        //loadPlayer(545, 544);
-        loadPlayer(3500, 480);
-        //inventory
-        createInventory();
-        //current item display
-        displayCurrentItem(740, game.world.height-195);
+       
         
         villageKidnappedMusic = game.add.audio('villageKidnappedMusic', 1, true);
         villageKidnappedMusic.play();
@@ -62,7 +56,13 @@ demo.villageKidnapped.prototype = {
         mapChangeHouse = game.add.sprite(545, 544, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
-
+        // Add John sprite
+        //loadPlayer(545, 544);
+        loadPlayer(3500, 480);
+        //inventory
+        createInventory();
+        //current item display
+        displayCurrentItem(740, game.world.height-195);
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);

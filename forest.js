@@ -28,13 +28,7 @@ demo.forest.prototype = {
     
     create: function(){
         
-        // Player
-        loadPlayer(32, 381);
-        //inventory
-        createInventory();
-        //set properties for bullets
-        createBullets();
-        displayCurrentItem(740, game.world.height-65);
+
 
         
         forestMusic = game.add.audio('forestMusic', true);
@@ -57,6 +51,14 @@ demo.forest.prototype = {
         ground = map.createLayer('Ground');
         platforms = map.createLayer('Platforms');
         trees = map.createLayer('Trees');
+        
+        // Player
+        loadPlayer(32, 381);
+        //inventory
+        createInventory();
+        //set properties for bullets
+        createBullets();
+        displayCurrentItem(740, game.world.height-65);
         
         // Map change
         mapChange = game.add.sprite(1910, game.world.height-100, 'blank');
