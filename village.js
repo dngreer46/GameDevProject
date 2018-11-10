@@ -2,6 +2,7 @@ var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, invent
 var johnSign, paulaSign, bobSign, forestSign;
 var sarah, bob, paula;
 
+
 demo.village = function(){};
 
 demo.village.prototype = {
@@ -103,8 +104,8 @@ demo.village.prototype = {
 
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
-        player.body.setSize(35, 70, 0, 0);
-
+        player.body.setSize(35, 63, 0, 0);
+    
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
         
@@ -195,7 +196,6 @@ demo.village.prototype = {
         game.physics.arcade.collide(paula, ground);
 
         playerMovement(player);
-        useItem(player);
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
