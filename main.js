@@ -70,13 +70,14 @@ function playerMovement(player){
     player.anchor.setTo(.35,.35);
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
-        player.scale.x = .7;
+        player.scale.x = .5;
         player.body.velocity.x = 175;    
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
-    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                   player.scale.x = -.7;
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
+        player.scale.x = -.5;
         player.body.velocity.x = -175;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
@@ -88,10 +89,10 @@ function playerMovement(player){
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
         player.body.velocity.y = -340;
+        player.body.bounce.y = 0.3;
+
     }
-}
     
-function useItem(player){
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
         inventoryBox.alpha = 0.8;
         inventory = game.add.group(inventoryBox);
