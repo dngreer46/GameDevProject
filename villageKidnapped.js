@@ -88,7 +88,7 @@ demo.villageKidnapped.prototype = {
         
         
         // Add John sprite
-        //player = game.add.sprite(1787, 1152, 'john');
+        //player = game.add.sprite(3500, 480, 'john');
         player = game.add.sprite(545, 544, 'john');
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);

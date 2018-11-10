@@ -1,4 +1,5 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText;
+var johnSign, paulaSign, bobSign, forestSign;
 var sarah, bob, paula;
 
 
@@ -17,7 +18,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63, 70, 5);
+        game.load.spritesheet('john', 'assets/john.png', 63, 70);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -77,6 +78,7 @@ demo.village.prototype = {
             right: false
         });
         
+        
         // Add Sarah sprite
         sarah = game.add.sprite(850, 544, 'sarah');
         sarah.scale.setTo(0.5, 0.5);
@@ -98,18 +100,18 @@ demo.village.prototype = {
         
         // Add John sprite
         player = game.add.sprite(256, 544, 'john');
-        //player = game.add.sprite(1500, game.world.height-250, 'john');
+        //player = game.add.sprite(2210, 390, 'john');
 
         player.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
-        player.body.setSize(35, 70, 0, 0);
-
+        player.body.setSize(35, 63, 0, 0);
+    
         player.body.gravity.y = 500;
         player.body.collideWorldBounds = true;
         
         // Player Animations
-        player.animations.add('walk', [0, 1], 10, true);
-        player.animations.add('attack', [2, 3, 4], 10, true);
+        player.animations.add('walk', [0, 1], 10);
+        player.animations.add('attack', [2, 3, 4], 10);
         //Camera
         game.camera.follow(player);
         
@@ -131,7 +133,7 @@ demo.village.prototype = {
         items.physicsBodyType = Phaser.Physics.ARCADE;
         //items.create(1170, game.world.height-1015, 'gun');
         items.create(150, 544, 'pickAxe'); 
-        items.create(1072, 455, 'key');   
+        items.create(2210, 390, 'key');   
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
         
@@ -170,6 +172,18 @@ demo.village.prototype = {
         dialogueName.fixedToCamera = true;
         dialogueText = game.add.text(210, 75, '', {fontSize: '15px', fill: '#000'});
         dialogueText.fixedToCamera = true;
+        
+        
+        // Signs
+        johnSign = game.add.sprite(194, 545, 'blank');
+        game.physics.arcade.enable(johnSign);
+        paulaSign = game.add.sprite(1697, 482, 'blank');
+        game.physics.arcade.enable(paulaSign);
+        bobSign = game.add.sprite(2401, 482, 'blank');
+        game.physics.arcade.enable(bobSign);
+        forestSign = game.add.sprite(3137, 482, 'blank');
+        game.physics.arcade.enable(forestSign);
+        
 
       
 
@@ -182,7 +196,6 @@ demo.village.prototype = {
         game.physics.arcade.collide(paula, ground);
 
         playerMovement(player);
-
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -190,25 +203,27 @@ demo.village.prototype = {
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
-        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-            if(currItem == undefined){
-            }
-            else if(currItem.key == 'key'){
-                this.toHouse();
-            }
+        if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && currItem.key == 'key') {
+            this.toHouse();
         }
         
         // Overlap NPC
-        var atSarah = game.physics.arcade.overlap(sarah, player)
-        var atPaula = game.physics.arcade.overlap(paula, player)
-        var atBob = game.physics.arcade.overlap(bob, player)
-        var atForest = game.physics.arcade.overlap(mapChange, player)
+        var atSarah = game.physics.arcade.overlap(sarah, player);
+        var atPaula = game.physics.arcade.overlap(paula, player);
+        var atBob = game.physics.arcade.overlap(bob, player);
+        var atForest = game.physics.arcade.overlap(mapChange, player);
+        
+        // Overlap Signs
+        var atJohnSign = game.physics.arcade.overlap(johnSign, player);
+        var atPaulaSign = game.physics.arcade.overlap(paulaSign, player);
+        var atBobSign = game.physics.arcade.overlap(bobSign, player);
+        var atForestSign = game.physics.arcade.overlap(forestSign, player);
         
         // Sarah dialogue
         if (atSarah) {
             dialogueBox.alpha = 0.8;
             dialogueName.text = 'Sarah:';
-            dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked!\nWill you please find the key for me?';
+            dialogueText.text = 'Hi brother! It is such a nice day today. \nI want to play outside but I left my kite in the house, \nand the door is locked! Will you please find the key \nand unlock the door for me? \n\n(Make sure the key is the current item when using)';
         }
         
         // Paula dialogue
@@ -229,7 +244,35 @@ demo.village.prototype = {
         else if (atForest) {
             dialogueBox.alpha = 0.8;
             dialogueName.text = 'John (you):';
-            dialogueText.text = 'The forest is dangerous! \nI should look for the kite at home first.';
+            dialogueText.text = 'The forest is dangerous! \nI should unlock the door for Sarah first.';
+        }
+        
+        // John Sign text
+        else if (atJohnSign) {
+            dialogueBox.alpha = 0.8;
+            dialogueName.text = 'Sign:';
+            dialogueText.text = 'Residence of John and Sarah';
+        }
+        
+        // Paula Sign text
+        else if (atPaulaSign) {
+            dialogueBox.alpha = 0.8;
+            dialogueName.text = 'Sign:';
+            dialogueText.text = 'Residence of Paula';
+        }
+        
+        // Bob Sign text
+        else if (atBobSign) {
+            dialogueBox.alpha = 0.8;
+            dialogueName.text = 'Sign:';
+            dialogueText.text = 'Residence of Bob';
+        }
+        
+        // John Sign text
+        else if (atForestSign) {
+            dialogueBox.alpha = 0.8;
+            dialogueName.text = 'Sign:';
+            dialogueText.text = '>>> Forest (DANGER!) \n<<< Elysian Hill (Population: 4)';
         }
         
         // Get rid of text box if not overlapping NPC
@@ -245,6 +288,8 @@ demo.village.prototype = {
     
     render: function(){
         //game.debug.body(player);
+        game.debug.spriteInfo(player, 32, 32);
+
     },
     
     addInventory: function(player, item){

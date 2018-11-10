@@ -7,6 +7,7 @@ game.state.add('house', demo.house);
 game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('startPage', demo.startPage);
+game.state.add('lab', demo.lab);
 //game.state.start('village');
 game.state.start('startPage');
 
@@ -76,20 +77,24 @@ function playerMovement(player){
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
-    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){                   player.scale.x = -.5;
+
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
+        player.scale.x = -.5;
         player.body.velocity.x = -175;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
     else{
-        player.animations.stop();
-        player.frame = 0;
+        player.animations.stop('walk');
+        //player.frame = 0;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
         player.body.velocity.y = -340;
+        player.body.bounce.y = 0.3;
+
     }
-        
+    
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
         inventoryBox.alpha = 0.8;
         inventory = game.add.group(inventoryBox);
@@ -109,12 +114,10 @@ function playerMovement(player){
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-
+        
         if (currItem == undefined){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-            showCurrItem();
-
-            
+            showCurrItem();  
         }
             
         else if (currItem.key == 'gun'){
@@ -124,7 +127,6 @@ function playerMovement(player){
         else if (currItem.key == 'pickAxe'){
             //this.hit();
             player.animations.play('attack');
-
         }
         
         else if (currItem.key == 'health'){
@@ -139,9 +141,14 @@ function playerMovement(player){
         }
     }
     if (game.input.keyboard.downDuration(Phaser.Keyboard.F, 10)){
+        currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+        console.log(currItem);
+        if (currItem == undefined){
             currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-            console.log(currItem);
-            showCurrItem(currItem);
+        }
+        showCurrItem(currItem);
+
+        
     }
 
 
