@@ -59,6 +59,9 @@ demo.forest.prototype = {
         //set properties for bullets
         createBullets();
         displayCurrentItem(740, game.world.height-65);
+        healthFunc();
+        createHitbox();
+
         
         // Map change
         mapChange = game.add.sprite(1910, game.world.height-100, 'blank');
@@ -101,17 +104,7 @@ demo.forest.prototype = {
         items.setAll('scale.y', 2)
 
         
-        
-        playerHealth = game.add.group();
-        healthArray = [];
-        for (var i = 0; i < 3; i++){
-            playerHealth.create(i * 50, 0, 'health');
-            healthArray.push(i);
 
-        }
-        playerHealth.fixedToCamera = true;
-        playerHealth.setAll('scale.x', 3);
-        playerHealth.setAll('scale.y', 3);
         
         //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
@@ -137,6 +130,11 @@ demo.forest.prototype = {
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
         
+        game.physics.arcade.overlap(hitbox1, enemies);
+        if (attacking){
+            hitbox1.body.setSize(59,40,(6*dirValue)*-1, 0);
+        }
+
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -145,6 +143,9 @@ demo.forest.prototype = {
 
     },
 
+    render: function(){
+        game.debug.body(hitbox1);
+    },
     
     hitEnemy: function(enemy, bullet){
         bullet.kill();

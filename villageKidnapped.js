@@ -63,6 +63,7 @@ demo.villageKidnapped.prototype = {
         createInventory();
         //current item display
         displayCurrentItem(740, game.world.height-195);
+        healthFunc();
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);

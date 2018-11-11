@@ -18,7 +18,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63, 70);
+        game.load.spritesheet('john', 'assets/john.png', 63.5, 70);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -55,7 +55,6 @@ demo.village.prototype = {
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
         
-        //These functions must be called in every state
         // Add John sprite
         loadPlayer(246, 544);
         //loadPlayer(2210, 390);
@@ -66,6 +65,8 @@ demo.village.prototype = {
         displayCurrentItem(740, game.world.height-195);
         //inventory
         createInventory();
+        healthFunc();
+        createHitbox();
         
         
         // Map change
@@ -165,9 +166,14 @@ demo.village.prototype = {
 
         playerMovement(player);
         
+        
         game.physics.arcade.overlap(items, player, this.addInventory);
         
 
+        game.physics.arcade.overlap(hitbox1, enemies);
+        if (attacking){
+            hitbox1.body.setSize(50,40,(15*dirValue)*-1, 0);
+        }
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
@@ -257,6 +263,8 @@ demo.village.prototype = {
     render: function(){
         //game.debug.body(player);
         game.debug.spriteInfo(player, 32, 32);
+        game.debug.body(hitbox1);
+
 
     },
     
@@ -264,7 +272,7 @@ demo.village.prototype = {
         inventoryArray.push(item);
         item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-
+        showCurrItem();
 
     },
     
