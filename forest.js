@@ -81,11 +81,11 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
-        boss = enemies.create(350, game.world.height-100, 'boss');
-        boss = enemies.create(768, game.world.height-100, 'boss');
-        boss = enemies.create(1216, game.world.height-100, 'boss');
-        boss = enemies.create(1056, 192, 'boss');
-        boss = enemies.create(1440, 288, 'boss');
+        enemies.create(350, game.world.height-100, 'boss');
+        enemies.create(768, game.world.height-100, 'boss');
+        enemies.create(1216, game.world.height-100, 'boss');
+        enemies.create(1056, 192, 'boss');
+        enemies.create(1440, 288, 'boss');
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
@@ -112,8 +112,10 @@ demo.forest.prototype = {
         //current item display
         itemText = game.add.text(600, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
+        
+        game.add.tween(enemies).to({x:game.world.enemies.x}, 300, "Linear", true, 2000, -1, true);
     }, 
-    
+
     
     
     

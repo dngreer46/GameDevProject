@@ -1,13 +1,13 @@
 var game = new Phaser.Game(800, 500, Phaser.AUTO);
-game.state.add('bossState', demo.bossState);
+game.state.add('startPage', demo.startPage);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
 game.state.add('house', demo.house);
 game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
-game.state.add('startPage', demo.startPage);
 game.state.add('lab', demo.lab);
+game.state.add('bossState', demo.bossState);
 //game.state.start('village');
 game.state.start('startPage');
 
