@@ -227,7 +227,7 @@ function fire(){
     }
 }
 function hit(){
-    player.animations.play('attack');
+    player.animations.play('attack', true);
 
 }
 

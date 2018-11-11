@@ -6,6 +6,7 @@ demo.startPage.prototype = {
     preload: function(){
         game.load.image('sky', 'assets/maps/sky.png');
         game.load.image('ground', 'assets/ground.png');
+        game.load.image('title', 'assets/titleimage.png');
         game.load.audio('villageMusic', 'assets/villageMusic.mp3');
         
     },
@@ -21,11 +22,14 @@ demo.startPage.prototype = {
         groundT.scale.setTo(.5,.5);
         groundT.body.immovable = true;
         
-        title = game.add.text(325, 70, 'Elysian Hill',{fontSize: '32px', fill: '#000000' });
+        var title = game.add.sprite(250, game.world.height-600, 'title');
+        title.scale.setTo(.5,.5);
         
-        var startD = game.add.text(230, 465, 'Press The Spacebar To Begin',{fontSize: '24px', fill: '#ffffff' });  
+        //title = game.add.text(325, 70, 'Elysian Hill',{fontSize: '32px', fill: '#000000' });
         
-        var tutorialD = game.add.text(230, 300, 'Press The "T" Key To Begin Tutorial',{fontSize: '24px', fill: '#000000' });
+        var startD = game.add.text(250, 465, 'Press The Spacebar To Begin',{fontSize: '24px', fill: '#ffffff' });  
+        
+        var tutorialD = game.add.text(220, 300, 'Press The "T" Key To Begin Tutorial',{fontSize: '24px', fill: '#000000' });
         
         
     },
