@@ -8,7 +8,6 @@ var inventoryBox;
 var enemyE;
 var enemies;
 
-var demo = {};
 demo.bossState = function(){};
 demo.bossState.prototype = {
     preload: function(){

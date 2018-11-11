@@ -1,17 +1,17 @@
 var game = new Phaser.Game(800, 500, Phaser.AUTO);
-game.state.add('bossState', demo.bossState);
+game.state.add('startPage', demo.startPage);
 game.state.add('village', demo.village);
 game.state.add('youDied', demo.youDied);
 game.state.add('forest', demo.forest);
 game.state.add('house', demo.house);
 game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
-game.state.add('startPage', demo.startPage);
 game.state.add('lab', demo.lab);
+game.state.add('bossState', demo.bossState);
 //game.state.start('village');
 game.state.start('startPage');
 
-var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue;
+var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
 
 
@@ -142,8 +142,7 @@ function playerMovement(player){
         }
             
         else if (currItem.key == 'pickAxe'){
-            //this.hit();
-            player.animations.play('attack');
+            this.hit();
         }
         
         else if (currItem.key == 'health'){
@@ -227,8 +226,18 @@ function fire(){
     }
 }
 function hit(){
-    player.animations.play('attack');
-
+    if(!attacking){
+        attacking = true;
+        hitbox1.body.enable = true;
+        player.animations.play('attack');
+        var atkTimer = game.time.create(true)
+        atkTimer.add(200, function () 
+        {
+            attacking = false;
+            hitbox1.body.enable = false;
+        }, this);
+        atkTimer.start();
+    }
 }
 
 function addHealth(){
@@ -249,4 +258,33 @@ function showCurrItem(){
     itemOnScreen.loadTexture(currItem.key);
 
     
+}
+
+function healthFunc(){
+    playerHealth = game.add.group();
+        healthArray = [];
+        for (var i = 0; i < 3; i++){
+            playerHealth.create(i * 50, 0, 'health');
+            healthArray.push(i);
+
+        }
+        playerHealth.fixedToCamera = true;
+        playerHealth.setAll('scale.x', 3);
+        playerHealth.setAll('scale.y', 3);
+}
+
+function createHitbox(){
+    hitboxes = game.add.group();
+    hitboxes.enableBody = true; 
+    player.addChild(hitboxes);
+    hitbox1 = hitboxes.create(0,0,null);
+    hitbox1.anchor.setTo(.5,.5);
+    hitbox1.body.onOverlap = new Phaser.Signal();
+    hitbox1.body.onOverlap.add(hitEnemy);
+    hitbox1.body.enable = false;
+}
+
+function hitEnemy(hitbox, enemy){
+    enemy.kill();
+    damageSound.play();
 }

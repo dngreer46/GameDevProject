@@ -38,6 +38,7 @@ demo.lab.prototype = {
         loadPlayer(16, 192);
         //inventory
         createInventory();
+        healthFunc();
         
         // Map collision
         map.setCollision([211, 215, 216, 101, 33, 32, 205, 206, 207, 141, 142, 176, 177, 71, 72, 106, 107], true, ground);
