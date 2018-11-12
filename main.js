@@ -156,7 +156,7 @@ function playerMovement(player){
         }
             
         else if (currItem.key == 'pickAxe'){
-            hitbox1.body.setSize(50,40,(15*dirValue)*-1, 0);
+            hitbox1.body.setSize(33,40,(15*dirValue)*-1, 0);
             this.hit();
         }
         
@@ -297,7 +297,7 @@ function createHitbox(){
     hitboxes.enableBody = true; 
     player.addChild(hitboxes);
     hitbox1 = hitboxes.create(0,0);
-    hitbox1.anchor.setTo(0.75,0.5);
+    hitbox1.anchor.setTo(0.5,0.5);
     hitbox1.body.onOverlap = new Phaser.Signal();
     hitbox1.body.onOverlap.add(hitEnemy);
     hitbox1.body.enable = false;
