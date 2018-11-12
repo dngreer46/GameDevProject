@@ -9,7 +9,7 @@ game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
 game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
-game.state.start('village');
+game.state.start('startPage');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
