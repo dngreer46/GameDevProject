@@ -35,11 +35,10 @@ demo.boss.prototype = {
         
         // Add John sprite
         loadPlayer(50, 512);
-        //Create bullets for gun
         createBullets();
-        //Display current item
-        //displayCurrentItem(740, game.world.height-65);
-        //Display inventory
+        displayCurrentItem(740, game.world.height-65);
+        inventory
+
         createInventory();
         //Add player health
         healthFunc();
