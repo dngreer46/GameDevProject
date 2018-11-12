@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange, forestMusic;
+var map, ground, platforms, trees, bullet, bullets, enemies, mapChange, forestMusic;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
+        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
         
         game.load.audio('impact', 'assets/slaphit.mp3');
         game.load.audio('forestMusic', 'assets/forestMusic.mp3');
@@ -33,6 +33,7 @@ demo.forest.prototype = {
         
         forestMusic = game.add.audio('forestMusic', true);
         forestMusic.play();
+        game.add.audio('impact')
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -59,6 +60,9 @@ demo.forest.prototype = {
         //set properties for bullets
         createBullets();
         displayCurrentItem(740, game.world.height-65);
+        healthFunc();
+        createHitbox();
+
         
         // Map change
         mapChange = game.add.sprite(1910, game.world.height-100, 'blank');
@@ -78,19 +82,17 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
-        boss = enemies.create(350, game.world.height-100, 'boss');
-        boss = enemies.create(768, game.world.height-100, 'boss');
-        boss = enemies.create(1216, game.world.height-100, 'boss');
-        boss = enemies.create(1056, 192, 'boss');
-        boss = enemies.create(1440, 288, 'boss');
+        enemies.create(350, game.world.height-100, 'enemy');
+        enemies.create(768, game.world.height-100, 'enemy');
+        enemies.create(1216, game.world.height-100, 'enemy');
+        enemies.create(1056, 192, 'enemy');
+        enemies.create(1440, 288, 'enemy');
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
-        
+
        
         
-        //add sound
-        damageSound = game.add.audio('impact');
         
         //create items
         items = game.add.group();
@@ -101,17 +103,7 @@ demo.forest.prototype = {
         items.setAll('scale.y', 2)
 
         
-        
-        playerHealth = game.add.group();
-        healthArray = [];
-        for (var i = 0; i < 3; i++){
-            playerHealth.create(i * 50, 0, 'health');
-            healthArray.push(i);
 
-        }
-        playerHealth.fixedToCamera = true;
-        playerHealth.setAll('scale.x', 3);
-        playerHealth.setAll('scale.y', 3);
         
         //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
@@ -119,8 +111,10 @@ demo.forest.prototype = {
         //current item display
         itemText = game.add.text(600, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
+        
+
     }, 
-    
+
     
     
     
@@ -136,7 +130,9 @@ demo.forest.prototype = {
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
-        
+        game.physics.arcade.overlap(hitbox1, enemies);
+
+
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
         
@@ -145,18 +141,20 @@ demo.forest.prototype = {
 
     },
 
+    render: function(){
+        //game.debug.body(hitbox1);
+    },
     
     hitEnemy: function(enemy, bullet){
         bullet.kill();
         enemy.kill();
-        damageSound.play();
     },
     
     addInventory: function(player, item){
         inventoryArray.push(item);               
         item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-
+        showCurrItem();
         
     },
     
@@ -171,7 +169,6 @@ demo.forest.prototype = {
             healthArray.pop();
             var heart = playerHealth.getFirstAlive();
             heart.kill();
-            damageSound.play();
         }
         
         if (healthArray.length == 0){

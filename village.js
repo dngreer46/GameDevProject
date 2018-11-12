@@ -1,5 +1,5 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText;
-var johnSign, paulaSign, bobSign, forestSign;
+var johnSign, forestSign;
 var sarah, bob, paula;
 
 
@@ -18,7 +18,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63, 70);
+        game.load.spritesheet('john', 'assets/john.png', 63.9, 70);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -28,10 +28,11 @@ demo.village.prototype = {
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('blank', 'assets/blank.png');
-
+        
     },
     
     create: function(){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // Background image
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
@@ -55,17 +56,16 @@ demo.village.prototype = {
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
         
-        //These functions must be called in every state
         // Add John sprite
         loadPlayer(246, 544);
         //loadPlayer(2210, 390);
-        //set properties for bullets
-        createBullets();
         //current item display
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         displayCurrentItem(740, game.world.height-195);
         //inventory
         createInventory();
+        healthFunc();
+        createHitbox();
         
         
         // Map change
@@ -78,7 +78,7 @@ demo.village.prototype = {
 
         
         // Map collision
-        map.setCollision([43, 44, 45], true, ground);
+        map.setCollision([43, 44, 45, 54], true, ground);
         map.setCollision([44, 1610612780, 2684354604], true, walls);
         map.setCollision(44, true, platforms);
         setTileCollision(platforms, 44, {
@@ -119,8 +119,7 @@ demo.village.prototype = {
         items.create(2210, 390, 'key');   
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
-        
-
+        game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
         
 
         
@@ -145,10 +144,6 @@ demo.village.prototype = {
         // Signs
         johnSign = game.add.sprite(194, 545, 'blank');
         game.physics.arcade.enable(johnSign);
-        paulaSign = game.add.sprite(1697, 482, 'blank');
-        game.physics.arcade.enable(paulaSign);
-        bobSign = game.add.sprite(2401, 482, 'blank');
-        game.physics.arcade.enable(bobSign);
         forestSign = game.add.sprite(3137, 482, 'blank');
         game.physics.arcade.enable(forestSign);
         
@@ -165,8 +160,11 @@ demo.village.prototype = {
 
         playerMovement(player);
         
+        
         game.physics.arcade.overlap(items, player, this.addInventory);
         
+        
+        game.physics.arcade.overlap(hitbox1, enemies);
 
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
@@ -183,8 +181,6 @@ demo.village.prototype = {
         
         // Overlap Signs
         var atJohnSign = game.physics.arcade.overlap(johnSign, player);
-        var atPaulaSign = game.physics.arcade.overlap(paulaSign, player);
-        var atBobSign = game.physics.arcade.overlap(bobSign, player);
         var atForestSign = game.physics.arcade.overlap(forestSign, player);
         
         // Sarah dialogue
@@ -222,21 +218,7 @@ demo.village.prototype = {
             dialogueText.text = 'Residence of John and Sarah';
         }
         
-        // Paula Sign text
-        else if (atPaulaSign) {
-            dialogueBox.alpha = 0.8;
-            dialogueName.text = 'Sign:';
-            dialogueText.text = 'Residence of Paula';
-        }
-        
-        // Bob Sign text
-        else if (atBobSign) {
-            dialogueBox.alpha = 0.8;
-            dialogueName.text = 'Sign:';
-            dialogueText.text = 'Residence of Bob';
-        }
-        
-        // John Sign text
+        // Forest Sign text
         else if (atForestSign) {
             dialogueBox.alpha = 0.8;
             dialogueName.text = 'Sign:';
@@ -256,7 +238,9 @@ demo.village.prototype = {
     
     render: function(){
         //game.debug.body(player);
-        game.debug.spriteInfo(player, 32, 32);
+        //game.debug.spriteInfo(player, 32, 32);
+        //game.debug.body(hitbox1);
+
 
     },
     
@@ -264,7 +248,7 @@ demo.village.prototype = {
         inventoryArray.push(item);
         item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-
+        showCurrItem();
 
     },
     
@@ -273,7 +257,7 @@ demo.village.prototype = {
     },
     
     toHouse: function(){
-        villageMusic.stop();
+        //villageMusic.stop();
         game.state.start('house');    
     },
     

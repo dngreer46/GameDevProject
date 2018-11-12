@@ -1,5 +1,6 @@
 var map, title, groundT, villageMusic;
 
+var demo = {};
 demo.startPage = function(){};
 
 demo.startPage.prototype = {
