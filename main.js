@@ -9,7 +9,7 @@ game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
 game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
-game.state.start('village');
+game.state.start('startPage');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
@@ -261,8 +261,8 @@ function addHealth(){
     var addHeart = playerHealth.getFirstAlive();
     playerHealth.create(addHeart.x - 50, addHeart.y, 'health');
     healthArray.push(addHeart);
-    playerHealth.setAll('scale.x', 3);
-    playerHealth.setAll('scale.y', 3);
+    playerHealth.setAll('scale.x', 6);
+    playerHealth.setAll('scale.y', 6);
 
 }
 
@@ -281,13 +281,13 @@ function healthFunc(){
     playerHealth = game.add.group();
         healthArray = [];
         for (var i = 0; i < 3; i++){
-            playerHealth.create(i * 50, 0, 'health');
+            playerHealth.create(i * 60, 0, 'health');
             healthArray.push(i);
 
         }
         playerHealth.fixedToCamera = true;
-        playerHealth.setAll('scale.x', 3);
-        playerHealth.setAll('scale.y', 3);
+        playerHealth.setAll('scale.x', 6);
+        playerHealth.setAll('scale.y', 6);
 }
 
 function createHitbox(){

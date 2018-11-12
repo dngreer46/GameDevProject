@@ -113,7 +113,9 @@ demo.villageKidnapped.prototype = {
         dialogueText = game.add.text(210, 75, '', {fontSize: '15px', fill: '#000'});
         dialogueText.fixedToCamera = true;
 
-      
+        itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
+        
 
     },
     
