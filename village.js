@@ -61,7 +61,7 @@ demo.village.prototype = {
         //loadPlayer(2210, 390);
         //current item display
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
-        displayCurrentItem(740, game.world.height-195);
+        displayCurrentItem(140, game.world.height-195);
         //inventory
         createInventory();
         healthFunc();
@@ -117,13 +117,14 @@ demo.village.prototype = {
         //items.create(1170, game.world.height-1015, 'gun');
         items.create(150, 544, 'pickAxe'); 
         items.create(2210, 390, 'key');   
-        items.setAll('scale.x', 2);
-        items.setAll('scale.y', 2);
+        items.setAll('scale.x', 2.5);
+        items.setAll('scale.y', 2.5);
         game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
         
-
         
-        itemText = game.add.text(600, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+
+
+        itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
 

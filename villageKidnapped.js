@@ -59,11 +59,10 @@ demo.villageKidnapped.prototype = {
         // Add John sprite
         loadPlayer(545, 544);
         //loadPlayer(3500, 480);
+        //current item display
+        displayCurrentItem(140, game.world.height-195);
         //inventory
         createInventory();
-        //current item display
-
-        displayCurrentItem(740, game.world.height-195);
         healthFunc();
         createHitbox();
         
@@ -119,7 +118,9 @@ demo.villageKidnapped.prototype = {
         forestSign = game.add.sprite(3137, 482, 'blank');
         game.physics.arcade.enable(forestSign);
 
-      
+        itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
+        
 
     },
     
