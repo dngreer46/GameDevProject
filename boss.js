@@ -38,8 +38,13 @@ demo.boss.prototype = {
         createBullets();
         displayCurrentItem(740, game.world.height-65);
         inventory
+
         createInventory();
+        //Add player health
         healthFunc();
+        //Add hitbox for player
+        createHitbox();
+        
         
         // Map collision
         map.setCollision([205,206,207], true, ground);

@@ -91,8 +91,8 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.scale.x = .5;
-        player.body.velocity.x = 225;    
-        //player.body.velocity.x = 475;
+        //player.body.velocity.x = 225;    
+        player.body.velocity.x = 475;
         if (attacking){
             player.animations.play('attack');
         }
@@ -106,8 +106,8 @@ function playerMovement(player){
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
         player.scale.x = -.5;
-        player.body.velocity.x = -225;
-        //player.body.velocity.x = -475;
+        //player.body.velocity.x = -225;
+        player.body.velocity.x = -475;
         if (attacking){
             player.animations.play('attack');
         }
@@ -128,21 +128,20 @@ function playerMovement(player){
     }
     
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
-        inventoryBox.alpha = 0.8;
+        inventoryBox.alpha = 0.65;
         inventory = game.add.group(inventoryBox);
-        inventoryText.text = 'Inventory: ';
+        //inventoryText.text = 'Inventory: ';
         for (var i = 0; i < inventoryArray.length; i++){
             inventory.create(0, 0, inventoryArray[i].key);
         }
-        inventory.setAll('scale.x', 2);
-        inventory.setAll('scale.y', 2);
-        inventory.align(5, 1, 50, 30, Phaser.CENTER);
-        inventory.x = 210;
-        inventory.y = 80;
+        inventory.setAll('scale.x', 4);
+        inventory.setAll('scale.y', 4);
+        inventory.align(5, 1, 50, 50, Phaser.CENTER);
+
     }
     else{
         inventoryBox.alpha=0;
-        inventoryText.text = '';
+        //inventoryText.text = '';
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
@@ -179,6 +178,8 @@ function playerMovement(player){
         currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
         console.log(currItem);
         if (currItem == undefined){
+            currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+            showCurrItem(currItem);
 
         }
         else{
@@ -192,13 +193,13 @@ function playerMovement(player){
 
 function createInventory(){
     //inventory
-    inventoryBox = game.add.graphics(0, 0);
-    inventoryBox.beginFill(0x77bdea);
+    inventoryBox = game.add.graphics(itemBox.x + 55, itemBox.y);
+    inventoryBox.beginFill(0x5daf8a);
+    inventoryBox.lineStyle(5, 0xffe102, 1);
     inventoryBox.alpha = 0;
-    inventoryBox.drawRect(200, 20, 400, 100);
+    inventoryBox.drawRect(0, 0, 400, 50);
     inventoryBox.fixedToCamera = true;
-    inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-    inventoryText.fixedToCamera = true;
+    
 }
 
 function createBullets(){
@@ -217,13 +218,14 @@ function displayCurrentItem(x, y){
     itemBox = game.add.graphics(x, y);
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
-    itemBox = itemBox.drawRect(0, 0, 50, 50);
+    itemBox.lineStyle(5, 0xffe102, 1);
+    itemBox.drawRect(0, 0, 50, 50);
     itemBox.fixedToCamera = true;
     itemOnScreen = game.add.sprite(x, y, currItem.key);
-    itemOnScreen.alignIn(itemBox, Phaser.CENTER);
+    itemOnScreen.alignIn(itemBox, Phaser.TOP_LEFT);
     itemOnScreen.fixedToCamera = true;
-    itemOnScreen.scale.x = 3.75;
-    itemOnScreen.scale.y = 3.75;
+    itemOnScreen.scale.x = 4;
+    itemOnScreen.scale.y = 4;
 }
 
 function fire(){
@@ -261,8 +263,8 @@ function addHealth(){
     var addHeart = playerHealth.getFirstAlive();
     playerHealth.create(addHeart.x - 50, addHeart.y, 'health');
     healthArray.push(addHeart);
-    playerHealth.setAll('scale.x', 3);
-    playerHealth.setAll('scale.y', 3);
+    playerHealth.setAll('scale.x', 6);
+    playerHealth.setAll('scale.y', 6);
 
 }
 
@@ -281,13 +283,13 @@ function healthFunc(){
     playerHealth = game.add.group();
         healthArray = [];
         for (var i = 0; i < 3; i++){
-            playerHealth.create(i * 50, 0, 'health');
+            playerHealth.create(i * 60, 0, 'health');
             healthArray.push(i);
 
         }
         playerHealth.fixedToCamera = true;
-        playerHealth.setAll('scale.x', 3);
-        playerHealth.setAll('scale.y', 3);
+        playerHealth.setAll('scale.x', 6);
+        playerHealth.setAll('scale.y', 6);
 }
 
 function createHitbox(){

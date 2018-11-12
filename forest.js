@@ -90,7 +90,7 @@ demo.forest.prototype = {
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
-
+        game.add.tween(enemies).to({x: enemies.x + 130}, 1000, 'Linear', true, 0, -1, true);
        
         
         
@@ -101,6 +101,7 @@ demo.forest.prototype = {
         items.create(224, game.world.height-96, 'gun');
         items.setAll('scale.x', 2)
         items.setAll('scale.y', 2)
+        game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
 
         
 
@@ -109,7 +110,7 @@ demo.forest.prototype = {
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
         
         //current item display
-        itemText = game.add.text(600, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText = game.add.text(0, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
 
@@ -169,6 +170,10 @@ demo.forest.prototype = {
             healthArray.pop();
             var heart = playerHealth.getFirstAlive();
             heart.kill();
+            player.tint = 0xf24826
+            player.body.velocity.x = 500*dirValue;
+            player.body.velocity.y = -50
+            game.time.events.add(500, unTint)
         }
         
         if (healthArray.length == 0){
