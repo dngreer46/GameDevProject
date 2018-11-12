@@ -76,6 +76,8 @@ function loadPlayer(x, y){
     player.animations.add('attack', [2, 3, 4], 10);
     //Camera
     game.camera.follow(player);
+    player.tint = 0xffffff;
+
     
 }
 function playerMovement(player){
@@ -288,3 +290,4 @@ function hitEnemy(hitbox, enemy){
     enemy.kill();
     damageSound.play();
 }
+

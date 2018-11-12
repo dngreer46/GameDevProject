@@ -89,7 +89,8 @@ demo.forest.prototype = {
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
-        
+        enemies.body.onOverlap = new Phaser.Signal();
+        enemies.body.onOverlap.add(playerHit);
        
         
         //add sound
@@ -113,7 +114,7 @@ demo.forest.prototype = {
         itemText = game.add.text(600, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
-        game.add.tween(enemies).to({x:game.world.enemies.x}, 300, "Linear", true, 2000, -1, true);
+
     }, 
 
     
@@ -130,8 +131,10 @@ demo.forest.prototype = {
 
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
+        
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
         
+
         game.physics.arcade.overlap(hitbox1, enemies);
         if (attacking){
             hitbox1.body.setSize(59,40,(6*dirValue)*-1, 0);
