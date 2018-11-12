@@ -128,21 +128,20 @@ function playerMovement(player){
     }
     
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
-        inventoryBox.alpha = 0.8;
+        inventoryBox.alpha = 0.65;
         inventory = game.add.group(inventoryBox);
-        inventoryText.text = 'Inventory: ';
+        //inventoryText.text = 'Inventory: ';
         for (var i = 0; i < inventoryArray.length; i++){
             inventory.create(0, 0, inventoryArray[i].key);
         }
-        inventory.setAll('scale.x', 2);
-        inventory.setAll('scale.y', 2);
-        inventory.align(5, 1, 50, 30, Phaser.CENTER);
-        inventory.x = 210;
-        inventory.y = 80;
+        inventory.setAll('scale.x', 4);
+        inventory.setAll('scale.y', 4);
+        inventory.align(5, 1, 50, 50, Phaser.CENTER);
+
     }
     else{
         inventoryBox.alpha=0;
-        inventoryText.text = '';
+        //inventoryText.text = '';
     }
         
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
@@ -179,6 +178,8 @@ function playerMovement(player){
         currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
         console.log(currItem);
         if (currItem == undefined){
+            currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+            showCurrItem(currItem);
 
         }
         else{
@@ -192,13 +193,14 @@ function playerMovement(player){
 
 function createInventory(){
     //inventory
-    inventoryBox = game.add.graphics(0, 0);
-    inventoryBox.beginFill(0x77bdea);
+    inventoryBox = game.add.graphics(195, itemBox.y);
+    inventoryBox.beginFill(0x5daf8a);
+    inventoryBox.lineStyle(5, 0xffe102, 1);
     inventoryBox.alpha = 0;
-    inventoryBox.drawRect(200, 20, 400, 100);
+    inventoryBox.drawRect(0, 0, 400, 50);
     inventoryBox.fixedToCamera = true;
-    inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-    inventoryText.fixedToCamera = true;
+    //inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
+    //inventoryText.fixedToCamera = true;
 }
 
 function createBullets(){
@@ -214,16 +216,17 @@ function createBullets(){
 }
 
 function displayCurrentItem(x, y){
-    itemBox = game.add.graphics(x, y);
+    itemBox = game.add.graphics(140, y);
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
+    itemBox.lineStyle(5, 0xffe102, 1);
     itemBox = itemBox.drawRect(0, 0, 50, 50);
     itemBox.fixedToCamera = true;
-    itemOnScreen = game.add.sprite(x, y, currItem.key);
+    itemOnScreen = game.add.sprite(140, y, currItem.key);
     itemOnScreen.alignIn(itemBox, Phaser.CENTER);
     itemOnScreen.fixedToCamera = true;
-    itemOnScreen.scale.x = 3.75;
-    itemOnScreen.scale.y = 3.75;
+    itemOnScreen.scale.x = 4;
+    itemOnScreen.scale.y = 4;
 }
 
 function fire(){

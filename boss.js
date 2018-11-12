@@ -35,11 +35,17 @@ demo.boss.prototype = {
         
         // Add John sprite
         loadPlayer(50, 512);
-        //createBullets();
+        //Create bullets for gun
+        createBullets();
+        //Display current item
         //displayCurrentItem(740, game.world.height-65);
-        //inventory
+        //Display inventory
         createInventory();
+        //Add player health
         healthFunc();
+        //Add hitbox for player
+        createHitbox();
+        
         
         // Map collision
         map.setCollision([205,206,207], true, ground);
