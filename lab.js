@@ -68,7 +68,7 @@ demo.lab.prototype = {
     },
     
     toBoss: function(){
-        game.state.start('bossState');
+        game.state.start('boss');
     }
     
 }
