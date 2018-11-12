@@ -91,8 +91,8 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.scale.x = .5;
-        player.body.velocity.x = 225;    
-        //player.body.velocity.x = 475;
+        //player.body.velocity.x = 225;    
+        player.body.velocity.x = 475;
         if (attacking){
             player.animations.play('attack');
         }
@@ -106,8 +106,8 @@ function playerMovement(player){
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
         player.scale.x = -.5;
-        player.body.velocity.x = -225;
-        //player.body.velocity.x = -475;
+        //player.body.velocity.x = -225;
+        player.body.velocity.x = -475;
         if (attacking){
             player.animations.play('attack');
         }
@@ -193,14 +193,13 @@ function playerMovement(player){
 
 function createInventory(){
     //inventory
-    inventoryBox = game.add.graphics(195, itemBox.y);
+    inventoryBox = game.add.graphics(itemBox.x + 55, itemBox.y);
     inventoryBox.beginFill(0x5daf8a);
     inventoryBox.lineStyle(5, 0xffe102, 1);
     inventoryBox.alpha = 0;
     inventoryBox.drawRect(0, 0, 400, 50);
     inventoryBox.fixedToCamera = true;
-    //inventoryText = game.add.text(210, 25, '', {fontSize: '18px', fill: '#000'});
-    //inventoryText.fixedToCamera = true;
+    
 }
 
 function createBullets(){
@@ -216,14 +215,14 @@ function createBullets(){
 }
 
 function displayCurrentItem(x, y){
-    itemBox = game.add.graphics(140, y);
+    itemBox = game.add.graphics(x, y);
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
     itemBox.lineStyle(5, 0xffe102, 1);
-    itemBox = itemBox.drawRect(0, 0, 50, 50);
+    itemBox.drawRect(0, 0, 50, 50);
     itemBox.fixedToCamera = true;
-    itemOnScreen = game.add.sprite(140, y, currItem.key);
-    itemOnScreen.alignIn(itemBox, Phaser.CENTER);
+    itemOnScreen = game.add.sprite(x, y, currItem.key);
+    itemOnScreen.alignIn(itemBox, Phaser.TOP_LEFT);
     itemOnScreen.fixedToCamera = true;
     itemOnScreen.scale.x = 4;
     itemOnScreen.scale.y = 4;
