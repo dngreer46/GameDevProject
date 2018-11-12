@@ -219,10 +219,10 @@ function displayCurrentItem(x, y){
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
     itemBox.lineStyle(5, 0xffe102, 1);
-    itemBox.drawRect(0, 0, 50, 50);
+    itemBox.drawRect(0, 0, 55, 50);
     itemBox.fixedToCamera = true;
     itemOnScreen = game.add.sprite(x, y, currItem.key);
-    itemOnScreen.alignIn(itemBox, Phaser.TOP_LEFT);
+    itemOnScreen.alignIn(itemBox, Phaser.TOP_LEFT, -5, -5);
     itemOnScreen.fixedToCamera = true;
     itemOnScreen.scale.x = 4;
     itemOnScreen.scale.y = 4;

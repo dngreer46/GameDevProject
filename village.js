@@ -117,9 +117,10 @@ demo.village.prototype = {
         //items.create(1170, game.world.height-1015, 'gun');
         items.create(150, 544, 'pickAxe'); 
         items.create(2210, 390, 'key');   
-        items.setAll('scale.x', 2);
-        items.setAll('scale.y', 2);
+        items.setAll('scale.x', 2.5);
+        items.setAll('scale.y', 2.5);
         game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
+        
         
 
 

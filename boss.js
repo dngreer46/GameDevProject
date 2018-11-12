@@ -36,9 +36,9 @@ demo.boss.prototype = {
         // Add John sprite
         loadPlayer(50, 512);
         createBullets();
-        displayCurrentItem(740, game.world.height-65);
-        inventory
-
+        displayCurrentItem(140, game.world.height-195);
+        itemText = game.add.text(0, game.world.height - 195, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
         createInventory();
         //Add player health
         healthFunc();
