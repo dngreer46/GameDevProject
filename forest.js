@@ -89,12 +89,9 @@ demo.forest.prototype = {
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
-        enemies.body.onOverlap = new Phaser.Signal();
-        enemies.body.onOverlap.add(playerHit);
+
        
         
-        //add sound
-        damageSound = game.add.audio('impact');
         
         //create items
         items = game.add.group();
@@ -155,14 +152,14 @@ demo.forest.prototype = {
     hitEnemy: function(enemy, bullet){
         bullet.kill();
         enemy.kill();
-        damageSound.play();
+        //damageSound.play();
     },
     
     addInventory: function(player, item){
         inventoryArray.push(item);               
         item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-
+        showCurrItem();
         
     },
     
@@ -177,7 +174,7 @@ demo.forest.prototype = {
             healthArray.pop();
             var heart = playerHealth.getFirstAlive();
             heart.kill();
-            damageSound.play();
+            //damageSound.play();
         }
         
         if (healthArray.length == 0){

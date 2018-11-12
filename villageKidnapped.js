@@ -57,13 +57,15 @@ demo.villageKidnapped.prototype = {
         game.physics.arcade.enable(mapChangeHouse);
         
         // Add John sprite
-        //loadPlayer(545, 544);
-        loadPlayer(3500, 480);
+        loadPlayer(545, 544);
+        //loadPlayer(3500, 480);
         //inventory
         createInventory();
         //current item display
+
         displayCurrentItem(740, game.world.height-195);
         healthFunc();
+        createHitbox();
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);

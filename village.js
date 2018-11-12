@@ -57,10 +57,8 @@ demo.village.prototype = {
         plantsAndSigns = map.createLayer('PlantsSigns');
         
         // Add John sprite
-        //loadPlayer(246, 544);
-        loadPlayer(2210, 390);
-        //set properties for bullets
-        createBullets();
+        loadPlayer(246, 544);
+        //loadPlayer(2210, 390);
         //current item display
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
         displayCurrentItem(740, game.world.height-195);

@@ -9,7 +9,7 @@ game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
 game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
-game.state.start('boss');
+game.state.start('startPage');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
@@ -91,7 +91,8 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.scale.x = .5;
-        player.body.velocity.x = 375;    
+        player.body.velocity.x = 225;    
+        //player.body.velocity.x = 475;    
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
@@ -99,7 +100,8 @@ function playerMovement(player){
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
         player.scale.x = -.5;
-        player.body.velocity.x = -375;
+        player.body.velocity.x = -225;
+        //player.body.velocity.x = -475;
         player.animations.play('walk');
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
@@ -193,7 +195,6 @@ function createBullets(){
     bullets.createMultiple(50, 'bullet');
     bullets.setAll('checkWorldBounds', true);
     bullets.setAll('outOfBoundsKill', true);
-    bullets.setAll('anchor.y', -5);
     bullets.setAll('anchor.x', 0.5);
     bullets.setAll('scale.x', 0.8);
     bullets.setAll('scale.y', 0.8);        
