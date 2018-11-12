@@ -68,7 +68,7 @@ demo.villageKidnapped.prototype = {
         createHitbox();
         
         // Map collision
-        map.setCollision([43, 44, 45], true, ground);
+        map.setCollision([43, 44, 45, 54], true, ground);
         map.setCollision([44, 1610612780, 2684354604], true, walls);
         map.setCollision(44, true, platforms);
         setTileCollision(platforms, 44, {
