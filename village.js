@@ -1,5 +1,5 @@
 var map, ground, walls, platforms, houses, plantsAndSigns, chests, items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText;
-var johnSign, paulaSign, bobSign, forestSign;
+var johnSign, forestSign;
 var sarah, bob, paula;
 
 
@@ -78,7 +78,7 @@ demo.village.prototype = {
 
         
         // Map collision
-        map.setCollision([43, 44, 45], true, ground);
+        map.setCollision([43, 44, 45, 54], true, ground);
         map.setCollision([44, 1610612780, 2684354604], true, walls);
         map.setCollision(44, true, platforms);
         setTileCollision(platforms, 44, {
@@ -144,10 +144,6 @@ demo.village.prototype = {
         // Signs
         johnSign = game.add.sprite(194, 545, 'blank');
         game.physics.arcade.enable(johnSign);
-        paulaSign = game.add.sprite(1697, 482, 'blank');
-        game.physics.arcade.enable(paulaSign);
-        bobSign = game.add.sprite(2401, 482, 'blank');
-        game.physics.arcade.enable(bobSign);
         forestSign = game.add.sprite(3137, 482, 'blank');
         game.physics.arcade.enable(forestSign);
         
@@ -185,8 +181,6 @@ demo.village.prototype = {
         
         // Overlap Signs
         var atJohnSign = game.physics.arcade.overlap(johnSign, player);
-        var atPaulaSign = game.physics.arcade.overlap(paulaSign, player);
-        var atBobSign = game.physics.arcade.overlap(bobSign, player);
         var atForestSign = game.physics.arcade.overlap(forestSign, player);
         
         // Sarah dialogue
@@ -224,21 +218,7 @@ demo.village.prototype = {
             dialogueText.text = 'Residence of John and Sarah';
         }
         
-        // Paula Sign text
-        else if (atPaulaSign) {
-            dialogueBox.alpha = 0.8;
-            dialogueName.text = 'Sign:';
-            dialogueText.text = 'Residence of Paula';
-        }
-        
-        // Bob Sign text
-        else if (atBobSign) {
-            dialogueBox.alpha = 0.8;
-            dialogueName.text = 'Sign:';
-            dialogueText.text = 'Residence of Bob';
-        }
-        
-        // John Sign text
+        // Forest Sign text
         else if (atForestSign) {
             dialogueBox.alpha = 0.8;
             dialogueName.text = 'Sign:';
@@ -277,7 +257,7 @@ demo.village.prototype = {
     },
     
     toHouse: function(){
-        villageMusic.stop();
+        //villageMusic.stop();
         game.state.start('house');    
     },
     
