@@ -55,11 +55,12 @@ demo.forest.prototype = {
         
         // Player
         loadPlayer(32, 381);
-        //inventory
-        createInventory();
+
         //set properties for bullets
         createBullets();
-        displayCurrentItem(740, game.world.height-65);
+        displayCurrentItem(140, game.world.height-65);
+        //inventory
+        createInventory();
         healthFunc();
         createHitbox();
 

@@ -156,7 +156,7 @@ function playerMovement(player){
         }
             
         else if (currItem.key == 'pickAxe'){
-            hitbox1.body.setSize(50,40,(15*dirValue)*-1, 0);
+            hitbox1.body.setSize(33,40,(15*dirValue)*-1, 0);
             this.hit();
         }
         
@@ -219,10 +219,10 @@ function displayCurrentItem(x, y){
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
     itemBox.lineStyle(5, 0xffe102, 1);
-    itemBox.drawRect(0, 0, 50, 50);
+    itemBox.drawRect(0, 0, 55, 50);
     itemBox.fixedToCamera = true;
     itemOnScreen = game.add.sprite(x, y, currItem.key);
-    itemOnScreen.alignIn(itemBox, Phaser.TOP_LEFT);
+    itemOnScreen.alignIn(itemBox, Phaser.TOP_LEFT, -5, -5);
     itemOnScreen.fixedToCamera = true;
     itemOnScreen.scale.x = 4;
     itemOnScreen.scale.y = 4;
@@ -297,7 +297,7 @@ function createHitbox(){
     hitboxes.enableBody = true; 
     player.addChild(hitboxes);
     hitbox1 = hitboxes.create(0,0);
-    hitbox1.anchor.setTo(0.75,0.5);
+    hitbox1.anchor.setTo(0.5,0.5);
     hitbox1.body.onOverlap = new Phaser.Signal();
     hitbox1.body.onOverlap.add(hitEnemy);
     hitbox1.body.enable = false;
