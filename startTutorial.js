@@ -8,7 +8,7 @@ demo.startTutorial.prototype = {
         game.load.image('ground', 'assets/ground.png');
         
         // Sprites
-        game.load.image('f', 'assets/FButton.png');
+        game.load.image('tab', 'assets/tab.png');
         game.load.image('spacebar', 'assets/spacebar.png');
         game.load.image('shift', 'assets/shift.png');
         game.load.image('WASD', 'assets/WASD.png');
@@ -32,9 +32,9 @@ demo.startTutorial.prototype = {
         var wasd = keys.create(75, game.world.height-525, 'WASD');
         wasd.scale.setTo(.7,.7);
         wasdD = game.add.text(120, 250, 'To Move',{fontSize: '24px', fill: '#000000' });
-        var f = keys.create(550, game.world.height-450, 'f');
-        f.scale.setTo(.3,.3)
-        fD = game.add.text(450, 250, 'To Change Current Item',{fontSize: '24px', fill: '#000000' });
+        var tab = keys.create(550, game.world.height-475, 'tab');
+        tab.scale.setTo(.13,.13)
+        tabD = game.add.text(450, 250, 'To Change Current Item',{fontSize: '24px', fill: '#000000' });
         var shift = keys.create(500, game.world.height-335, 'shift');
         shift.scale.setTo(.17,.17)
         shiftD = game.add.text(475, 380, 'To Inspect Inventory',{fontSize: '24px', fill: '#000000' });
