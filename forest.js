@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, bullet, bullets, enemies, damageSound, mapChange, forestMusic;
+var map, ground, platforms, trees, bullet, bullets, enemies, mapChange, forestMusic;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -33,6 +33,7 @@ demo.forest.prototype = {
         
         forestMusic = game.add.audio('forestMusic', true);
         forestMusic.play();
+        game.add.audio('impact')
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -128,14 +129,9 @@ demo.forest.prototype = {
 
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
-        
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
-        
-
         game.physics.arcade.overlap(hitbox1, enemies);
-        if (attacking){
-            hitbox1.body.setSize(59,40,(6*dirValue)*-1, 0);
-        }
+
 
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
@@ -146,13 +142,12 @@ demo.forest.prototype = {
     },
 
     render: function(){
-        game.debug.body(hitbox1);
+        //game.debug.body(hitbox1);
     },
     
     hitEnemy: function(enemy, bullet){
         bullet.kill();
         enemy.kill();
-        //damageSound.play();
     },
     
     addInventory: function(player, item){
@@ -174,7 +169,6 @@ demo.forest.prototype = {
             healthArray.pop();
             var heart = playerHealth.getFirstAlive();
             heart.kill();
-            //damageSound.play();
         }
         
         if (healthArray.length == 0){

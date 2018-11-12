@@ -35,8 +35,8 @@ demo.boss.prototype = {
         
         // Add John sprite
         loadPlayer(50, 512);
-        createBullets();
-        displayCurrentItem(740, game.world.height-65);
+        //createBullets();
+        //displayCurrentItem(740, game.world.height-65);
         //inventory
         createInventory();
         healthFunc();
@@ -72,12 +72,14 @@ demo.boss.prototype = {
         game.physics.arcade.collide(boss, walls);
         game.physics.arcade.collide(boss, platforms);
         game.physics.arcade.overlap(player, slimeBalls);
+
         boss.animations.play('barf');
     },
     
     render: function(){
-        game.debug.spriteInfo(player, 32, 32);
+        //game.debug.spriteInfo(player, 32, 32);
         //game.debug.spriteInfo(boss, 32, 32);
+        //game.debug.body(player);
     },
     
     bossMove: function(){
@@ -94,7 +96,7 @@ demo.boss.prototype = {
     bossAttack: function(){
         slime = slimeBalls.getFirstDead();
         slime.body.setSize(37, 37);
-        game.debug.body(slime)
+        game.debug.body(slime);
         slime.reset(boss.x+15, boss.y+15);
         slime.body.velocity.x = -250;
         slime.body.velocity.y = -50;

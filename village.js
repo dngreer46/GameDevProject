@@ -18,7 +18,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63.5, 70);
+        game.load.spritesheet('john', 'assets/john.png', 63.9, 70);
         game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
@@ -28,11 +28,11 @@ demo.village.prototype = {
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('blank', 'assets/blank.png');
-        game.load.audio('damageSound', 'assets/slaphit.mp3');
         
     },
     
     create: function(){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // Background image
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
@@ -119,8 +119,7 @@ demo.village.prototype = {
         items.create(2210, 390, 'key');   
         items.setAll('scale.x', 2);
         items.setAll('scale.y', 2);
-        
-
+        game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
         
 
         
@@ -168,11 +167,9 @@ demo.village.prototype = {
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         
-
+        
         game.physics.arcade.overlap(hitbox1, enemies);
-        if (attacking){
-            hitbox1.body.setSize(50,40,(15*dirValue)*-1, 0);
-        }
+
         
         var atDoor = game.physics.arcade.overlap(mapChangeHouse, player)
         
@@ -261,8 +258,8 @@ demo.village.prototype = {
     
     render: function(){
         //game.debug.body(player);
-        game.debug.spriteInfo(player, 32, 32);
-        game.debug.body(hitbox1);
+        //game.debug.spriteInfo(player, 32, 32);
+        //game.debug.body(hitbox1);
 
 
     },

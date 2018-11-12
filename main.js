@@ -9,7 +9,7 @@ game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
 game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
-game.state.start('startPage');
+game.state.start('village');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
@@ -73,7 +73,7 @@ function loadPlayer(x, y){
         
     // Player Animations
     player.animations.add('walk', [0, 1], 10);
-    player.animations.add('attack', [2, 3, 4], 10);
+    player.animations.add('attack', [2, 3, 4], 15);
     //Camera
     game.camera.follow(player);
     player.tint = 0xffffff;
@@ -92,8 +92,14 @@ function playerMovement(player){
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.scale.x = .5;
         player.body.velocity.x = 225;    
-        //player.body.velocity.x = 475;    
-        player.animations.play('walk');
+        //player.body.velocity.x = 475;
+        if (attacking){
+            player.animations.play('attack');
+        }
+        else{
+            player.animations.play('walk');
+        }
+        
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
@@ -102,7 +108,12 @@ function playerMovement(player){
         player.scale.x = -.5;
         player.body.velocity.x = -225;
         //player.body.velocity.x = -475;
-        player.animations.play('walk');
+        if (attacking){
+            player.animations.play('attack');
+        }
+        else{
+            player.animations.play('walk');
+        }
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
@@ -146,13 +157,13 @@ function playerMovement(player){
         }
             
         else if (currItem.key == 'pickAxe'){
+            hitbox1.body.setSize(50,40,(15*dirValue)*-1, 0);
             this.hit();
         }
         
         else if (currItem.key == 'health'){
             if (healthArray.length < 3){
                 this.addHealth();
-                console.log(currItem.index);
                 inventoryArray.splice(inventoryArray.indexOf(currItem));
                 currItem = inventoryArray[0];
             }
@@ -162,16 +173,18 @@ function playerMovement(player){
     }
     
     game.input.keyboard.addKeyCapture(Phaser.Keyboard.TAB);
+    game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
     
     if (game.input.keyboard.downDuration(Phaser.Keyboard.TAB, 10)){
         currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
         console.log(currItem);
         if (currItem == undefined){
-            currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-        }
-        showCurrItem(currItem);
 
-        
+        }
+        else{
+            showCurrItem(currItem);
+
+        }
     }
 
 
@@ -201,12 +214,13 @@ function createBullets(){
 }
 
 function displayCurrentItem(x, y){
-    itemBox = game.add.graphics(0, 0);
+    itemBox = game.add.graphics(x, y);
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
-    itemBox = itemBox.drawRect(x, y, 50, 50);
+    itemBox = itemBox.drawRect(0, 0, 50, 50);
     itemBox.fixedToCamera = true;
     itemOnScreen = game.add.sprite(x, y, currItem.key);
+    itemOnScreen.alignIn(itemBox, Phaser.CENTER);
     itemOnScreen.fixedToCamera = true;
     itemOnScreen.scale.x = 3.75;
     itemOnScreen.scale.y = 3.75;
@@ -280,8 +294,8 @@ function createHitbox(){
     hitboxes = game.add.group();
     hitboxes.enableBody = true; 
     player.addChild(hitboxes);
-    hitbox1 = hitboxes.create(0,0,null);
-    hitbox1.anchor.setTo(.5,.5);
+    hitbox1 = hitboxes.create(0,0);
+    hitbox1.anchor.setTo(0.75,0.5);
     hitbox1.body.onOverlap = new Phaser.Signal();
     hitbox1.body.onOverlap.add(hitEnemy);
     hitbox1.body.enable = false;
@@ -289,7 +303,6 @@ function createHitbox(){
 
 function hitEnemy(hitbox, enemy){
     enemy.kill();
-    damageSound.play();
 }
 
 function createSlime(){        
@@ -310,7 +323,6 @@ function playerHit(enemy, player){
         healthArray.pop();
         var heart = playerHealth.getFirstAlive();
         heart.kill();
-        //damageSound.play();
         player.tint = 0xf24826
         player.body.velocity.x = 500*dirValue;
         player.body.velocity.y = -50
@@ -322,7 +334,6 @@ function playerHit(enemy, player){
             healthArray.pop();
             var heart = playerHealth.getFirstAlive();
             heart.kill();
-            damageSound.play();
         }
     }
     if (healthArray.length == 0){
