@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange, forestMusic;
+var map, ground, platforms, trees, bullet, bullets, enemies, damageSound, mapChange, forestMusic;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
+        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
         
         game.load.audio('impact', 'assets/slaphit.mp3');
         game.load.audio('forestMusic', 'assets/forestMusic.mp3');
@@ -81,11 +81,11 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
-        enemies.create(350, game.world.height-100, 'boss');
-        enemies.create(768, game.world.height-100, 'boss');
-        enemies.create(1216, game.world.height-100, 'boss');
-        enemies.create(1056, 192, 'boss');
-        enemies.create(1440, 288, 'boss');
+        enemies.create(350, game.world.height-100, 'enemy');
+        enemies.create(768, game.world.height-100, 'enemy');
+        enemies.create(1216, game.world.height-100, 'enemy');
+        enemies.create(1056, 192, 'enemy');
+        enemies.create(1440, 288, 'enemy');
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);

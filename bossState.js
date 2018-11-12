@@ -85,7 +85,7 @@ demo.bossState.prototype = {
         enemies.createMultiple(15, 'enemy');
         enemies.setAll('body.gravity.y', 500);
         enemies.setAll('collideWorldBounds', true);
-        game.add.tween(enemies).to( { x: game.world.randomX }, 2000, "Linear", true, 2000, -1, true);
+        game.add.tween(enemies).to( { x: game.world.randomX }, 2000, Phaser.Easing.Back.InOut, true, 0, 2000, true);
         
         //set properties for bullets
         createBullets();

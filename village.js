@@ -28,7 +28,8 @@ demo.village.prototype = {
         game.load.image('key', 'assets/key.png');
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('blank', 'assets/blank.png');
-
+        game.load.audio('damageSound', 'assets/slaphit.mp3');
+        
     },
     
     create: function(){
@@ -56,8 +57,8 @@ demo.village.prototype = {
         plantsAndSigns = map.createLayer('PlantsSigns');
         
         // Add John sprite
-        loadPlayer(246, 544);
-        //loadPlayer(2210, 390);
+        //loadPlayer(246, 544);
+        loadPlayer(2210, 390);
         //set properties for bullets
         createBullets();
         //current item display

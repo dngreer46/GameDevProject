@@ -9,7 +9,7 @@ game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
 game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
-game.state.start('startPage');
+game.state.start('boss');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
@@ -215,7 +215,7 @@ function fire(){
     if(game.time.now > nextFire){
         nextFire = game.time.now + fireRate;         
         bullet = bullets.getFirstDead();
-        bullet.reset(player.x, player.y-10);
+        bullet.reset(player.x, player.y);
         if (dirValue == 1){
             bullet.body.velocity.x = -550;
 
@@ -291,3 +291,46 @@ function hitEnemy(hitbox, enemy){
     damageSound.play();
 }
 
+function createSlime(){        
+    slimeBalls = game.add.group();
+    slimeBalls.enableBody = true;
+    slimeBalls.physicsBodyType = Phaser.Physics.ARCADE;
+    slimeBalls.createMultiple(50, 'slime');
+    slimeBalls.setAll('checkWorldBounds', true);
+    slimeBalls.setAll('outOfBoundsKill', true);
+    slimeBalls.setAll('scale.x', 0.1);
+    slimeBalls.setAll('scale.y', 0.1);
+    
+}
+
+function playerHit(enemy, player){
+    if (enemy.key = 'slime'){
+        enemy.kill();
+        healthArray.pop();
+        var heart = playerHealth.getFirstAlive();
+        heart.kill();
+        //damageSound.play();
+        player.tint = 0xf24826
+        player.body.velocity.x = 500*dirValue;
+        player.body.velocity.y = -50
+        game.time.events.add(500, unTint);
+    }
+    else{
+        if (!overlap){
+            overlap = true;
+            healthArray.pop();
+            var heart = playerHealth.getFirstAlive();
+            heart.kill();
+            damageSound.play();
+        }
+    }
+    if (healthArray.length == 0){
+        player.kill();
+        game.state.start('youDied');
+    }
+}
+
+function unTint(){
+    player.tint = 0xffffff;
+
+}
