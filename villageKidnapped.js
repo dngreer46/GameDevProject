@@ -57,13 +57,15 @@ demo.villageKidnapped.prototype = {
         game.physics.arcade.enable(mapChangeHouse);
         
         // Add John sprite
-        //loadPlayer(545, 544);
-        loadPlayer(3500, 480);
+        loadPlayer(545, 544);
+        //loadPlayer(3500, 480);
         //inventory
         createInventory();
         //current item display
+
         displayCurrentItem(740, game.world.height-195);
         healthFunc();
+        createHitbox();
         
         // Map collision
         map.setCollision([43, 44, 45], true, ground);
@@ -110,6 +112,12 @@ demo.villageKidnapped.prototype = {
         dialogueName.fixedToCamera = true;
         dialogueText = game.add.text(210, 75, '', {fontSize: '15px', fill: '#000'});
         dialogueText.fixedToCamera = true;
+        
+        // Signs
+        johnSign = game.add.sprite(194, 545, 'blank');
+        game.physics.arcade.enable(johnSign);
+        forestSign = game.add.sprite(3137, 482, 'blank');
+        game.physics.arcade.enable(forestSign);
 
       
 
@@ -140,6 +148,9 @@ demo.villageKidnapped.prototype = {
         var atPaula = game.physics.arcade.overlap(paula, player)
         var atBob = game.physics.arcade.overlap(bob, player)
         
+        var atJohnSign = game.physics.arcade.overlap(johnSign, player);
+        var atForestSign = game.physics.arcade.overlap(forestSign, player);
+        
         // Sarah dialogue
         if (atNote) {
             box.alpha = 0.8;
@@ -160,6 +171,21 @@ demo.villageKidnapped.prototype = {
             dialogueName.text = 'Bob:';
             dialogueText.text = 'I tried to stop it, John, but it was too fast! \nIt took your sister Sarah into the forest!';
         }
+        
+        // John Sign text
+        else if (atJohnSign) {
+            box.alpha = 0.8;
+            dialogueName.text = 'Sign:';
+            dialogueText.text = 'Residence of John and Sarah';
+        }
+        
+        // Forest Sign text
+        else if (atForestSign) {
+            box.alpha = 0.8;
+            dialogueName.text = 'Sign:';
+            dialogueText.text = '>>> Forest (DANGER!) \n<<< Elysian Hill (Population: 4)';
+        }
+        
         
         // Get rid of text box if not overlapping NPC
         else {

@@ -1,4 +1,4 @@
-var map, ground, platforms, trees, bullet, bullets, enemies, boss, damageSound, mapChange, forestMusic;
+var map, ground, platforms, trees, bullet, bullets, enemies, mapChange, forestMusic;
 var fireRate = 1000;
 var nextFire = 0;
 
@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('boss', 'assets/bossmini.png', 40, 40);
+        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
         
         game.load.audio('impact', 'assets/slaphit.mp3');
         game.load.audio('forestMusic', 'assets/forestMusic.mp3');
@@ -33,6 +33,7 @@ demo.forest.prototype = {
         
         forestMusic = game.add.audio('forestMusic', true);
         forestMusic.play();
+        game.add.audio('impact')
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -81,19 +82,17 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
-        enemies.create(350, game.world.height-100, 'boss');
-        enemies.create(768, game.world.height-100, 'boss');
-        enemies.create(1216, game.world.height-100, 'boss');
-        enemies.create(1056, 192, 'boss');
-        enemies.create(1440, 288, 'boss');
+        enemies.create(350, game.world.height-100, 'enemy');
+        enemies.create(768, game.world.height-100, 'enemy');
+        enemies.create(1216, game.world.height-100, 'enemy');
+        enemies.create(1056, 192, 'enemy');
+        enemies.create(1440, 288, 'enemy');
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
-        
+
        
         
-        //add sound
-        damageSound = game.add.audio('impact');
         
         //create items
         items = game.add.group();
@@ -113,7 +112,7 @@ demo.forest.prototype = {
         itemText = game.add.text(600, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
-        game.add.tween(enemies).to({x:game.world.enemies.x}, 300, "Linear", true, 2000, -1, true);
+
     }, 
 
     
@@ -131,11 +130,8 @@ demo.forest.prototype = {
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
-        
         game.physics.arcade.overlap(hitbox1, enemies);
-        if (attacking){
-            hitbox1.body.setSize(59,40,(6*dirValue)*-1, 0);
-        }
+
 
         // Pick up item
         game.physics.arcade.overlap(items, player, this.addInventory);
@@ -146,20 +142,19 @@ demo.forest.prototype = {
     },
 
     render: function(){
-        game.debug.body(hitbox1);
+        //game.debug.body(hitbox1);
     },
     
     hitEnemy: function(enemy, bullet){
         bullet.kill();
         enemy.kill();
-        damageSound.play();
     },
     
     addInventory: function(player, item){
         inventoryArray.push(item);               
         item.kill();
         currItem = inventoryArray[inventoryArray.indexOf(item)];
-
+        showCurrItem();
         
     },
     
@@ -174,7 +169,6 @@ demo.forest.prototype = {
             healthArray.pop();
             var heart = playerHealth.getFirstAlive();
             heart.kill();
-            damageSound.play();
         }
         
         if (healthArray.length == 0){

@@ -1,0 +1,6 @@
+John: 35 x 70 pixels
+
+
+Boss: 96 x 128 px
+ - Walking frames: 1-7
+ - Projectile attack frames: 8-14

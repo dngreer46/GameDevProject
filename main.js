@@ -8,8 +8,8 @@ game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
 game.state.add('bossState', demo.bossState);
-//game.state.start('village');
-game.state.start('startPage');
+game.state.add('boss', demo.boss);
+game.state.start('village');
 
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
 
@@ -73,9 +73,11 @@ function loadPlayer(x, y){
         
     // Player Animations
     player.animations.add('walk', [0, 1], 10);
-    player.animations.add('attack', [2, 3, 4], 10);
+    player.animations.add('attack', [2, 3, 4], 15);
     //Camera
     game.camera.follow(player);
+    player.tint = 0xffffff;
+
     
 }
 function playerMovement(player){
@@ -89,16 +91,29 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
         player.scale.x = .5;
-        player.body.velocity.x = 375;    
-        player.animations.play('walk');
+        player.body.velocity.x = 225;    
+        //player.body.velocity.x = 475;
+        if (attacking){
+            player.animations.play('attack');
+        }
+        else{
+            player.animations.play('walk');
+        }
+        
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
         player.scale.x = -.5;
-        player.body.velocity.x = -375;
-        player.animations.play('walk');
+        player.body.velocity.x = -225;
+        //player.body.velocity.x = -475;
+        if (attacking){
+            player.animations.play('attack');
+        }
+        else{
+            player.animations.play('walk');
+        }
         dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
 
     }
@@ -142,13 +157,13 @@ function playerMovement(player){
         }
             
         else if (currItem.key == 'pickAxe'){
+            hitbox1.body.setSize(50,40,(15*dirValue)*-1, 0);
             this.hit();
         }
         
         else if (currItem.key == 'health'){
             if (healthArray.length < 3){
                 this.addHealth();
-                console.log(currItem.index);
                 inventoryArray.splice(inventoryArray.indexOf(currItem));
                 currItem = inventoryArray[0];
             }
@@ -158,16 +173,18 @@ function playerMovement(player){
     }
     
     game.input.keyboard.addKeyCapture(Phaser.Keyboard.TAB);
+    game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
     
     if (game.input.keyboard.downDuration(Phaser.Keyboard.TAB, 10)){
         currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
         console.log(currItem);
         if (currItem == undefined){
-            currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
-        }
-        showCurrItem(currItem);
 
-        
+        }
+        else{
+            showCurrItem(currItem);
+
+        }
     }
 
 
@@ -191,19 +208,19 @@ function createBullets(){
     bullets.createMultiple(50, 'bullet');
     bullets.setAll('checkWorldBounds', true);
     bullets.setAll('outOfBoundsKill', true);
-    bullets.setAll('anchor.y', -5);
     bullets.setAll('anchor.x', 0.5);
     bullets.setAll('scale.x', 0.8);
     bullets.setAll('scale.y', 0.8);        
 }
 
 function displayCurrentItem(x, y){
-    itemBox = game.add.graphics(0, 0);
+    itemBox = game.add.graphics(x, y);
     itemBox.beginFill(0x5daf8a);
     itemBox.alpha = 0.65;
-    itemBox = itemBox.drawRect(x, y, 50, 50);
+    itemBox = itemBox.drawRect(0, 0, 50, 50);
     itemBox.fixedToCamera = true;
     itemOnScreen = game.add.sprite(x, y, currItem.key);
+    itemOnScreen.alignIn(itemBox, Phaser.CENTER);
     itemOnScreen.fixedToCamera = true;
     itemOnScreen.scale.x = 3.75;
     itemOnScreen.scale.y = 3.75;
@@ -213,7 +230,7 @@ function fire(){
     if(game.time.now > nextFire){
         nextFire = game.time.now + fireRate;         
         bullet = bullets.getFirstDead();
-        bullet.reset(player.x, player.y-10);
+        bullet.reset(player.x, player.y);
         if (dirValue == 1){
             bullet.body.velocity.x = -550;
 
@@ -277,8 +294,8 @@ function createHitbox(){
     hitboxes = game.add.group();
     hitboxes.enableBody = true; 
     player.addChild(hitboxes);
-    hitbox1 = hitboxes.create(0,0,null);
-    hitbox1.anchor.setTo(.5,.5);
+    hitbox1 = hitboxes.create(0,0);
+    hitbox1.anchor.setTo(0.75,0.5);
     hitbox1.body.onOverlap = new Phaser.Signal();
     hitbox1.body.onOverlap.add(hitEnemy);
     hitbox1.body.enable = false;
@@ -286,5 +303,46 @@ function createHitbox(){
 
 function hitEnemy(hitbox, enemy){
     enemy.kill();
-    damageSound.play();
+}
+
+function createSlime(){        
+    slimeBalls = game.add.group();
+    slimeBalls.enableBody = true;
+    slimeBalls.physicsBodyType = Phaser.Physics.ARCADE;
+    slimeBalls.createMultiple(50, 'slime');
+    slimeBalls.setAll('checkWorldBounds', true);
+    slimeBalls.setAll('outOfBoundsKill', true);
+    slimeBalls.setAll('scale.x', 0.1);
+    slimeBalls.setAll('scale.y', 0.1);
+    
+}
+
+function playerHit(enemy, player){
+    if (enemy.key = 'slime'){
+        enemy.kill();
+        healthArray.pop();
+        var heart = playerHealth.getFirstAlive();
+        heart.kill();
+        player.tint = 0xf24826
+        player.body.velocity.x = 500*dirValue;
+        player.body.velocity.y = -50
+        game.time.events.add(500, unTint);
+    }
+    else{
+        if (!overlap){
+            overlap = true;
+            healthArray.pop();
+            var heart = playerHealth.getFirstAlive();
+            heart.kill();
+        }
+    }
+    if (healthArray.length == 0){
+        player.kill();
+        game.state.start('youDied');
+    }
+}
+
+function unTint(){
+    player.tint = 0xffffff;
+
 }
