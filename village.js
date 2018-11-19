@@ -108,15 +108,17 @@ demo.village.prototype = {
         paula.body.gravity.y = 500;
         
         
-
         
+        createItems(150, 544, 'pickAxe');
+        createItems(2210, 390, 'key');
+
         //create items
-        items = game.add.group();
-        items.enableBody = true;
-        items.physicsBodyType = Phaser.Physics.ARCADE;
+        //items = game.add.group();
+        //items.enableBody = true;
+        //items.physicsBodyType = Phaser.Physics.ARCADE;
         //items.create(1170, game.world.height-1015, 'gun');
-        items.create(150, 544, 'pickAxe'); 
-        items.create(2210, 390, 'key');   
+        //items.create(150, 544, 'pickAxe'); 
+        //items.create(2210, 390, 'key');   
         items.setAll('scale.x', 2.5);
         items.setAll('scale.y', 2.5);
         game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
@@ -258,7 +260,7 @@ demo.village.prototype = {
     },
     
     toHouse: function(){
-        //villageMusic.stop();
+        villageMusic.stop();
         game.state.start('house');    
     },
     

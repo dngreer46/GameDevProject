@@ -11,10 +11,12 @@ game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
 game.state.start('startPage');
 
-var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking;
+var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking, items;
 
 
-
+items = game.add.group();
+items.enableBody = true;
+items.physicsBodyType = Phaser.Physics.ARCADE;
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -346,5 +348,10 @@ function playerHit(enemy, player){
 
 function unTint(){
     player.tint = 0xffffff;
+
+}
+
+function createItems(x, y, sprite){
+    items.create(x, y, sprite);
 
 }
