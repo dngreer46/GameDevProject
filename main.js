@@ -95,7 +95,7 @@ function playerMovement(player){
         player.body.velocity.x = 475;
         if (attacking){
             player.animations.play('attack');
-        }
+        } 
         else{
             player.animations.play('walk');
         }
