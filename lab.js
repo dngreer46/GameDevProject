@@ -81,9 +81,11 @@ demo.lab.prototype = {
         game.physics.arcade.collide(enemies, platforms);
         
         playerMovement(player);
-        
+        playerAction(player);
+
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
+
         // Map change
         game.physics.arcade.overlap(mapChange, player, this.toBoss);
     },
