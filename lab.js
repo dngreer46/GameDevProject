@@ -1,5 +1,5 @@
 var map, bg, ground, walls, platforms;
-var items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText;
+var items, inventoryBox, inventoryText, mapChange, dialogueName, dialogueText, dialogueBox, villageMusic, itemOnScreen, itemText, enemies;
 
 demo.lab = function(){};
 demo.lab.prototype = {
@@ -7,6 +7,8 @@ demo.lab.prototype = {
         // Preload tileset images
         game.load.image('scifiSet', 'assets/maps/scifiSet.png');
         
+        //Sprite
+        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
         // Preload tilemap
         game.load.tilemap('labMap', 'assets/maps/labMap.json', null, Phaser.Tilemap.TILED_JSON);
         
@@ -55,14 +57,35 @@ demo.lab.prototype = {
         mapChange = game.add.sprite(940, 1408, 'blank');
         game.physics.arcade.enable(mapChange);
         
-
+        // Add enemies
+        enemies = game.add.group();
+        enemies.enableBody = true;
+        game.physics.arcade.enable(enemies);
+        enemies.create(500, game.world.height-100, 'enemy');
+        enemies.create(100, game.world.height-1000, 'enemy');
+        enemies.create(600, game.world.height-1000, 'enemy');
+        enemies.create(200, game.world.height-2000, 'enemy');
+        enemies.create(200, game.world.height-2000, 'enemy');
+        
+        enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
+        enemies.callAll('play', null, 'blob');
+        enemies.setAll('body.gravity.y', 500);
+        game.add.tween(enemies).to({x: enemies.x + 130}, 1000, 'Linear', true, 0, -1, true);
         
         
     },
     
     update: function() {
+        
+        game.physics.arcade.collide(enemies, ground);
+        game.physics.arcade.collide(enemies, platforms);
+        
         playerMovement(player);
         playerAction(player);
+
+        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
+        
+
         // Map change
         game.physics.arcade.overlap(mapChange, player, this.toBoss);
     },
