@@ -53,8 +53,7 @@ demo.forest.prototype = {
         platforms = map.createLayer('Platforms');
         trees = map.createLayer('Trees');
         
-        // Player
-        loadPlayer(32, 381);
+
 
         //set properties for bullets
         createBullets();
@@ -96,16 +95,8 @@ demo.forest.prototype = {
         
         
         //create items
-        items = game.add.group();
-        items.enableBody = true;
-        items.physicsBodyType = Phaser.Physics.ARCADE;
-        items.create(224, game.world.height-96, 'gun');
-        items.setAll('scale.x', 2)
-        items.setAll('scale.y', 2)
-        game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
-
-        
-
+        createItems()
+        spawnItems(224, game.world.height-96, 'gun')
         
         //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
@@ -114,7 +105,8 @@ demo.forest.prototype = {
         itemText = game.add.text(0, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
-
+        // Player
+        loadPlayer(32, 381);
     }, 
 
     
@@ -128,7 +120,8 @@ demo.forest.prototype = {
         
         // Player Movement
         playerMovement(player);
-
+        playerAction(player);
+        
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);

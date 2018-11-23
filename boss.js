@@ -33,17 +33,7 @@ demo.boss.prototype = {
         ground = map.createLayer('Ground');
         platforms = map.createLayer('Platforms');
         
-        // Add John sprite
-        loadPlayer(50, 512);
-        createBullets();
-        displayCurrentItem(140, game.world.height-195);
-        itemText = game.add.text(0, game.world.height - 195, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
-        itemText.fixedToCamera = true;
-        createInventory();
-        //Add player health
-        healthFunc();
-        //Add hitbox for player
-        createHitbox();
+
         
         
         // Map collision
@@ -68,11 +58,24 @@ demo.boss.prototype = {
         
         //Boss projectile
         createSlime();
-
+        
+        // Add John sprite
+        loadPlayer(50, 512);
+        createBullets();
+        displayCurrentItem(140, game.world.height-195);
+        itemText = game.add.text(0, game.world.height - 195, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
+        createInventory();
+        //Add player health
+        healthFunc();
+        //Add hitbox for player
+        createHitbox();
     },
     
     update: function() {
         playerMovement(player);
+        playerAction(player);
+    
         game.physics.arcade.collide(boss, ground);
         game.physics.arcade.collide(boss, walls);
         game.physics.arcade.collide(boss, platforms);

@@ -54,8 +54,12 @@ demo.house.prototype = {
         mapChange = game.add.sprite(194, 517, 'blank');
         game.physics.arcade.enable(mapChange);
         
+        
+        
         // Add John sprite
         loadPlayer(194, 517);
+        
+        
         
         
     },
@@ -63,12 +67,19 @@ demo.house.prototype = {
     update: function() {
         
         playerMovement(player);
+        playerAction(player);
         
         var atDoor = game.physics.arcade.overlap(mapChange, player)
         
         if (atDoor && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
             this.toVillage();
         }
+
+        
+    },
+    
+    render: function(){
+        game.debug.spriteInfo(player, 32, 32);
         
     },
     
@@ -76,5 +87,6 @@ demo.house.prototype = {
         //villageMusic.stop();
         game.state.start('villageKidnapped');    
     },
+    
     
 }
