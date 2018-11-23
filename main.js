@@ -14,9 +14,6 @@ game.state.start('startPage');
 var player, ground, playerHealth, healthArray, velocity = 700, fireRate = 1000, nextFire=0, inventory, inventoryArray = [], currItem, bullet, bullets, dirValue, hitbox, hitbox1, attacking, items;
 
 
-items = game.add.group();
-items.enableBody = true;
-items.physicsBodyType = Phaser.Physics.ARCADE;
 
 // Allows collision for select tile faces
 // Found here: https://thoughts.amphibian.com/2015/11/single-direction-collision-for-your.html
@@ -91,7 +88,7 @@ function playerMovement(player){
     player.body.velocity.x = 0;
     player.anchor.setTo(.35,.35);
     
-    if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
+    if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
         player.scale.x = .5;
         //player.body.velocity.x = 225;    
         player.body.velocity.x = 475;
@@ -102,11 +99,11 @@ function playerMovement(player){
             player.animations.play('walk');
         }
         
-        dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
+        dirValue = game.input.keyboard.isDown(Phaser.Keyboard.LEFT) - game.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
 
     }
 
-    else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){               
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){               
         player.scale.x = -.5;
         //player.body.velocity.x = -225;
         player.body.velocity.x = -475;
@@ -116,19 +113,20 @@ function playerMovement(player){
         else{
             player.animations.play('walk');
         }
-        dirValue = game.input.keyboard.isDown(Phaser.Keyboard.A) - game.input.keyboard.isDown(Phaser.Keyboard.D);
+        dirValue = game.input.keyboard.isDown(Phaser.Keyboard.LEFT) - game.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
 
     }
     else{
         player.animations.stop('walk');
         //player.frame = 0;
     }
-    if (game.input.keyboard.isDown(Phaser.Keyboard.W) && touchGround) {
+    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && touchGround) {
         player.body.velocity.y = -340;
         player.body.bounce.y = 0.3;
 
     }
-    
+}
+function playerAction(player){
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){   
         inventoryBox.alpha = 0.65;
         inventory = game.add.group(inventoryBox);
@@ -351,7 +349,16 @@ function unTint(){
 
 }
 
-function createItems(x, y, sprite){
+function createItems(){
+    items = game.add.group();
+    items.enableBody = true;
+    items.physicsBodyType = Phaser.Physics.ARCADE;
+}
+function spawnItems(x, y, sprite){
     items.create(x, y, sprite);
+    items.setAll('scale.x', 2.5);
+    items.setAll('scale.y', 2.5);
+    game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
+
 
 }

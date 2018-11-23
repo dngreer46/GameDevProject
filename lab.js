@@ -62,7 +62,7 @@ demo.lab.prototype = {
     
     update: function() {
         playerMovement(player);
-        
+        playerAction(player);
         // Map change
         game.physics.arcade.overlap(mapChange, player, this.toBoss);
     },

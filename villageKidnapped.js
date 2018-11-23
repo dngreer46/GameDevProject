@@ -56,15 +56,8 @@ demo.villageKidnapped.prototype = {
         mapChangeHouse = game.add.sprite(545, 544, 'blank');
         game.physics.arcade.enable(mapChangeHouse);
         
-        // Add John sprite
-        loadPlayer(545, 544);
-        //loadPlayer(3500, 480);
-        //current item display
-        displayCurrentItem(140, game.world.height-195);
-        //inventory
-        createInventory();
-        healthFunc();
-        createHitbox();
+
+
         
         // Map collision
         map.setCollision([43, 44, 45, 54], true, ground);
@@ -94,12 +87,7 @@ demo.villageKidnapped.prototype = {
         game.physics.arcade.enable(paula);
         paula.body.gravity.y = 500;
         
-        
-        //create items
-        items = game.add.group();
-        items.enableBody = true;
-        items.physicsBodyType = Phaser.Physics.ARCADE;
-
+    
         
         //dialouge
         box = game.add.graphics(0, 0);
@@ -121,6 +109,18 @@ demo.villageKidnapped.prototype = {
         itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
         
+        //current item display
+        displayCurrentItem(140, game.world.height-195);
+        //inventory
+        createInventory();
+        //health
+        healthFunc();
+        //hitbox
+        createHitbox();
+        // Add John sprite
+        loadPlayer(545, 544);
+        //loadPlayer(3500, 480);
+        
 
     },
     
@@ -132,6 +132,7 @@ demo.villageKidnapped.prototype = {
 
         
         playerMovement(player);
+        playerAction(player);
         
         game.physics.arcade.overlap(items, player, this.addInventory);
         

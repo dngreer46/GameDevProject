@@ -67,6 +67,7 @@ demo.house.prototype = {
     update: function() {
         
         playerMovement(player);
+        playerAction(player);
         
         var atDoor = game.physics.arcade.overlap(mapChange, player)
         
