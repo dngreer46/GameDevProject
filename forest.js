@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
+        game.load.spritesheet('enemy', 'assets/enemy.png', 100, 100);
         
         game.load.audio('impact', 'assets/slaphit.mp3');
         game.load.audio('forestMusic', 'assets/forestMusic.mp3');
@@ -82,6 +82,7 @@ demo.forest.prototype = {
         // Enemy Group
         enemies = game.add.group();
         enemies.enableBody = true;
+        enemies.scale.setTo(0.5, 0.5);
         enemies.create(350, game.world.height-100, 'enemy');
         enemies.create(768, game.world.height-100, 'enemy');
         enemies.create(1216, game.world.height-100, 'enemy');
