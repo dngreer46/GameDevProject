@@ -283,13 +283,13 @@ function healthFunc(){
     playerHealth = game.add.group();
         healthArray = [];
         for (var i = 0; i < 3; i++){
-            playerHealth.create(i * 60, 0, 'health');
+            playerHealth.create(i * 60 + 5, 5, 'health');
             healthArray.push(i);
 
         }
         playerHealth.fixedToCamera = true;
-        playerHealth.setAll('scale.x', 6);
-        playerHealth.setAll('scale.y', 6);
+        playerHealth.setAll('scale.x', 0.75);
+        playerHealth.setAll('scale.y', 0.75);
 }
 
 function createHitbox(){

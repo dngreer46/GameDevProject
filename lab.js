@@ -19,7 +19,7 @@ demo.lab.prototype = {
         
         
         game.stage.backgroundColor = '#000';
-        game.world.setBounds(0, 0, 960, 1600);
+        game.world.setBounds(0, 0, 960, 2400);
         
         // Game Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -55,7 +55,7 @@ demo.lab.prototype = {
         });
         
         // Map Change
-        mapChange = game.add.sprite(940, 1408, 'blank');
+        mapChange = game.add.sprite(940, 2208, 'blank');
         game.physics.arcade.enable(mapChange);
         
         // Add enemies
