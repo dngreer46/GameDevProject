@@ -8,7 +8,7 @@ demo.lab.prototype = {
         game.load.image('scifiSet', 'assets/maps/scifiSet.png');
         
         //Sprite
-        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
+        game.load.spritesheet('enemy', 'assets/enemy.png', 100, 100);
         // Preload tilemap
         game.load.tilemap('labMap', 'assets/maps/labMap.json', null, Phaser.Tilemap.TILED_JSON);
         
@@ -42,6 +42,7 @@ demo.lab.prototype = {
         createInventory();
         healthFunc();
         createBullets();
+        createHitbox();
         // Map collision
         map.setCollision([211, 215, 216, 101, 33, 32, 205, 206, 207, 141, 142, 176, 177, 71, 72, 106, 107], true, ground);
         map.setCollision(211, true, walls);
@@ -58,21 +59,26 @@ demo.lab.prototype = {
         game.physics.arcade.enable(mapChange);
         
         // Add enemies
-        enemies = game.add.group();
-        enemies.enableBody = true;
-        game.physics.arcade.enable(enemies);
-        enemies.create(500, game.world.height-100, 'enemy');
-        enemies.create(100, game.world.height-1000, 'enemy');
-        enemies.create(600, game.world.height-1000, 'enemy');
-        enemies.create(200, game.world.height-2000, 'enemy');
-        enemies.create(200, game.world.height-2000, 'enemy');
+        createEnemies();
+    
+        spawnEnemies(500, game.world.height-100, 'enemy');
+        spawnEnemies(100, game.world.height-1000, 'enemy');
+        spawnEnemies(600, game.world.height-1000, 'enemy');
+        spawnEnemies(200, game.world.height-2000, 'enemy');
+        spawnEnemies(200, game.world.height-2000, 'enemy');
         
         enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
         game.add.tween(enemies).to({x: enemies.x + 130}, 1000, 'Linear', true, 0, -1, true);
         
-        
+        // Add John sprite
+        loadPlayer(16, 192);
+        //inventory
+        createInventory();
+        healthFunc();
+        createBullets();
+        createHitbox();
     },
     
     update: function() {

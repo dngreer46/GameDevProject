@@ -313,10 +313,7 @@ function createSlime(){
     slimeBalls.physicsBodyType = Phaser.Physics.ARCADE;
     slimeBalls.createMultiple(50, 'slime');
     slimeBalls.setAll('checkWorldBounds', true);
-    slimeBalls.setAll('outOfBoundsKill', true);
-    slimeBalls.setAll('scale.x', 0.1);
-    slimeBalls.setAll('scale.y', 0.1);
-    
+
 }
 
 function playerHit(enemy, player){
@@ -361,4 +358,16 @@ function spawnItems(x, y, sprite){
     game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
 
 
+}
+
+function createEnemies(){
+    enemies = game.add.group();
+    enemies.enableBody = true;
+    enemies.physicsBodyType = Phaser.Physics.ARACADE;
+}
+
+function spawnEnemies(x, y, sprite){
+    enemies.create(x, y, sprite);
+    enemies.setAll('scale.x', .5);
+    enemies.setAll('scale.y', .5);
 }

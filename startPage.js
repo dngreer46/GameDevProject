@@ -12,6 +12,8 @@ demo.startPage.prototype = {
         
     },
     create: function(){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
         villageMusic = game.add.audio('villageMusic', 0.3, true);
         villageMusic.play();
         game.add.tileSprite(0, 0, 3520, 640, 'sky');

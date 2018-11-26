@@ -32,7 +32,6 @@ demo.village.prototype = {
     },
     
     create: function(){
-        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // Background image
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
@@ -232,7 +231,7 @@ demo.village.prototype = {
     render: function(){
         //game.debug.body(player);
         //game.debug.spriteInfo(player, 32, 32);
-        //game.debug.body(hitbox1);
+        game.debug.body(hitbox1);
 
 
     },
