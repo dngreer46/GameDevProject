@@ -66,15 +66,21 @@ demo.lab.prototype = {
         game.add.tween(enemies).to({x: enemies.x + 130}, 1000, 'Linear', true, 0, -1, true);
         
         createItems()
-        spawnItems(50, 192, 'gun');
+        spawnItems(80, 315, 'gun');
         
         // Add John sprite
         loadPlayer(16, 192);
-        //inventory
-        createInventory();
         healthFunc();
         createBullets();
         createHitbox();
+        
+        //Current item and inventoryinventory
+        itemText = game.add.text(0, 450, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
+        displayCurrentItem(140, 446);
+        createInventory();
+
+
     },
     
     update: function() {
@@ -87,7 +93,8 @@ demo.lab.prototype = {
 
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
-
+        // Pick up item
+        game.physics.arcade.overlap(items, player, addInventory);
         // Map change
         game.physics.arcade.overlap(mapChange, player, this.toBoss);
     },

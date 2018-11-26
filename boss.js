@@ -61,6 +61,7 @@ demo.boss.prototype = {
         
         //add health
         bossHealth = game.add.text(540, 0, 'Boss Health: 100', {fontSize: '32px', fill: '#ffffff' });
+        bossHealth.fixedToCamera = true;
         boss_health = 100;
         
         // Add John sprite
@@ -86,6 +87,8 @@ demo.boss.prototype = {
         game.physics.arcade.overlap(player, slimeBalls);
         game.physics.arcade.overlap(boss, bullets, this.hitBoss)
         boss.animations.play('barf');
+        // Pick up item
+        game.physics.arcade.overlap(items, player, addInventory);
     },
     
     render: function(){
