@@ -35,14 +35,7 @@ demo.lab.prototype = {
         walls = map.createLayer('Walls');
         platforms = map.createLayer('Platforms');
         
-        
-        // Add John sprite
-        loadPlayer(16, 192);
-        //inventory
-        createInventory();
-        healthFunc();
-        createBullets();
-        createHitbox();
+
         // Map collision
         map.setCollision([211, 215, 216, 101, 33, 32, 205, 206, 207, 141, 142, 176, 177, 71, 72, 106, 107], true, ground);
         map.setCollision(211, true, walls);

@@ -1,4 +1,4 @@
-var map, bg, ground, platforms, walls, chests, door, mapChange
+var map, bg, ground, platforms, walls, door, mapChange
 var player
 
 demo.house = function(){};
@@ -20,7 +20,7 @@ demo.house.prototype = {
     
     create: function() {
         game.stage.backgroundColor = '#000';
-        game.world.setBounds(00, 0, 672, 576);
+        game.world.setBounds(0, 0, 672, 576);
         
         // Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -36,7 +36,6 @@ demo.house.prototype = {
         ground = map.createLayer('Ground');
         platforms = map.createLayer('Platforms');
         walls = map.createLayer('Walls');
-        chests = map.createLayer('Chests');
         door = map.createLayer('Door');
         
         // Map collision
@@ -54,8 +53,19 @@ demo.house.prototype = {
         mapChange = game.add.sprite(194, 517, 'blank');
         game.physics.arcade.enable(mapChange);
         
+        // Create items
+        createItems()
+        spawnItems(192, 352, 'pickAxe')
         
         
+        //current item display
+        displayCurrentItem(5, game.world.height-150);
+        //inventory
+        createInventory();
+        //health
+        healthFunc();
+        //hitbox
+        createHitbox();
         // Add John sprite
         loadPlayer(194, 517);
         
@@ -68,6 +78,8 @@ demo.house.prototype = {
         
         playerMovement(player);
         playerAction(player);
+        
+        game.physics.arcade.overlap(items, player, this.addInventory);
         
         var atDoor = game.physics.arcade.overlap(mapChange, player)
         
@@ -87,6 +99,14 @@ demo.house.prototype = {
         //villageMusic.stop();
         game.state.start('villageKidnapped');    
     },
+    
+     addInventory: function(player, item){
+        inventoryArray.push(item);
+        item.kill();
+        currItem = inventoryArray[inventoryArray.indexOf(item)];
+        showCurrItem();
+
+    }
     
     
 }
