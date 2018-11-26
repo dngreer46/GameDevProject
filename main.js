@@ -67,7 +67,7 @@ function loadPlayer(x, y){
     game.physics.arcade.enable(player);
     player.body.setSize(35, 63, 0, 0);
     
-    player.body.gravity.y = 500;
+    player.body.gravity.y = 750;
     player.body.collideWorldBounds = true;
         
     // Player Animations
@@ -121,8 +121,8 @@ function playerMovement(player){
         //player.frame = 0;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && touchGround) {
-        player.body.velocity.y = -340;
-        player.body.bounce.y = 0.3;
+        player.body.velocity.y = -410;
+        player.body.bounce.y = 0.2;
 
     }
 }
