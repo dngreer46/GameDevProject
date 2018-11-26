@@ -55,17 +55,6 @@ demo.village.prototype = {
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
         
-        // Add John sprite
-        loadPlayer(246, 544);
-        //loadPlayer(2210, 390);
-        //current item display
-        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
-        displayCurrentItem(140, game.world.height-195);
-        //inventory
-        createInventory();
-        healthFunc();
-        createHitbox();
-        
         
         // Map change
         mapChange = game.add.sprite(3500, 480, 'blank');
@@ -111,14 +100,9 @@ demo.village.prototype = {
         createItems()
         spawnItems(2210, 390, 'key')
         
-        
-
 
         itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
-        
-
-
         
         //dialouge
         dialogueBox = game.add.graphics(0, 0);
@@ -138,7 +122,16 @@ demo.village.prototype = {
         forestSign = game.add.sprite(3137, 482, 'blank');
         game.physics.arcade.enable(forestSign);
         
-
+        // Add John sprite
+        loadPlayer(246, 544);
+        //loadPlayer(2210, 390);
+        //current item display
+        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
+        displayCurrentItem(140, game.world.height-195);
+        //inventory
+        createInventory();
+        healthFunc();
+        createHitbox();
       
 
     },

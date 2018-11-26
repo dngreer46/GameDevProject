@@ -82,7 +82,7 @@ demo.forest.prototype = {
         
         //create items
         createItems()
-        spawnItems(224, game.world.height-96, 'gun')
+        //spawnItems(224, game.world.height-96, 'gun')
         
         //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
