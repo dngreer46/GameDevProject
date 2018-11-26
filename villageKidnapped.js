@@ -23,7 +23,7 @@ demo.villageKidnapped.prototype = {
     
     create: function(){
         
-       
+       attacking = false
         
         villageKidnappedMusic = game.add.audio('villageKidnappedMusic', 1, true);
         villageKidnappedMusic.play();
