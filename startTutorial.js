@@ -11,7 +11,7 @@ demo.startTutorial.prototype = {
         game.load.image('tab', 'assets/tab.png');
         game.load.image('spacebar', 'assets/spacebar.png');
         game.load.image('shift', 'assets/shift.png');
-        game.load.image('WASD', 'assets/WASD.png');
+        game.load.image('arrowkeys', 'assets/arrowkeys.png');
         
     },
     
@@ -29,9 +29,9 @@ demo.startTutorial.prototype = {
         title = game.add.text(325, 70, 'Tutorial',{fontSize: '32px', fill: '#000000' });
         
         keys = game.add.group();
-        var wasd = keys.create(75, game.world.height-525, 'WASD');
-        wasd.scale.setTo(.7,.7);
-        wasdD = game.add.text(120, 250, 'To Move',{fontSize: '24px', fill: '#000000' });
+        var arrow = keys.create(75, game.world.height-525, 'arrowkeys');
+        arrow.scale.setTo(.08,.08);
+        arrowD = game.add.text(120, 250, 'To Move',{fontSize: '24px', fill: '#000000' });
         var tab = keys.create(550, game.world.height-475, 'tab');
         tab.scale.setTo(.13,.13)
         tabD = game.add.text(450, 250, 'To Change Current Item',{fontSize: '24px', fill: '#000000' });
