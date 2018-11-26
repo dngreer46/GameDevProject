@@ -67,7 +67,7 @@ function loadPlayer(x, y){
     game.physics.arcade.enable(player);
     player.body.setSize(35, 63, 0, 0);
     
-    player.body.gravity.y = 500;
+    player.body.gravity.y = 750;
     player.body.collideWorldBounds = true;
         
     // Player Animations
@@ -90,8 +90,8 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
         player.scale.x = .5;
-        //player.body.velocity.x = 225;    
-        player.body.velocity.x = 475;
+        player.body.velocity.x = 225;    
+        //player.body.velocity.x = 475;
         if (attacking){
             player.animations.play('attack');
         } 
@@ -105,8 +105,8 @@ function playerMovement(player){
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){               
         player.scale.x = -.5;
-        //player.body.velocity.x = -225;
-        player.body.velocity.x = -475;
+        player.body.velocity.x = -225;
+        //player.body.velocity.x = -475;
         if (attacking){
             player.animations.play('attack');
         }
@@ -121,8 +121,8 @@ function playerMovement(player){
         //player.frame = 0;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && touchGround) {
-        player.body.velocity.y = -340;
-        player.body.bounce.y = 0.3;
+        player.body.velocity.y = -410;
+        player.body.bounce.y = 0.2;
 
     }
 }
@@ -357,7 +357,6 @@ function spawnItems(x, y, sprite){
     items.setAll('scale.y', 2.5);
     game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
 
-
 }
 
 function createEnemies(){
@@ -370,4 +369,11 @@ function spawnEnemies(x, y, sprite){
     enemies.create(x, y, sprite);
     enemies.setAll('scale.x', .5);
     enemies.setAll('scale.y', .5);
+}
+
+function addInventory(player, item){
+    inventoryArray.push(item);               
+    item.kill();
+    currItem = inventoryArray[inventoryArray.indexOf(item)];
+    showCurrItem();
 }

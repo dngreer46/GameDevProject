@@ -99,10 +99,7 @@ demo.village.prototype = {
         //create items
         createItems()
         spawnItems(2210, 390, 'key')
-        
 
-        itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
-        itemText.fixedToCamera = true;
         
         //dialouge
         dialogueBox = game.add.graphics(0, 0);
@@ -124,13 +121,18 @@ demo.village.prototype = {
         
         // Add John sprite
         loadPlayer(246, 544);
-        //loadPlayer(2210, 390);
-        //current item display
+
+        //current item display and inventory
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
+        itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
+        itemText.fixedToCamera = true;
         displayCurrentItem(140, game.world.height-195);
-        //inventory
         createInventory();
+
+        //Player health
         healthFunc();
+
+        //Hitboxes
         createHitbox();
       
 
@@ -145,7 +147,7 @@ demo.village.prototype = {
         playerMovement(player);
         playerAction(player);
         
-        game.physics.arcade.overlap(items, player, this.addInventory);
+        game.physics.arcade.overlap(items, player, addInventory);
         
         
         game.physics.arcade.overlap(hitbox1, enemies);
@@ -228,13 +230,6 @@ demo.village.prototype = {
 
     },
     
-    addInventory: function(player, item){
-        inventoryArray.push(item);
-        item.kill();
-        currItem = inventoryArray[inventoryArray.indexOf(item)];
-        showCurrItem();
-
-    },
     
     toForest: function(){        
         game.state.start('forest');    

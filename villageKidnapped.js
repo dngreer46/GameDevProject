@@ -119,7 +119,6 @@ demo.villageKidnapped.prototype = {
         createHitbox();
         // Add John sprite
         loadPlayer(545, 544);
-        //loadPlayer(3500, 480);
         
 
     },
@@ -134,7 +133,7 @@ demo.villageKidnapped.prototype = {
         playerMovement(player);
         playerAction(player);
         
-        game.physics.arcade.overlap(items, player, this.addInventory);
+        game.physics.arcade.overlap(items, player, addInventory);
         
         game.physics.arcade.overlap(mapChange, player, this.toForest);
         
@@ -199,13 +198,7 @@ demo.villageKidnapped.prototype = {
         
 
     },
-    
-    addInventory: function(player, item){
-        inventoryArray.push(item);
-        item.kill();
-        currItem = inventoryArray[inventoryArray.indexOf(item)];
 
-    },
     
     toForest: function(){   
         villageKidnappedMusic.stop();
