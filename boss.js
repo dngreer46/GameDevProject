@@ -117,7 +117,7 @@ demo.boss.prototype = {
         slime.body.velocity.y = -50;
         slime.body.gravity.y = 400;
         slime.body.onOverlap = new Phaser.Signal();
-        slime.body.onOverlap.add(playerHit);
+        slime.body.onOverlap.add(bossHitPlayer);
     },
     hitBoss: function(boss, bullet){
         bullet.kill();

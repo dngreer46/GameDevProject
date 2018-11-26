@@ -316,25 +316,29 @@ function createSlime(){
 
 }
 
-function playerHit(enemy, player){
-    if (enemy.key = 'slime'){
-        enemy.kill();
+function bossHitPlayer(player, enemy){
+    enemy.kill();
+    healthArray.pop();
+    var heart = playerHealth.getFirstAlive();
+    heart.kill();
+    player.tint = 0xf24826;
+    player.body.velocity.x = 500*dirValue;
+    player.body.velocity.y = -50;
+    game.time.events.add(500, unTint);
+}
+
+function playerHit(player, enemy){
+    if(!overlap){
+        overlap = true;
+        player.tint = 0xf24826;
+        player.body.velocity.x = 500*dirValue;
+        player.body.velocity.y = -50;
+        game.time.events.add(500, unTint);
         healthArray.pop();
         var heart = playerHealth.getFirstAlive();
         heart.kill();
-        player.tint = 0xf24826
-        player.body.velocity.x = 500*dirValue;
-        player.body.velocity.y = -50
-        game.time.events.add(500, unTint);
     }
-    else{
-        if (!overlap){
-            overlap = true;
-            healthArray.pop();
-            var heart = playerHealth.getFirstAlive();
-            heart.kill();
-        }
-    }
+    
     if (healthArray.length == 0){
         player.kill();
         game.state.start('youDied');
@@ -376,4 +380,8 @@ function addInventory(player, item){
     item.kill();
     currItem = inventoryArray[inventoryArray.indexOf(item)];
     showCurrItem();
+}
+
+function overlapFalse(){
+    overlap = false;
 }

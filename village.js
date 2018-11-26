@@ -98,6 +98,7 @@ demo.village.prototype = {
         
         //create items
         createItems()
+        spawnItems(150, 544, 'pickAxe')
         spawnItems(2210, 390, 'key')
 
         
@@ -149,7 +150,6 @@ demo.village.prototype = {
         playerAction(player);
         
         game.physics.arcade.overlap(items, player, addInventory);
-        
         
         game.physics.arcade.overlap(hitbox1, enemies);
 
@@ -241,10 +241,6 @@ demo.village.prototype = {
         game.state.start('house');    
     },
     
-   
-
-    
-
 };
 
 

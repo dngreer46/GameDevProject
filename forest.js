@@ -85,7 +85,7 @@ demo.forest.prototype = {
         //spawnItems(224, game.world.height-96, 'gun')
         
         //time event to deal damage to the player
-        game.time.events.repeat(2000, 100, this.overlapFalse, this);     
+        game.time.events.repeat(3000, 100, overlapFalse);     
         
         //current item display
         itemText = game.add.text(0, game.world.height - 35, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
@@ -107,22 +107,26 @@ demo.forest.prototype = {
     
     update: function(){
         
-        // Collision
+        //Enemies collide with world
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
         
-        // Player Movement
+        //Damage
+        //Pickaxe kills enemies
+        game.physics.arcade.overlap(hitbox1, enemies, hitEnemy);
+        //Bullets kill enemies
+        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy);
+        //Enemies hurt player
+        game.physics.arcade.overlap(player, enemies, playerHit);
+
+        //Player controls
         playerMovement(player);
         playerAction(player);
+
         
-        // Damage
-        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
-        game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
-        game.physics.arcade.overlap(hitbox1, enemies, this.hitEnemy);
-
-
         // Pick up item
         game.physics.arcade.overlap(items, player, addInventory);
+        // Map change
         
         // Map change
         game.physics.arcade.overlap(mapChange, player, this.toLab);
@@ -133,39 +137,10 @@ demo.forest.prototype = {
         game.debug.body(hitbox1);
     },
     
-    hitEnemy: function(enemy, bullet){
-        bullet.kill();
-        enemy.kill();
-    },
-    
     
     toLab: function(){
         forestMusic.stop();
         game.state.start('lab');    
-    },
-    
-    playerHit: function(player) {
-        if (!overlap){
-            overlap = true;
-            healthArray.pop();
-            var heart = playerHealth.getFirstAlive();
-            heart.kill();
-            player.tint = 0xf24826
-            player.body.velocity.x = 500*dirValue;
-            player.body.velocity.y = -50
-            game.time.events.add(500, unTint)
-        }
-        
-        if (healthArray.length == 0){
-            player.kill();
-            this.changeState();
-        }
-        
-    },
-    
-    overlapFalse: function() {
-        overlap = false;
-        
     },
     
     changeState: function(){
