@@ -122,7 +122,7 @@ demo.forest.prototype = {
 
 
         // Pick up item
-        game.physics.arcade.overlap(items, player, this.addInventory);
+        game.physics.arcade.overlap(items, player, addInventory);
         
         // Map change
         game.physics.arcade.overlap(mapChange, player, this.toLab);
@@ -138,13 +138,6 @@ demo.forest.prototype = {
         enemy.kill();
     },
     
-    addInventory: function(player, item){
-        inventoryArray.push(item);               
-        item.kill();
-        currItem = inventoryArray[inventoryArray.indexOf(item)];
-        showCurrItem();
-        
-    },
     
     toLab: function(){
         forestMusic.stop();

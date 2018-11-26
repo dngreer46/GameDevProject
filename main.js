@@ -357,7 +357,6 @@ function spawnItems(x, y, sprite){
     items.setAll('scale.y', 2.5);
     game.add.tween(items).to( { y: items.y + 7 }, 1350, Phaser.Easing.Back.InOut, true, 0, -1, true);
 
-
 }
 
 function createEnemies(){
@@ -370,4 +369,11 @@ function spawnEnemies(x, y, sprite){
     enemies.create(x, y, sprite);
     enemies.setAll('scale.x', .5);
     enemies.setAll('scale.y', .5);
+}
+
+function addInventory(player, item){
+    inventoryArray.push(item);               
+    item.kill();
+    currItem = inventoryArray[inventoryArray.indexOf(item)];
+    showCurrItem();
 }
