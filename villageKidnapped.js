@@ -118,8 +118,7 @@ demo.villageKidnapped.prototype = {
         //hitbox
         createHitbox();
         // Add John sprite
-        //loadPlayer(545, 544);
-        loadPlayer(3500, 480);
+        loadPlayer(545, 544);
         
 
     },

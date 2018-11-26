@@ -120,8 +120,7 @@ demo.village.prototype = {
         game.physics.arcade.enable(forestSign);
         
         // Add John sprite
-        //loadPlayer(246, 544);
-        loadPlayer(2210, 390);
+        loadPlayer(246, 544);
 
         //current item display and inventory
         currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
