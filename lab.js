@@ -36,13 +36,6 @@ demo.lab.prototype = {
         platforms = map.createLayer('Platforms');
         
         
-        // Add John sprite
-        loadPlayer(16, 192);
-        //inventory
-        createInventory();
-        healthFunc();
-        createBullets();
-        createHitbox();
         // Map collision
         map.setCollision([211, 215, 216, 101, 33, 32, 205, 206, 207, 141, 142, 176, 177, 71, 72, 106, 107], true, ground);
         map.setCollision(211, true, walls);
@@ -71,6 +64,9 @@ demo.lab.prototype = {
         enemies.callAll('play', null, 'blob');
         enemies.setAll('body.gravity.y', 500);
         game.add.tween(enemies).to({x: enemies.x + 130}, 1000, 'Linear', true, 0, -1, true);
+        
+        createItems()
+        spawnItems(50, 192, 'gun');
         
         // Add John sprite
         loadPlayer(16, 192);
