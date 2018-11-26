@@ -98,7 +98,6 @@ demo.village.prototype = {
         
         //create items
         createItems()
-        spawnItems(150, 544, 'pickAxe')
         spawnItems(2210, 390, 'key')
         
 
