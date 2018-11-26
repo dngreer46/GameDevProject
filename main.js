@@ -73,6 +73,7 @@ function loadPlayer(x, y){
     // Player Animations
     player.animations.add('walk', [0, 1], 10);
     player.animations.add('attack', [2, 3, 4], 15);
+    player.animations.add('gun',[5,6], 15);
     //Camera
     game.camera.follow(player);
     player.tint = 0xffffff;
@@ -153,6 +154,8 @@ function playerAction(player){
             
         else if (currItem.key == 'gun'){
             this.fire();
+            
+            
         }
             
         else if (currItem.key == 'pickAxe'){
@@ -272,6 +275,9 @@ function showCurrItem(){
     
     if (currItem == undefined){
         currItem = inventoryArray[inventoryArray.indexOf(currItem) + 1];
+    }
+    if (currItem.key == 'gun'){
+        player.animations.play('gun');
     }
     
     itemOnScreen.loadTexture(currItem.key);
