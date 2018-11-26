@@ -18,7 +18,7 @@ demo.youDied.prototype = {
     update: function(){},
     
     restart: function() {
-            game.state.start('startPage');
+            game.state.start('startPage', true, true);
     }
 };
         

@@ -17,7 +17,7 @@ demo.forest.prototype = {
         game.load.tilemap('forestMap', 'assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('enemy', 'assets/enemy.png', 40, 40);
+        game.load.spritesheet('rat', 'assets/rat.png', 64, 32);
         
         game.load.audio('impact', 'assets/slaphit.mp3');
         game.load.audio('forestMusic', 'assets/forestMusic.mp3');
@@ -27,9 +27,6 @@ demo.forest.prototype = {
     
     
     create: function(){
-        
-
-
         
         forestMusic = game.add.audio('forestMusic', true);
         forestMusic.play();
@@ -53,17 +50,6 @@ demo.forest.prototype = {
         platforms = map.createLayer('Platforms');
         trees = map.createLayer('Trees');
         
-
-
-        //set properties for bullets
-        createBullets();
-        displayCurrentItem(140, game.world.height-65);
-        //inventory
-        createInventory();
-        healthFunc();
-        createHitbox();
-
-        
         // Map change
         mapChange = game.add.sprite(1910, game.world.height-100, 'blank');
         game.physics.arcade.enable(mapChange);
@@ -80,15 +66,15 @@ demo.forest.prototype = {
         
 
         // Enemy Group
-        enemies = game.add.group();
-        enemies.enableBody = true;
-        enemies.create(350, game.world.height-100, 'enemy');
-        enemies.create(768, game.world.height-100, 'enemy');
-        enemies.create(1216, game.world.height-100, 'enemy');
-        enemies.create(1056, 192, 'enemy');
-        enemies.create(1440, 288, 'enemy');
-        enemies.callAll('animations.add', 'animations', 'blob', [0, 1, 2, 3], 7, true);
-        enemies.callAll('play', null, 'blob');
+        createEnemies();
+        spawnEnemies(350, game.world.height-100, 'rat')
+        spawnEnemies(768, game.world.height-100, 'rat')
+        spawnEnemies(1216, game.world.height-100, 'rat')
+        spawnEnemies(1056, 192, 'rat')
+        spawnEnemies(1440, 288, 'rat')
+
+        enemies.callAll('animations.add', 'animations', 'move', [0, 1, 2], 7, true);
+        enemies.callAll('play', null, 'move');
         enemies.setAll('body.gravity.y', 500);
         game.add.tween(enemies).to({x: enemies.x + 130}, 1000, 'Linear', true, 0, -1, true);
        
@@ -96,7 +82,7 @@ demo.forest.prototype = {
         
         //create items
         createItems()
-        spawnItems(224, game.world.height-96, 'gun')
+        //spawnItems(224, game.world.height-96, 'gun')
         
         //time event to deal damage to the player
         game.time.events.repeat(2000, 100, this.overlapFalse, this);     
@@ -107,6 +93,13 @@ demo.forest.prototype = {
         
         // Player
         loadPlayer(32, 381);
+        //set properties for bullets
+        createBullets();
+        displayCurrentItem(140, game.world.height-65);
+        //inventory
+        createInventory();
+        healthFunc();
+        createHitbox();
     }, 
 
     
@@ -125,7 +118,7 @@ demo.forest.prototype = {
         // Damage
         game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         game.physics.arcade.overlap(player, enemies, this.playerHit, null, this);
-        game.physics.arcade.overlap(hitbox1, enemies);
+        game.physics.arcade.overlap(hitbox1, enemies, this.hitEnemy);
 
 
         // Pick up item
@@ -137,7 +130,7 @@ demo.forest.prototype = {
     },
 
     render: function(){
-        //game.debug.body(hitbox1);
+        game.debug.body(hitbox1);
     },
     
     hitEnemy: function(enemy, bullet){

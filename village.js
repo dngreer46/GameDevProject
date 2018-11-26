@@ -32,7 +32,6 @@ demo.village.prototype = {
     },
     
     create: function(){
-        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // Background image
         game.add.tileSprite(0, 0, 3520, 640, 'sky');
@@ -55,17 +54,6 @@ demo.village.prototype = {
         platforms = map.createLayer('Platforms');
         houses = map.createLayer('Houses');
         plantsAndSigns = map.createLayer('PlantsSigns');
-        
-        // Add John sprite
-        loadPlayer(246, 544);
-        //loadPlayer(2210, 390);
-        //current item display
-        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
-        displayCurrentItem(140, game.world.height-195);
-        //inventory
-        createInventory();
-        healthFunc();
-        createHitbox();
         
         
         // Map change
@@ -110,17 +98,11 @@ demo.village.prototype = {
         
         //create items
         createItems()
-        spawnItems(150, 544, 'pickAxe')
         spawnItems(2210, 390, 'key')
         
-        
-
 
         itemText = game.add.text(0, game.world.height - 165, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         itemText.fixedToCamera = true;
-        
-
-
         
         //dialouge
         dialogueBox = game.add.graphics(0, 0);
@@ -140,7 +122,16 @@ demo.village.prototype = {
         forestSign = game.add.sprite(3137, 482, 'blank');
         game.physics.arcade.enable(forestSign);
         
-
+        // Add John sprite
+        loadPlayer(246, 544);
+        //loadPlayer(2210, 390);
+        //current item display
+        currItem = game.add.sprite(0, game.world.height - 2720, 'blank');
+        displayCurrentItem(140, game.world.height-195);
+        //inventory
+        createInventory();
+        healthFunc();
+        createHitbox();
       
 
     },
@@ -232,7 +223,7 @@ demo.village.prototype = {
     render: function(){
         //game.debug.body(player);
         //game.debug.spriteInfo(player, 32, 32);
-        //game.debug.body(hitbox1);
+        game.debug.body(hitbox1);
 
 
     },

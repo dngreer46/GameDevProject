@@ -1,4 +1,4 @@
-var bossTween, slime;
+var bossTween, slime, bossHealth, boss_health;
 
 demo.boss = function(){};
 demo.boss.prototype = {
@@ -59,6 +59,10 @@ demo.boss.prototype = {
         //Boss projectile
         createSlime();
         
+        //add health
+        bossHealth = game.add.text(540, 0, 'Boss Health: 100', {fontSize: '32px', fill: '#ffffff' });
+        boss_health = 100;
+        
         // Add John sprite
         loadPlayer(50, 512);
         createBullets();
@@ -80,7 +84,7 @@ demo.boss.prototype = {
         game.physics.arcade.collide(boss, walls);
         game.physics.arcade.collide(boss, platforms);
         game.physics.arcade.overlap(player, slimeBalls);
-
+        game.physics.arcade.overlap(boss, bullets, this.hitBoss)
         boss.animations.play('barf');
     },
     
@@ -111,5 +115,24 @@ demo.boss.prototype = {
         slime.body.gravity.y = 400;
         slime.body.onOverlap = new Phaser.Signal();
         slime.body.onOverlap.add(playerHit);
-    }
+    },
+    hitBoss: function(boss, bullet){
+        bullet.kill();
+        
+        //damageSound.play();
+        boss_health -= 10;
+        bossHealth.text = 'Boss Health: ' + boss_health;
+        console.log(boss_health);
+        
+        if (boss_health == 70){
+
+            //enemyE.on = true;
+            //enemyE.start(true, 0, 15);
+            //bossDialouge = game.add.text(game.world.width - 500, game.world.height - 400, 'You will never win', {fontSize: '32px', fill: '#ffffff' });
+        }
+        else if (boss_health == 0){
+            boss.kill();
+        }
+         
+    },
 }
