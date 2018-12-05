@@ -5,7 +5,7 @@ demo.startPage = function(){};
 
 demo.startPage.prototype = {
     preload: function(){
-        game.load.image('sky', 'Assets/maps/sky.png');
+        game.load.image('sky', 'Assets/Maps/sky.png');
         game.load.image('ground', 'Assets/ground.png');
         game.load.image('title', 'Assets/titleimage.png');
         game.load.audio('villageMusic', 'Assets/villageMusic.mp3');

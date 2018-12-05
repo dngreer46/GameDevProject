@@ -8,14 +8,14 @@ demo.village = function(){};
 demo.village.prototype = {
     
     preload: function(){
-        game.load.image('sky', 'Assets/maps/sky.png');
+        game.load.image('sky', 'Assets/Maps/sky.png');
         
         // Preload tileset images
-        game.load.image('natureSet', 'Assets/maps/natureSet.png');
-        game.load.image('houseSet', 'Assets/maps/house2.png');
+        game.load.image('natureSet', 'Assets/Maps/natureSet.png');
+        game.load.image('houseSet', 'Assets/Maps/house2.png');
         
         // Preload tilemap
-        game.load.tilemap('villageMap', 'Assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('villageMap', 'Assets/Maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
         game.load.spritesheet('john', 'Assets/john.png', 63.9, 70);

@@ -4,7 +4,7 @@ demo.startTutorial = function(){};
 
 demo.startTutorial.prototype = {
     preload: function(){
-        game.load.image('sky', 'Assets/maps/sky.png');
+        game.load.image('sky', 'Assets/Maps/sky.png');
         game.load.image('ground', 'Assets/ground.png');
         
         // Sprites

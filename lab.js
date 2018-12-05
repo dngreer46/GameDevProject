@@ -5,12 +5,12 @@ demo.lab = function(){};
 demo.lab.prototype = {
     preload: function(){
         // Preload tileset images
-        game.load.image('scifiSet', 'Assets/maps/scifiSet.png');
+        game.load.image('scifiSet', 'Assets/Maps/scifiSet.png');
         
         //Sprite
         game.load.spritesheet('enemy', 'Assets/enemy.png', 100, 100);
         // Preload tilemap
-        game.load.tilemap('labMap', 'Assets/maps/labMap.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('labMap', 'Assets/Maps/labMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         
     },

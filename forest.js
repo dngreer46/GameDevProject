@@ -8,13 +8,13 @@ demo.forest = function(){};
 demo.forest.prototype = {
     preload: function(){
         //BG image
-        game.load.image('forestBG', 'Assets/maps/forestBG.png');
+        game.load.image('forestBG', 'Assets/Maps/forestBG.png');
         
         // Preload tileset images
-        game.load.image('natureSet', 'Assets/maps/natureSet.png');
+        game.load.image('natureSet', 'Assets/Maps/natureSet.png');
         
         // Preload tilemap
-        game.load.tilemap('forestMap', 'Assets/maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('forestMap', 'Assets/Maps/forestMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
         game.load.spritesheet('rat', 'Assets/rat.png', 64, 32);
