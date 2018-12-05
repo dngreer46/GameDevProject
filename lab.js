@@ -96,7 +96,7 @@ demo.lab.prototype = {
         //Pickaxe kills enemies
         game.physics.arcade.overlap(hitbox1, enemies, hitEnemy);
         //Bullets kill enemies
-        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy);
+        game.physics.arcade.overlap(enemies, bullet, hitEnemy);
         //Enemies hurt player
         game.physics.arcade.overlap(player, enemies, playerHit);
 
