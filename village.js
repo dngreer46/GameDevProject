@@ -18,7 +18,7 @@ demo.village.prototype = {
         game.load.tilemap('villageMap', 'Assets/Maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'Assets/john.png', 63.9, 70);
+        game.load.spritesheet('john', 'Assets/John.png', 63.9, 70);
         game.load.spritesheet('sarah', 'Assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'Assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'Assets/Paula.png', 35, 70);
