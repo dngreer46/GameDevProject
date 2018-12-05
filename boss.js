@@ -78,17 +78,19 @@ demo.boss.prototype = {
     },
     
     update: function() {
-        playerMovement(player);
-        playerAction(player);
     
         game.physics.arcade.collide(boss, ground);
         game.physics.arcade.collide(boss, walls);
         game.physics.arcade.collide(boss, platforms);
-        game.physics.arcade.overlap(player, slimeBalls);
+        //game.physics.arcade.overlap(player, slimeBalls, bossHitPlayer);
+        //game.physics.arcade.overlap(player, boss, bossHitPlayer);
         game.physics.arcade.overlap(boss, bullets, this.hitBoss)
         boss.animations.play('barf');
         // Pick up item
         game.physics.arcade.overlap(items, player, addInventory);
+        
+        playerMovement(player);
+        playerAction(player);
     },
     
     render: function(){
@@ -111,7 +113,7 @@ demo.boss.prototype = {
     bossAttack: function(){
         slime = slimeBalls.getFirstDead();
         slime.body.setSize(37, 37);
-        game.debug.body(slime);
+        //game.debug.body(slime);
         slime.reset(boss.x+15, boss.y+15);
         slime.body.velocity.x = -250;
         slime.body.velocity.y = -50;
@@ -135,6 +137,7 @@ demo.boss.prototype = {
         }
         else if (boss_health == 0){
             boss.kill();
+            game.state.start('gameEnd');
         }
          
     },

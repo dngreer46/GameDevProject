@@ -134,7 +134,7 @@ demo.forest.prototype = {
     },
 
     render: function(){
-        game.debug.body(hitbox1);
+        //game.debug.body(hitbox1);
     },
     
     

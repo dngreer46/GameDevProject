@@ -98,7 +98,7 @@ demo.village.prototype = {
         
         //create items
         createItems()
-        spawnItems(150, 544, 'pickAxe')
+        //spawnItems(150, 544, 'pickAxe')
         spawnItems(2210, 390, 'key')
 
         
@@ -225,7 +225,7 @@ demo.village.prototype = {
     render: function(){
         //game.debug.body(player);
         //game.debug.spriteInfo(player, 32, 32);
-        game.debug.body(hitbox1);
+        //game.debug.body(hitbox1);
 
 
     },
