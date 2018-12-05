@@ -4,10 +4,10 @@ demo.boss = function(){};
 demo.boss.prototype = {
     preload: function() {
          // Preload tileset images
-        game.load.image('scifiSet', 'Assets/maps/scifiSet.png');
+        game.load.image('scifiSet', 'Assets/Maps/scifiSet.png');
         
         // Preload tilemap
-        game.load.tilemap('bossMap', 'Assets/maps/bossMap.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('bossMap', 'Assets/Maps/bossMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         game.load.spritesheet('boss', 'Assets/Boss.png', 96, 128);
         game.load.spritesheet('john', 'Assets/John.png', 63.5, 70);

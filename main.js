@@ -7,7 +7,6 @@ game.state.add('house', demo.house);
 game.state.add('startTutorial', demo.startTutorial);
 game.state.add('villageKidnapped', demo.villageKidnapped);
 game.state.add('lab', demo.lab);
-game.state.add('bossState', demo.bossState);
 game.state.add('boss', demo.boss);
 game.state.add('gameEnd', demo.gameEnd);
 game.state.start('startPage');
