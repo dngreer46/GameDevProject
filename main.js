@@ -92,8 +92,8 @@ function playerMovement(player){
     
     if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
         player.scale.x = .5;
-        //player.body.velocity.x = 225;    
-        player.body.velocity.x = 475;
+        player.body.velocity.x = 225;    
+        //player.body.velocity.x = 475;
         if (attacking){
             player.animations.play('attack');
         } 
@@ -107,8 +107,8 @@ function playerMovement(player){
 
     else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){               
         player.scale.x = -.5;
-        //player.body.velocity.x = -225;
-        player.body.velocity.x = -475;
+        player.body.velocity.x = -225;
+        //player.body.velocity.x = -475;
         if (attacking){
             player.animations.play('attack');
         }
