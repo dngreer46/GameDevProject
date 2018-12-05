@@ -34,7 +34,8 @@ demo.lab.prototype = {
         ground = map.createLayer('Ground');
         walls = map.createLayer('Walls');
         platforms = map.createLayer('Platforms');
-
+        
+        
         // Map collision
         map.setCollision([211, 215, 216, 101, 33, 32, 205, 206, 207, 141, 142, 176, 177, 71, 72, 106, 107], true, ground);
         map.setCollision(211, true, walls);
@@ -45,6 +46,9 @@ demo.lab.prototype = {
             left: false,
             right: false
         });
+        
+        //time event to deal damage to the player
+        game.time.events.repeat(3000, 100, overlapFalse);    
         
         // Map Change
         mapChange = game.add.sprite(940, 2208, 'blank');
@@ -84,13 +88,22 @@ demo.lab.prototype = {
     
     update: function() {
         
+        //Enemies collide with world
         game.physics.arcade.collide(enemies, ground);
         game.physics.arcade.collide(enemies, platforms);
         
+        //Damage
+        //Pickaxe kills enemies
+        game.physics.arcade.overlap(hitbox1, enemies, hitEnemy);
+        //Bullets kill enemies
+        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy);
+        //Enemies hurt player
+        game.physics.arcade.overlap(player, enemies, playerHit);
+
+        //Player controls
         playerMovement(player);
         playerAction(player);
 
-        game.physics.arcade.overlap(enemies, bullet, this.hitEnemy, null, this);
         
         // Pick up item
         game.physics.arcade.overlap(items, player, addInventory);

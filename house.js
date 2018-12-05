@@ -59,7 +59,7 @@ demo.house.prototype = {
         
         
         //current item display
-        displayCurrentItem(5, game.world.height-150);
+        displayCurrentItem(140, game.world.height-155);
         //inventory
         createInventory();
         //health
