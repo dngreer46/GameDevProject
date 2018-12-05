@@ -59,7 +59,8 @@ demo.house.prototype = {
         
         
         //current item display
-        displayCurrentItem(140, game.world.height-155);
+        displayCurrentItem(135, game.world.height-140);
+        itemText = game.add.text(0, game.world.height-30, 'Current Item', {fontSize: '18px', fill: '#ECE6E5'});
         //inventory
         createInventory();
         //health
