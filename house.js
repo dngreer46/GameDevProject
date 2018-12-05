@@ -7,14 +7,14 @@ demo.house.prototype = {
     preload: function() {
         
         // Tileset images
-        game.load.image('natureSet', 'assets/maps/natureSet.png');
-        game.load.image('castleSet1', 'assets/maps/castleSet1.png');
+        game.load.image('natureSet', 'Assets/maps/natureSet.png');
+        game.load.image('castleSet1', 'Assets/maps/castleSet1.png');
         
         // Tilemap
-        game.load.tilemap('houseMap', 'assets/maps/houseMap.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('houseMap', 'Assets/maps/houseMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.image('blank', 'assets/blank.png');
+        game.load.image('blank', 'Assets/blank.png');
 
     },
     

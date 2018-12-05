@@ -8,26 +8,26 @@ demo.village = function(){};
 demo.village.prototype = {
     
     preload: function(){
-        game.load.image('sky', 'assets/maps/sky.png');
+        game.load.image('sky', 'Assets/maps/sky.png');
         
         // Preload tileset images
-        game.load.image('natureSet', 'assets/maps/natureSet.png');
-        game.load.image('houseSet', 'assets/maps/house2.png');
+        game.load.image('natureSet', 'Assets/maps/natureSet.png');
+        game.load.image('houseSet', 'Assets/maps/house2.png');
         
         // Preload tilemap
-        game.load.tilemap('villageMap', 'assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('villageMap', 'Assets/maps/villageMap.json', null, Phaser.Tilemap.TILED_JSON);
         
         // Sprites
-        game.load.spritesheet('john', 'assets/john.png', 63.9, 70);
-        game.load.spritesheet('sarah', 'assets/Sarah.png', 35, 70);
-        game.load.spritesheet('bob', 'assets/Bob.png', 35, 70);
-        game.load.spritesheet('paula', 'assets/Paula.png', 35, 70);
-        game.load.image('gun', 'assets/gun.png');
-        game.load.image('pickAxe', 'assets/Pickaxe.png');
-        game.load.image('health', 'assets/Heart.png');
-        game.load.image('key', 'assets/key.png');
-        game.load.image('bullet', 'assets/bullet.png');
-        game.load.image('blank', 'assets/blank.png');
+        game.load.spritesheet('john', 'Assets/john.png', 63.9, 70);
+        game.load.spritesheet('sarah', 'Assets/Sarah.png', 35, 70);
+        game.load.spritesheet('bob', 'Assets/Bob.png', 35, 70);
+        game.load.spritesheet('paula', 'Assets/Paula.png', 35, 70);
+        game.load.image('gun', 'Assets/gun.png');
+        game.load.image('pickAxe', 'Assets/Pickaxe.png');
+        game.load.image('health', 'Assets/Heart.png');
+        game.load.image('key', 'Assets/key.png');
+        game.load.image('bullet', 'Assets/bullet.png');
+        game.load.image('blank', 'Assets/blank.png');
         
     },
     

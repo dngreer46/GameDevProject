@@ -4,14 +4,14 @@ demo.startTutorial = function(){};
 
 demo.startTutorial.prototype = {
     preload: function(){
-        game.load.image('sky', 'assets/maps/sky.png');
-        game.load.image('ground', 'assets/ground.png');
+        game.load.image('sky', 'Assets/maps/sky.png');
+        game.load.image('ground', 'Assets/ground.png');
         
         // Sprites
-        game.load.image('tab', 'assets/tab.png');
-        game.load.image('spacebar', 'assets/spacebar.png');
-        game.load.image('shift', 'assets/shift.png');
-        game.load.image('arrowkeys', 'assets/arrowkeys.png');
+        game.load.image('tab', 'Assets/tab.png');
+        game.load.image('spacebar', 'Assets/spacebar.png');
+        game.load.image('shift', 'Assets/shift.png');
+        game.load.image('arrowkeys', 'Assets/arrowkeys.png');
         
     },
     

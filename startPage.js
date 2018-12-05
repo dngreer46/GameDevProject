@@ -5,10 +5,10 @@ demo.startPage = function(){};
 
 demo.startPage.prototype = {
     preload: function(){
-        game.load.image('sky', 'assets/maps/sky.png');
-        game.load.image('ground', 'assets/ground.png');
-        game.load.image('title', 'assets/titleimage.png');
-        game.load.audio('villageMusic', 'assets/villageMusic.mp3');
+        game.load.image('sky', 'Assets/maps/sky.png');
+        game.load.image('ground', 'Assets/ground.png');
+        game.load.image('title', 'Assets/titleimage.png');
+        game.load.audio('villageMusic', 'Assets/villageMusic.mp3');
         
     },
     create: function(){
