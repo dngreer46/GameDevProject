@@ -22,7 +22,7 @@ demo.village.prototype = {
         game.load.spritesheet('sarah', 'Assets/Sarah.png', 35, 70);
         game.load.spritesheet('bob', 'Assets/Bob.png', 35, 70);
         game.load.spritesheet('paula', 'Assets/Paula.png', 35, 70);
-        game.load.image('gun', 'Assets/gun.png');
+        game.load.image('gun', 'Assets/Gun.png');
         game.load.image('pickAxe', 'Assets/Pickaxe.png');
         game.load.image('health', 'Assets/Heart.png');
         game.load.image('key', 'Assets/key.png');
